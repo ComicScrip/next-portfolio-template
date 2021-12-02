@@ -1,0 +1,8 @@
+.projectCard {
+  display: flex;
+  flex-direction: column;
+}
+
+.projectCard h2 {
+  text-align: center;
+}

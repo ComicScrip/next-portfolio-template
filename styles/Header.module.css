@@ -1,0 +1,13 @@
+.menu {
+  display: flex;
+  justify-content: center;
+}
+
+.menu a {
+  display: block;
+  padding: 10px;
+}
+
+.menu a:hover {
+  color: rgb(159, 196, 255);
+}
