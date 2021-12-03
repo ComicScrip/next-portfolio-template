@@ -1,5 +1,3 @@
-const contactRequests = [];
-
 const handleNewContactRequest = (req, res) => {
   contactRequests.push(req.body);
   console.log(contactRequests);

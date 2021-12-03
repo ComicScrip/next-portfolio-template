@@ -27,7 +27,6 @@
 .field textarea {
   font-family: inherit;
   display: block;
-  width: 80vw;
-  max-width: 1000px;
+  min-width: 400px;
   min-height: 400px;
 }

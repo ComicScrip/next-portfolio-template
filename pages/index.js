@@ -1,4 +1,4 @@
-import Head from 'next/head';
+import Link from 'next/link';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import portfolioImg from '../public/images/portfolio.jpg';
@@ -24,6 +24,11 @@ export default function Home() {
           schnaps de eme gal nüdle blottkopf, de Chulien Roger hop pfourtz! bett
           mer ech schpeck un salami schmutz. Gal!
         </p>
+      </div>
+      <div className={styles.ctaContainer}>
+        <Link href='/projects' passHref>
+          <a className='cta'>REALISATIONS</a>
+        </Link>
       </div>
     </Layout>
   );

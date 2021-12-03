@@ -6,10 +6,10 @@ export default function Header() {
     <header>
       <nav className={styles.menu}>
         <Link href='/'>
-          <a>Home</a>
+          <a>Accueil</a>
         </Link>
         <Link href='/projects'>
-          <a>Projects</a>
+          <a>Projets</a>
         </Link>
         <Link href='/contact'>
           <a>Contact</a>

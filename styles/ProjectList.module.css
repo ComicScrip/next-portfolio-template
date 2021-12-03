@@ -1,9 +1,6 @@
 .projectListContainer {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 70px;
   flex-wrap: wrap;
-}
-
-.title {
-  text-align: center;
 }
