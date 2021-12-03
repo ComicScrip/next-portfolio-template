@@ -9,7 +9,6 @@ export default function Projects() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ email, message });
     axios.post('/api/contactRequests', { email, message }).then(() => {
       alert('Merci, je vous recontacterai au plus vite');
       setMessage('');

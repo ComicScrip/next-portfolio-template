@@ -1,7 +1,7 @@
-import Layout from '../../components/Layout';
-import { getOneProject, getProjects } from '../../models/project';
-import styles from '../../styles/ProjectDetails.module.css';
 import Image from 'next/image';
+import Layout from '@components/Layout';
+import { getOneProject, getProjects } from '@models/project';
+import styles from '@styles/ProjectDetails.module.css';
 
 export default function Project({
   project: { title, mainPictureUrl, description },
@@ -19,7 +19,6 @@ export default function Project({
 
 export async function getStaticPaths() {
   const projects = await getProjects();
-
   return {
     paths: projects.map((p) => {
       return { params: { id: p.id.toString() } };

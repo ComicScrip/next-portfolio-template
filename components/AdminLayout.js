@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import styles from '@styles/AdminLayout.module.css';
 
 export default function AdminLayout({ children, pageTitle }) {
   return (
@@ -7,14 +8,7 @@ export default function AdminLayout({ children, pageTitle }) {
       <Head>
         <title>{pageTitle}</title>
       </Head>
-      <header
-        style={{
-          display: 'flex',
-          padding: 15,
-          justifyContent: 'space-between',
-          backgroundColor: 'rgb(39, 39, 39)',
-        }}
-      >
+      <header className={styles.header}>
         <nav>
           <Link href='/admin'>
             <a>Back-Office</a>
@@ -27,16 +21,8 @@ export default function AdminLayout({ children, pageTitle }) {
           </Link>
         </nav>
       </header>
-      <main
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        {children}
-      </main>
-      <footer style={{ backgroundColor: 'rgb(39, 39, 39)' }}>
+      <main className={styles.main}>{children}</main>
+      <footer className={styles.footer}>
         <nav>
           <Link href='/'>Go back to website</Link>
         </nav>

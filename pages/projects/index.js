@@ -1,7 +1,7 @@
-import Layout from '../../components/Layout';
-import ProjectCard from '../../components/ProjectCard';
-import { getProjects } from '../../models/project';
-import styles from '../../styles/ProjectList.module.css';
+import Layout from '@components/Layout';
+import ProjectCard from '@components/ProjectCard';
+import { getProjects } from '@models/project';
+import styles from '@styles/ProjectList.module.css';
 
 export default function Projects({ projects }) {
   return (

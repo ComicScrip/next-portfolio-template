@@ -1,0 +1,16 @@
+.header {
+  display: flex;
+  padding: 15px;
+  justify-content: 'space-between';
+  background-color: rgb(39, 39, 39);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer {
+  background-color: rgb(39, 39, 39);
+}
