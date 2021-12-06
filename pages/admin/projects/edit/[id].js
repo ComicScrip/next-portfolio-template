@@ -34,6 +34,7 @@ export default function CreateProject() {
       axios
         .get(`/api/projects/${id}`)
         .then(({ data: { title, description, mainPictureUrl } }) => {
+          console.log(mainPictureUrl);
           setTitle(title);
           setDescription(description);
           setMainPictureUrl(mainPictureUrl);
