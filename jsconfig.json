@@ -5,6 +5,7 @@
       "@styles/*": ["styles/*"],
       "@components/*": ["components/*"],
       "@models/*": ["models/*"],
+      "@middlewares/*": ["middlewares/*"],
     }
   }
 }

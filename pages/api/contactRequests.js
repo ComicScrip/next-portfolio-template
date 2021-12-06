@@ -1,10 +1,19 @@
+import base from '@middlewares/common';
+
+const protectPost = (req, res, next) => {
+  console.log('protect popssssts');
+  next();
+};
+
 const handleNewContactRequest = (req, res) => {
-  contactRequests.push(req.body);
-  console.log(contactRequests);
+  console.log(req.body);
   res.status(201).send(req.body);
 };
 
-export default function handler(req, res) {
-  if (req.method === 'POST') handleNewContactRequest(req, res);
-  else res.status(405).send('Method not allowed');
-}
+const handleGetContactRequest = (req, res) => {
+  res.send([]);
+};
+
+export default base()
+  .post(protectPost, handleNewContactRequest)
+  .get(handleGetContactRequest);
