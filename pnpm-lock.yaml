@@ -1,32 +1,38 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@hcaptcha/react-hcaptcha': ^0.3.9
   '@prisma/client': ^3.6.0
   '@uploadcare/react-widget': ^1.3.8
   axios: ^0.24.0
   dotenv: ^10.0.0
   eslint: 7.32.0
   eslint-config-next: 12.0.4
+  hcaptcha: ^0.1.0
   joi: ^17.5.0
   morgan: ^1.10.0
   mysql2: ^2.3.3
   next: 12.0.4
   next-connect: ^0.11.0
+  nodemailer: ^6.7.2
   prisma: ^3.6.0
   react: 17.0.2
   react-dom: 17.0.2
   typescript: ^4.5.2
 
 dependencies:
+  '@hcaptcha/react-hcaptcha': 0.3.9_react-dom@17.0.2+react@17.0.2
   '@prisma/client': 3.6.0_prisma@3.6.0
   '@uploadcare/react-widget': 1.3.8_react-dom@17.0.2+react@17.0.2
   axios: 0.24.0
   dotenv: 10.0.0
+  hcaptcha: 0.1.0
   joi: 17.5.0
   morgan: 1.10.0
   mysql2: 2.3.3
   next: 12.0.4_react-dom@17.0.2+react@17.0.2
   next-connect: 0.11.0
+  nodemailer: 6.7.2
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
 
@@ -137,6 +143,16 @@ packages:
     resolution: {integrity: sha512-foQZKJig7Ob0BMAYBfcJk8d77QtOe7Wo4ox7ff1lQYoNNAb6jwcY1ncdoy2e9wQZzvNy7ODZCYJkK8kzmcAnAg==}
     dependencies:
       '@hapi/hoek': 9.2.1
+    dev: false
+
+  /@hcaptcha/react-hcaptcha/0.3.9_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-yc3rRVQCz3w+rq9+Y1yi+hUlZscMDoXli0st8liefZ79gkFRa3vqd2zl+qGeRq+3HG7i+ydNNIXmnWhg8wJCSg==}
+    peerDependencies:
+      react: '>= 16.3.0'
+      react-dom: '>= 16.3.0'
+    dependencies:
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
     dev: false
 
   /@humanwhocodes/config-array/0.5.0:
@@ -1661,6 +1677,10 @@ packages:
       minimalistic-assert: 1.0.1
     dev: false
 
+  /hcaptcha/0.1.0:
+    resolution: {integrity: sha512-mVRkhNcOuP7QJO50nYdu3vS+uaOg6Ku2HpMy50C2EckjB9DlnwX24iePi912IXuVIq5L8ukjISG4Ea6MimZ5+w==}
+    dev: false
+
   /he/1.2.0:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
@@ -2241,6 +2261,11 @@ packages:
 
   /node-releases/1.1.77:
     resolution: {integrity: sha512-rB1DUFUNAN4Gn9keO2K1efO35IDK7yKHCdCaIMvFO7yUYmmZYeDjnGKle26G4rwj+LKRQpjyUUvMkPglwGCYNQ==}
+    dev: false
+
+  /nodemailer/6.7.2:
+    resolution: {integrity: sha512-Dz7zVwlef4k5R71fdmxwR8Q39fiboGbu3xgswkzGwczUfjp873rVxt1O46+Fh0j1ORnAC6L9+heI8uUpO6DT7Q==}
+    engines: {node: '>=6.0.0'}
     dev: false
 
   /normalize-path/3.0.0:
