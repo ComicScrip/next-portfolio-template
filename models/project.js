@@ -14,12 +14,24 @@ export const validateProject = (data, forUpdate = false) =>
       .presence(forUpdate ? 'optional' : 'required'),
   }).validate(data, { abortEarly: false }).error;
 
+export const projectPropsToShow = {
+  title: true,
+  id: true,
+  description: true,
+  mainPictureUrl: true,
+};
+
 export const getProjects = async () => {
-  return db.project.findMany();
+  return db.project.findMany({
+    select: projectPropsToShow,
+  });
 };
 
 export const getOneProject = (id) => {
-  return db.project.findUnique({ where: { id: parseInt(id, 10) } });
+  return db.project.findUnique({
+    where: { id: parseInt(id, 10) },
+    select: projectPropsToShow,
+  });
 };
 
 export const deleteOneProject = (id) => {
@@ -33,5 +45,7 @@ export const createProject = ({ title, description, mainPictureUrl }) => {
 };
 
 export const updateProject = (id, data) => {
-  return db.project.update({ where: { id: parseInt(id, 10) }, data });
+  return db.project
+    .update({ where: { id: parseInt(id, 10) }, data })
+    .catch((_) => false);
 };

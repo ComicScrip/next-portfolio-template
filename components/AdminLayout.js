@@ -11,7 +11,7 @@ export default function AdminLayout({ children, pageTitle }) {
       <header className={styles.header}>
         <nav>
           <Link href='/admin'>
-            <a>Back-Office</a>
+            <a>Dashboard</a>
           </Link>
         </nav>
 

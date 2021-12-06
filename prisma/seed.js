@@ -6,7 +6,7 @@ async function seed() {
     data: [
       {
         title: 'P1',
-        description: 'P3 description',
+        description: 'P1 description',
         mainPictureUrl:
           'https://ucarecdn.com/be32d5a2-4ef2-4a47-8e73-7142f80ae188/ms_project_2013_2.jpg',
       },
