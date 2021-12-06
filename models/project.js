@@ -1,4 +1,18 @@
 const db = require('../db');
+const Joi = require('joi');
+
+export const validateProject = (data, forUpdate = false) =>
+  Joi.object({
+    title: Joi.string()
+      .max(255)
+      .presence(forUpdate ? 'optional' : 'required'),
+    description: Joi.string()
+      .max(65000)
+      .presence(forUpdate ? 'optional' : 'required'),
+    mainPictureUrl: Joi.string()
+      .max(255)
+      .presence(forUpdate ? 'optional' : 'required'),
+  }).validate(data, { abortEarly: false }).error;
 
 export const getProjects = async () => {
   return db.project.findMany();

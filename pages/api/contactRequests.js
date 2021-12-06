@@ -1,9 +1,8 @@
-const handleNewContactRequest = (req, res) => {
+import base from '@middlewares/common';
+
+async function handlePost(req, res) {
   console.log(req.body);
   res.status(201).send(req.body);
-};
-
-export default function handler(req, res) {
-  if (req.method === 'POST') handleNewContactRequest(req, res);
-  else res.status(405).send('Method not allowed');
 }
+
+export default base().post(handlePost);
