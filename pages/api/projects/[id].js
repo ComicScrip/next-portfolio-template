@@ -2,20 +2,25 @@ import {
   deleteOneProject,
   getOneProject,
   updateProject,
-} from '../../../models/project';
-import { handleMethods } from '../../../helpers/handleMethods';
+  validateProject,
+} from '@models/project';
+import base from '@middlewares/common';
 
-export default handleMethods({
-  GET: async ({ query: { id } }, res) => {
-    const project = await getOneProject(id);
-    if (project) res.send(project);
-    else res.status(404).send();
-  },
-  DELETE: async ({ query: { id } }, res) => {
-    if (await deleteOneProject(id)) res.status(204).send();
-    else res.status(404).send();
-  },
-  PATCH: async ({ query: { id }, body }, res) => {
-    res.status(200).send(await updateProject(id, body));
-  },
-});
+async function handlePatch({ query: { id }, body }, res) {
+  const validationErrors = validateProject(body, true);
+  if (validationErrors) return res.status(422).send(validationErrors);
+  res.status(200).send(await updateProject(id, body));
+}
+
+async function handleGet({ query: { id } }, res) {
+  const project = await getOneProject(id);
+  if (project) res.send(project);
+  else res.status(404).send();
+}
+
+async function handleDelete({ query: { id } }, res) {
+  if (await deleteOneProject(id)) res.status(204).send();
+  else res.status(404).send();
+}
+
+export default base().get(handleGet).patch(handlePatch).delete(handleDelete);

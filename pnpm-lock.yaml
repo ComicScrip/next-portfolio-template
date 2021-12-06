@@ -7,6 +7,7 @@ specifiers:
   dotenv: ^10.0.0
   eslint: 7.32.0
   eslint-config-next: 12.0.4
+  joi: ^17.5.0
   morgan: ^1.10.0
   mysql2: ^2.3.3
   next: 12.0.4
@@ -21,6 +22,7 @@ dependencies:
   '@uploadcare/react-widget': 1.3.8_react-dom@17.0.2+react@17.0.2
   axios: 0.24.0
   dotenv: 10.0.0
+  joi: 17.5.0
   morgan: 1.10.0
   mysql2: 2.3.3
   next: 12.0.4_react-dom@17.0.2+react@17.0.2
@@ -129,6 +131,12 @@ packages:
 
   /@hapi/hoek/9.2.1:
     resolution: {integrity: sha512-gfta+H8aziZsm8pZa0vj04KO6biEiisppNgA1kbJvFrrWu9Vm7eaUEy76DIxsuTaWvti5fkJVhllWc6ZTE+Mdw==}
+    dev: false
+
+  /@hapi/topo/5.1.0:
+    resolution: {integrity: sha512-foQZKJig7Ob0BMAYBfcJk8d77QtOe7Wo4ox7ff1lQYoNNAb6jwcY1ncdoy2e9wQZzvNy7ODZCYJkK8kzmcAnAg==}
+    dependencies:
+      '@hapi/hoek': 9.2.1
     dev: false
 
   /@humanwhocodes/config-array/0.5.0:
@@ -347,6 +355,20 @@ packages:
   /@rushstack/eslint-patch/1.1.0:
     resolution: {integrity: sha512-JLo+Y592QzIE+q7Dl2pMUtt4q8SKYI5jDrZxrozEQxnGVOyYE+GWK9eLkwTaeN9DDctlaRAQ3TBmzZ1qdLE30A==}
     dev: true
+
+  /@sideway/address/4.1.3:
+    resolution: {integrity: sha512-8ncEUtmnTsMmL7z1YPB47kPUq7LpKWJNFPsRzHiIajGC5uXlWGn+AmkYPcHNl8S4tcEGx+cnORnNYaw2wvL+LQ==}
+    dependencies:
+      '@hapi/hoek': 9.2.1
+    dev: false
+
+  /@sideway/formula/3.0.0:
+    resolution: {integrity: sha512-vHe7wZ4NOXVfkoRb8T5otiENVlT7a3IAiw7H5M2+GO+9CDgcVUUsX1zalAztCmwyOr2RUTGJdgB+ZvSVqmdHmg==}
+    dev: false
+
+  /@sideway/pinpoint/2.0.0:
+    resolution: {integrity: sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==}
+    dev: false
 
   /@types/json5/0.0.29:
     resolution: {integrity: sha1-7ihweulOEdK4J7y+UnC86n8+ce4=}
@@ -1874,6 +1896,16 @@ packages:
       '@types/node': 16.11.11
       merge-stream: 2.0.0
       supports-color: 8.1.1
+    dev: false
+
+  /joi/17.5.0:
+    resolution: {integrity: sha512-R7hR50COp7StzLnDi4ywOXHrBrgNXuUUfJWIR5lPY5Bm/pOD3jZaTwpluUXVLRWcoWZxkrHBBJ5hLxgnlehbdw==}
+    dependencies:
+      '@hapi/hoek': 9.2.1
+      '@hapi/topo': 5.1.0
+      '@sideway/address': 4.1.3
+      '@sideway/formula': 3.0.0
+      '@sideway/pinpoint': 2.0.0
     dev: false
 
   /jquery/3.6.0:
