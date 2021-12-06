@@ -1,6 +1,5 @@
 const handleNewContactRequest = (req, res) => {
-  contactRequests.push(req.body);
-  console.log(contactRequests);
+  console.log(req.body);
   res.status(201).send(req.body);
 };
 
