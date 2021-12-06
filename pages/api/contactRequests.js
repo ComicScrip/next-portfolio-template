@@ -1,6 +1,5 @@
 import base from '@middlewares/common';
 import mailer from '@mailer';
-import axios from 'axios';
 import { verify } from 'hcaptcha';
 
 async function handlePost({ body: { email, message, hcaptchaToken } }, res) {
