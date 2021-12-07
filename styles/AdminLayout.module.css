@@ -2,7 +2,8 @@
   display: flex;
   padding: 15px;
   justify-content: space-between;
-  background-color: rgb(39, 39, 39);
+  align-items: center;
+  background-color: #272727;
 }
 
 .main {
@@ -13,4 +14,10 @@
 
 .footer {
   background-color: rgb(39, 39, 39);
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
 }

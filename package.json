@@ -9,15 +9,19 @@
   },
   "dependencies": {
     "@hcaptcha/react-hcaptcha": "^0.3.9",
+    "@next-auth/prisma-adapter": "^1.0.1",
     "@prisma/client": "^3.6.0",
     "@uploadcare/react-widget": "^1.3.8",
+    "argon2": "^0.28.3",
     "axios": "^0.24.0",
     "dotenv": "^10.0.0",
     "hcaptcha": "^0.1.0",
     "joi": "^17.5.0",
+    "module-alias": "^2.2.2",
     "morgan": "^1.10.0",
     "mysql2": "^2.3.3",
     "next": "12.0.4",
+    "next-auth": "^4.0.2",
     "next-connect": "^0.11.0",
     "nodemailer": "^6.7.2",
     "react": "17.0.2",
@@ -27,9 +31,19 @@
     "eslint": "7.32.0",
     "eslint-config-next": "12.0.4",
     "prisma": "^3.6.0",
+    "ts-node": "^10.4.0",
     "typescript": "^4.5.2"
   },
   "prisma": {
-    "seed": "node prisma/seed.js"
+    "seed": "ts-node prisma/seed.ts"
+  },
+  "_moduleAliases": {
+    "@root": ".",
+    "@styles": "styles",
+    "@components": "components",
+    "@models": "models",
+    "@middlewares": "middlewares",
+    "@db": "db.js",
+    "@mailer": "mailer.js"
   }
 }
