@@ -1,5 +1,6 @@
 const db = require('../db');
 const Joi = require('joi');
+const { ObjectId } = require('mongodb');
 
 export const validateProject = (data, forUpdate = false) =>
   Joi.object({
@@ -14,36 +15,35 @@ export const validateProject = (data, forUpdate = false) =>
       .presence(forUpdate ? 'optional' : 'required'),
   }).validate(data, { abortEarly: false }).error;
 
-export const projectPropsToShow = {
-  title: true,
-  id: true,
-  description: true,
-  mainPictureUrl: true,
-};
+const collection = db.collection('projects');
 
 export const getProjects = async () => {
-  return db.project.findMany({
-    select: projectPropsToShow,
-  });
+  return collection.find().toArray();
 };
 
 export const getOneProject = (id) => {
-  return db.project.findUnique({
-    where: { id: parseInt(id, 10) },
-    select: projectPropsToShow,
-  });
+  return collection.find(ObjectId(id)).next();
 };
 
 export const deleteOneProject = (id) => {
-  return db.project
-    .delete({ where: { id: parseInt(id, 10) } })
-    .catch((_) => false);
+  return collection
+    .deleteOne({ _id: ObjectId(id) })
+    .then(({ deletedCount }) => !!deletedCount);
 };
 
 export const createProject = ({ title, description, mainPictureUrl }) => {
-  return db.project.create({ data: { title, description, mainPictureUrl } });
+  return collection
+    .insertOne({ title, description, mainPictureUrl })
+    .then(({ insertedId }) => ({
+      _id: insertedId,
+      title,
+      description,
+      mainPictureUrl,
+    }));
 };
 
 export const updateProject = (id, data) => {
-  return db.project.update({ where: { id: parseInt(id, 10) }, data });
+  return collection
+    .updateOne({ _id: ObjectId(id) }, { $set: data })
+    .then(({ matchedCount }) => !!matchedCount);
 };

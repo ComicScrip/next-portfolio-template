@@ -9,7 +9,7 @@ export default function Projects({ projects }) {
       <h1 className={styles.title}>Mes Réalisations</h1>
       <div className={styles.projectListContainer}>
         {projects.map((p) => (
-          <ProjectCard key={p.id} project={p} />
+          <ProjectCard key={p._id} project={p} />
         ))}
       </div>
     </Layout>

@@ -15,7 +15,7 @@ export default function ProjectListAdmin() {
     if (confirm('Voulez vous vraiment supprimer ce projet définitivement ?')) {
       await axios.delete(`/api/projects/${id}`);
       alert('projet bien supprimé');
-      setProjects((projects) => projects.filter((p) => p.id !== id));
+      setProjects((projects) => projects.filter((p) => p._id !== id));
     }
   };
 
@@ -27,14 +27,14 @@ export default function ProjectListAdmin() {
       {projects && projects.length !== 0 && (
         <table className={styles.table}>
           <tbody>
-            {projects.map(({ id, title }) => (
-              <tr key={id}>
+            {projects.map(({ _id, title }) => (
+              <tr key={_id}>
                 <td>{title}</td>
                 <td>
-                  <Link passHref href={`/admin/projects/edit/${id}`}>
+                  <Link passHref href={`/admin/projects/edit/${_id}`}>
                     <button>Edit</button>
                   </Link>
-                  <button onClick={() => deleteProject(id)}>Delete</button>
+                  <button onClick={() => deleteProject(_id)}>Delete</button>
                 </td>
               </tr>
             ))}

@@ -1,3 +1,8 @@
-const { PrismaClient } = require('@prisma/client');
+const { MongoClient } = require('mongodb');
 
-module.exports = new PrismaClient();
+const client = new MongoClient(process.env.DATABASE_URL);
+client.connect();
+
+const database = client.db('portfolio');
+
+module.exports = database;

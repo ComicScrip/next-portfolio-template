@@ -21,7 +21,7 @@ export async function getStaticPaths() {
   const projects = await getProjects();
   return {
     paths: projects.map((p) => {
-      return { params: { id: p.id.toString() } };
+      return { params: { id: p._id } };
     }),
     fallback: 'blocking',
   };
