@@ -1,4 +1,4 @@
-const db = require('../db');
+import db from '@db';
 
 async function seed() {
   await db.project.deleteMany();
@@ -22,4 +22,4 @@ async function seed() {
 
 seed();
 
-module.exports = seed;
+export default seed;

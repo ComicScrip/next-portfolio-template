@@ -13,8 +13,10 @@
     "@uploadcare/react-widget": "^1.3.8",
     "axios": "^0.24.0",
     "dotenv": "^10.0.0",
+    "esm": "^3.2.25",
     "hcaptcha": "^0.1.0",
     "joi": "^17.5.0",
+    "module-alias": "^2.2.2",
     "morgan": "^1.10.0",
     "mysql2": "^2.3.3",
     "next": "12.0.4",
@@ -30,6 +32,14 @@
     "typescript": "^4.5.2"
   },
   "prisma": {
-    "seed": "node prisma/seed.js"
+    "seed": "node -r esm -r module-alias/register prisma/seed.js"
+  },
+  "_moduleAliases": {
+    "@styles": "styles",
+    "@components": "components",
+    "@models": "models",
+    "@middlewares": "middlewares",
+    "@db": "db.js",
+    "@mailer": "mailer.js"
   }
 }

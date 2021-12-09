@@ -8,8 +8,10 @@ specifiers:
   dotenv: ^10.0.0
   eslint: 7.32.0
   eslint-config-next: 12.0.4
+  esm: ^3.2.25
   hcaptcha: ^0.1.0
   joi: ^17.5.0
+  module-alias: ^2.2.2
   morgan: ^1.10.0
   mysql2: ^2.3.3
   next: 12.0.4
@@ -26,8 +28,10 @@ dependencies:
   '@uploadcare/react-widget': 1.3.8_react-dom@17.0.2+react@17.0.2
   axios: 0.24.0
   dotenv: 10.0.0
+  esm: 3.2.25
   hcaptcha: 0.1.0
   joi: 17.5.0
+  module-alias: 2.2.2
   morgan: 1.10.0
   mysql2: 2.3.3
   next: 12.0.4_react-dom@17.0.2+react@17.0.2
@@ -1381,6 +1385,11 @@ packages:
       - supports-color
     dev: true
 
+  /esm/3.2.25:
+    resolution: {integrity: sha512-U1suiZ2oDVWv4zPO56S0NcR5QriEahGtdN2OR6FiOG4WJvcjBVFB0qI4+eKoWFH483PKGuLuu6V8Z4T5g63UVA==}
+    engines: {node: '>=6'}
+    dev: false
+
   /espree/7.3.1:
     resolution: {integrity: sha512-v3JCNCE64umkFpmkFGqzVKsOT0tN1Zr+ueqLZfpV1Ob8e+CEgPWa+OxCoGH3tnhimMKIaBm4m/vaRpJ/krRz2g==}
     engines: {node: ^10.12.0 || >=12.0.0}
@@ -2102,6 +2111,10 @@ packages:
 
   /minimist/1.2.5:
     resolution: {integrity: sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==}
+
+  /module-alias/2.2.2:
+    resolution: {integrity: sha512-A/78XjoX2EmNvppVWEhM2oGk3x4lLxnkEA4jTbaK97QKSDjkIoOsKQlfylt/d3kKKi596Qy3NP5XrXJ6fZIC9Q==}
+    dev: false
 
   /morgan/1.10.0:
     resolution: {integrity: sha512-AbegBVI4sh6El+1gNwvD5YIck7nSA36weD7xvIxG4in80j/UoK8AEGaWnnz8v1GxonMCltmlNs5ZKbGvl9b1XQ==}

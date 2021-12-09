@@ -1,5 +1,5 @@
-const db = require('../db');
-const Joi = require('joi');
+import db from '@db';
+import Joi from 'joi';
 
 export const validateProject = (data, forUpdate = false) =>
   Joi.object({
