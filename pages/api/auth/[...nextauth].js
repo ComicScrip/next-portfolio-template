@@ -24,7 +24,6 @@ export default NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        console.log('lol', credentials);
         const user = await findByEmail(credentials.email);
         if (
           user &&

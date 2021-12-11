@@ -7,7 +7,6 @@ import { useRouter } from 'next/dist/client/router';
 export default function LoginPage({ csrfToken }) {
   const { data: session } = useSession();
   const { query } = useRouter();
-  console.log(query);
 
   return (
     <Layout pageTitle='login'>
