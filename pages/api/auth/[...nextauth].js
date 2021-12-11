@@ -3,7 +3,7 @@ import GithubProvider from 'next-auth/providers/github';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import db from '@db';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { findByEmail, verifyPassword } from '@models/user';
+import { findByEmail, findById, verifyPassword } from '@models/user';
 
 export default NextAuth({
   providers: [
@@ -32,8 +32,17 @@ export default NextAuth({
   adapter: PrismaAdapter(db),
   secret: process.env.SECRET,
   callbacks: {
-    async session({ session, user }) {
-      if (user) {
+    async jwt({ token, account, isNewUser, profile }) {
+      if (token && !token.role) {
+        token.role = (await findById(token.sub)).role;
+      }
+      return token;
+    },
+    async session({ session, user, token }) {
+      if (token) {
+        session.user.id = token.sub;
+        session.user.role = token.role;
+      } else if (user) {
         session.user.id = user.id;
       }
       return session;

@@ -8,10 +8,16 @@ export default function AdminLayout({ children, pageTitle }) {
   const { data, status } = useSession();
 
   useEffect(() => {
-    if (status === 'unauthenticated') {
+    if (
+      status === 'unauthenticated' ||
+      (status === 'authenticated' && data?.user?.role !== 'admin')
+    ) {
       signIn();
     }
-  }, [status]);
+  }, [status, data]);
+
+  if (status === 'unauthenticated')
+    return 'Please log in to access the back office';
 
   return (
     <>
@@ -46,7 +52,6 @@ export default function AdminLayout({ children, pageTitle }) {
       <main className={styles.main}>
         {
           {
-            unauthenticated: 'Please log in',
             loading: 'loading...',
             authenticated: children,
           }[status]

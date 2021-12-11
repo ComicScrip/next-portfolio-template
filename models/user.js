@@ -2,18 +2,21 @@ const db = require('@db');
 const Joi = require('joi');
 const argon2 = require('argon2');
 
-module.exports.isAdmin = async (id) => {
-  return !!(await db.user.findFirst({
-    where: { id, role: 'admin', active: true },
-  }));
+export const isAdmin = async (id) => {
+  return !!(
+    await db.user.findMany({
+      where: { id, role: 'admin', active: true },
+    })
+  )[0];
 };
 
-module.exports.emailAlreadyExists = (email) =>
+export const emailAlreadyExists = (email) =>
   db.user.findFirst({ where: { email } }).then((user) => !!user);
 
-module.exports.findByEmail = (email) => db.user.findFirst({ where: { email } });
+export const findByEmail = (email) => db.user.findFirst({ where: { email } });
+export const findById = (id) => db.user.findFirst({ where: { id } });
 
-module.exports.validateUser = (data, forUpdate = false) =>
+export const validateUser = (data, forUpdate = false) =>
   Joi.object({
     email: Joi.string()
       .email()
@@ -35,15 +38,13 @@ const hashingOptions = {
   type: argon2.argon2id,
 };
 
-const hashPassword = (plainPassword) =>
+export const hashPassword = (plainPassword) =>
   argon2.hash(plainPassword, hashingOptions);
 
-module.exports.hashPassword = hashPassword;
-
-module.exports.verifyPassword = (plainPassword, hashedPassword) =>
+export const verifyPassword = (plainPassword, hashedPassword) =>
   argon2.verify(hashedPassword, plainPassword, hashingOptions);
 
-module.exports.createUser = async ({ email, password, name, role }) => {
+export const createUser = async ({ email, password, name, role }) => {
   const hashedPassword = await hashPassword(password);
   return db.user.create({
     data: { email, hashedPassword, name, role },
