@@ -31,7 +31,11 @@ export default function AdminLayout({ children, pageTitle }) {
           </Link>
         </nav>
         {data?.user?.image && (
-          <img className={styles.avatar} src={data.user.image} />
+          <img
+            className={styles.avatar}
+            src={data.user.image}
+            alt='user avatar'
+          />
         )}
         {status === 'authenticated' && (
           <nav>

@@ -1,5 +1,17 @@
 import nc from 'next-connect';
-import logger from './logger';
+import morgan from 'morgan';
+
+morgan.token('reqbody', (req) => {
+  const bodyToLog = { ...req.body };
+  if (bodyToLog.password) {
+    bodyToLog.password = '...';
+  }
+  return JSON.stringify(bodyToLog, null, 2);
+});
+
+const logger = morgan(
+  ':method :url \nreq.body: :reqbody \n:status - :response-time ms\n'
+);
 
 export default function base() {
   return nc({

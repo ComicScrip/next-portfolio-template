@@ -1,17 +1,27 @@
 import Layout from '@components/Layout';
 import axios from 'axios';
+import { useRouter } from 'next/dist/client/router';
 import { useState } from 'react';
 
 export default function SignupPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter();
+  const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('/api/users', { email, name, password }).then(() => {
-      alert('ok');
-    });
+    setError('');
+    axios
+      .post('/api/users', { email, name, password })
+      .then(() => {
+        router.push('/login');
+      })
+      .catch((err) => {
+        if (err.response && err.response.status === 409)
+          setError('email already taken');
+      });
   };
 
   return (
@@ -48,6 +58,7 @@ export default function SignupPage() {
           />
         </label>
         <button type='submit'>Register</button>
+        {error && <p>{error}</p>}
       </form>
     </Layout>
   );

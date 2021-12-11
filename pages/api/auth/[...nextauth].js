@@ -24,7 +24,8 @@ export default NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        const user = await findByEmail(credentials.username);
+        console.log('lol', credentials);
+        const user = await findByEmail(credentials.email);
         if (
           user &&
           user.hashedPassword &&
@@ -49,5 +50,8 @@ export default NextAuth({
       }
       return session;
     },
+  },
+  pages: {
+    signIn: '/login',
   },
 });
