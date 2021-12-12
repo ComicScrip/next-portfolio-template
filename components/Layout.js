@@ -9,7 +9,7 @@ export default function Layout({ children, pageTitle }) {
         <title>{pageTitle}</title>
       </Head>
       <Header />
-      <main>{children}</main>
+      <main className='bg-slate-800 text-white'>{children}</main>
       <Footer />
     </>
   );

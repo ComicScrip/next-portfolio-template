@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body,
 #__next {
@@ -24,6 +28,11 @@ main {
   flex-grow: 1;
 }
 
+.pageTitle {
+  @apply p-6 text-4xl font-bold;
+}
+
+/*
 header,
 footer {
   color: white;
@@ -87,3 +96,4 @@ h2 {
   background-color: rgb(223, 63, 0);
   text-shadow: 0 0 10px black;
 }
+*/
