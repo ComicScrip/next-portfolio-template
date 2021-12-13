@@ -1,4 +1,5 @@
 import base from '@middlewares/common';
+import { requireAdmin } from '@middlewares/requireAdmin';
 import { createUser, emailAlreadyExists, validateUser } from '@models/user';
 
 async function handlePost(req, res) {
@@ -10,4 +11,4 @@ async function handlePost(req, res) {
   res.status(201).send({ id, email, name, image });
 }
 
-export default base().post(handlePost);
+export default base().post(requireAdmin, handlePost);

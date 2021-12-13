@@ -24,6 +24,7 @@ export default function SignupPage() {
 
   return (
     <Layout pageTitle='register'>
+      <h1>Signup</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor='name'>
           Nom

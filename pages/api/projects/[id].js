@@ -5,6 +5,7 @@ import {
   validateProject,
 } from '@models/project';
 import base from '@middlewares/common';
+import { requireAdmin } from '@middlewares/requireAdmin';
 
 async function handlePatch({ query: { id }, body }, res) {
   const validationErrors = validateProject(body, true);
@@ -25,4 +26,7 @@ async function handleDelete({ query: { id } }, res) {
   else res.status(404).send();
 }
 
-export default base().get(handleGet).patch(handlePatch).delete(handleDelete);
+export default base()
+  .get(handleGet)
+  .patch(requireAdmin, handlePatch)
+  .delete(requireAdmin, handleDelete);
