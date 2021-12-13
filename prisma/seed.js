@@ -1,7 +1,18 @@
+import { hashPassword } from '@models/user';
+
 const db = require('@db');
 
 async function seed() {
   await db.user.deleteMany();
+  await db.user.create({
+    data: {
+      email: 'admin@website.com',
+      name: 'admin',
+      image: 'https://imgcdn.com/img.jpg',
+      role: 'admin',
+      hashedPassword: await hashPassword('verysecure'),
+    },
+  });
 
   await db.project.deleteMany();
   await db.project.createMany({

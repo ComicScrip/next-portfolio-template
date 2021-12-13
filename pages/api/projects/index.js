@@ -1,5 +1,5 @@
 import { createProject, getProjects, validateProject } from '@models/project';
-import base from '../../../middlewares/common';
+import base from '@middlewares/common';
 
 const handleGet = async (req, res) => {
   res.send(await getProjects());

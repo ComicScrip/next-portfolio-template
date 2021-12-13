@@ -22,4 +22,5 @@ model User {
   email          String? @unique
   image          String?
   hashedPassword String?
+  role           String  @default("visitor")
 }
