@@ -32,7 +32,7 @@ export default NextAuth({
   adapter: PrismaAdapter(db),
   secret: process.env.SECRET,
   callbacks: {
-    async jwt({ token, account, isNewUser, profile }) {
+    async jwt({ token }) {
       if (token && !token.role) {
         token.role = (await findById(token.sub)).role;
       }

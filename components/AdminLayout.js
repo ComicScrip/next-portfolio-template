@@ -7,15 +7,6 @@ import { useEffect } from 'react';
 export default function AdminLayout({ children, pageTitle }) {
   const { data, status } = useSession();
 
-  useEffect(() => {
-    if (
-      status === 'unauthenticated' ||
-      (status === 'authenticated' && data?.user?.role !== 'admin')
-    ) {
-      signIn();
-    }
-  }, [status, data]);
-
   if (status === 'unauthenticated')
     return 'Please log in to access the back office';
 

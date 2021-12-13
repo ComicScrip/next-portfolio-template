@@ -10,6 +10,7 @@ import CurrentUserMenu from './CurrentUserMenu';
 export default function Header() {
   const { data } = useSession();
   const currentUser = data?.user;
+  console.log(data);
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen((open) => !open);
 

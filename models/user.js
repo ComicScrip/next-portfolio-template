@@ -2,12 +2,15 @@ const db = require('@db');
 const Joi = require('joi');
 const argon2 = require('argon2');
 
-export const isAdmin = async (id) => {
-  return !!(
-    await db.user.findMany({
-      where: { id, role: 'admin', active: true },
-    })
-  )[0];
+export const isAdmin = async (email) => {
+  let currentUser = null;
+  try {
+    currentUser = await db.user.findUnique({
+      where: { email },
+    });
+    if (currentUser?.active && currentUser?.role === 'admin') return true;
+  } catch (err) {}
+  return false;
 };
 
 export const emailAlreadyExists = (email) =>
