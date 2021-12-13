@@ -1,6 +1,8 @@
-import db from '@db';
+const db = require('@db');
 
 async function seed() {
+  await db.user.deleteMany();
+
   await db.project.deleteMany();
   await db.project.createMany({
     data: [

@@ -24,3 +24,4 @@ export default function base() {
     },
   }).use(logger);
 }
+merge;
