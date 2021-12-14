@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import styles from '../styles/Home.module.css';
 import portfolioImg from '../public/images/portfolio.jpg';
 import Layout from '../components/Layout';
 
