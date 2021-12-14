@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import styles from '../styles/ProjectCard.module.css';
 
 export default function ProjectCard({
   project: { title, mainPictureUrl, id },

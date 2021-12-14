@@ -2,7 +2,6 @@ import AdminLayout from '../../../../components/AdminLayout';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/dist/client/router';
-import styles from '../../../../styles/AdminProjectEdition.module.css';
 import { Widget } from '@uploadcare/react-widget';
 import Image from 'next/image';
 
@@ -73,30 +72,27 @@ export default function CreateProject() {
             <Image src={mainPictureUrl} alt={title} width={800} height={450} />
           </div>
         )}
-        <div className={styles.field}>
-          <label htmlFor='title'>
-            Title :{' '}
-            <input
-              required
-              id='title'
-              type='text'
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          </label>
-        </div>
+        <label htmlFor='title'>
+          Title :{' '}
+          <input
+            required
+            id='title'
+            type='text'
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </label>
 
-        <div className={styles.field}>
-          <label htmlFor='description'>
-            Description :
-            <textarea
-              required
-              id='description'
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </label>
-        </div>
+        <label htmlFor='description' className='block'>
+          Description :
+          <textarea
+            required
+            className='block mb-6 w-[400px]'
+            id='description'
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </label>
 
         <button type='submit'>Save</button>
       </form>

@@ -3,7 +3,6 @@ import HCaptcha from '@hcaptcha/react-hcaptcha';
 
 import axios from 'axios';
 import Layout from '../components/Layout';
-import styles from '../styles/ContactPage.module.css';
 
 export default function Projects() {
   const [email, setEmail] = useState('');
