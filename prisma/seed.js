@@ -1,6 +1,6 @@
 require('module-alias/register');
 import { hashPassword } from '@models/user';
-import db from '@db'
+import db from '@db';
 
 async function seed() {
   await db.user.deleteMany();
