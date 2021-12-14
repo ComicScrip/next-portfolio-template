@@ -17,7 +17,8 @@ export const isAdmin = async (email) => {
 export const emailAlreadyExists = (email) =>
   db.user.findFirst({ where: { email } }).then((user) => !!user);
 
-export const findByEmail = (email) => db.user.findFirst({ where: { email } });
+export const findByEmail = (email = '') =>
+  db.user.findUnique({ where: { email } });
 export const findById = (id) =>
   db.user.findFirst({ where: { id: parseInt(id, 10) } });
 
@@ -49,9 +50,20 @@ export const hashPassword = (plainPassword) =>
 export const verifyPassword = (plainPassword, hashedPassword) =>
   argon2.verify(hashedPassword, plainPassword, hashingOptions);
 
-export const createUser = async ({ email, password, name, role }) => {
+export const createUser = async ({ email, password, name, role, image }) => {
   const hashedPassword = await hashPassword(password);
   return db.user.create({
-    data: { email, hashedPassword, name, role },
+    data: { email, hashedPassword, name, role, image },
   });
 };
+
+export const getSafeAttributes = (user) => ({
+  ...user,
+  hashedPassword: undefined,
+});
+
+export const updateUser = async (id, data) =>
+  db.user.update({
+    where: { id: parseInt(id, 10) },
+    data,
+  });

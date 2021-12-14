@@ -1,8 +1,13 @@
 import NextAuth from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
-import db from '@db';
+import crypto from 'crypto';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { findByEmail, findById, verifyPassword } from '@models/user';
+import {
+  createUser,
+  findByEmail,
+  findById,
+  verifyPassword,
+} from '@models/user';
 
 export default NextAuth({
   providers: [
@@ -13,7 +18,8 @@ export default NextAuth({
     CredentialsProvider({
       name: 'Credentials',
       async authorize(credentials) {
-        const user = await findByEmail(credentials.email);
+        console.log(credentials);
+        const user = await findByEmail(credentials.username);
         if (
           user &&
           user.hashedPassword &&
@@ -27,8 +33,19 @@ export default NextAuth({
   ],
   secret: process.env.SECRET,
   callbacks: {
-    async jwt({ token }) {
-      console.log(token);
+    async jwt({ token, profile, account }) {
+      console.log('prof', profile);
+      if (account && account.provider === 'github' && profile) {
+        const matchingUser = await findByEmail(profile.email);
+        if (!matchingUser)
+          await createUser({
+            email: profile.email,
+            password: crypto.randomBytes(20).toString('hex'),
+            name: profile.login,
+            image: profile.avatar_url,
+          });
+      }
+
       if (token && !token.role) {
         const user = await findByEmail(token.email);
         token.role = user?.role;

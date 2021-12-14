@@ -51,6 +51,25 @@ textarea {
   @apply min-h-[300px];
 }
 
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  @apply bg-amber-400 text-white cursor-pointer;
+}
+
+button:hover,
+[type='button']:hover,
+[type='reset']:hover,
+[type='submit']:hover,
+button:focus,
+[type='button']:focus,
+[type='reset']:focus,
+[type='submit']:focus {
+  @apply bg-amber-500 text-white;
+  outline: none;
+}
+
 /*
 header,
 footer {

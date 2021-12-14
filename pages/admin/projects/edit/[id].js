@@ -43,33 +43,35 @@ export default function CreateProject() {
 
   return (
     <AdminLayout
-      pageTitle={isUpdate ? 'Edit ' : 'Create ' + (title || 'a projet')}
+      pageTitle={(isUpdate ? 'Edit ' : 'Create ') + (title || 'a projet')}
     >
-      <h1>{isUpdate ? 'Update a project' : 'Create a projet'}</h1>
+      <h1 className='text-4xl font-bold mb-6'>
+        {isUpdate ? 'Update a project' : 'Create a projet'}
+      </h1>
       <form
-        className={styles.form}
+        className=''
         onSubmit={async (e) => {
           e.preventDefault();
           await saveProject();
           router.push('/admin/projects');
         }}
       >
-        <div className={styles.field}>
-          <label htmlFor='mainPictureUrl'>
-            Main picture :{' '}
-            <Widget
-              publicKey={process.env.NEXT_PUBLIC_UPLOADCARE_KEY}
-              id='file'
-              tabs='file url'
-              crop='16:9'
-              value={mainPictureUrl}
-              onChange={({ cdnUrl }) => setMainPictureUrl(cdnUrl)}
-            />
-          </label>
-        </div>
+        <label htmlFor='mainPictureUrl'>
+          Main picture :{' '}
+          <Widget
+            publicKey={process.env.NEXT_PUBLIC_UPLOADCARE_KEY}
+            id='file'
+            tabs='file url'
+            crop='16:9'
+            value={mainPictureUrl}
+            onChange={({ cdnUrl }) => setMainPictureUrl(cdnUrl)}
+          />
+        </label>
 
         {mainPictureUrl && (
-          <Image src={mainPictureUrl} alt={title} width={800} height={450} />
+          <div className='mt-5'>
+            <Image src={mainPictureUrl} alt={title} width={800} height={450} />
+          </div>
         )}
         <div className={styles.field}>
           <label htmlFor='title'>

@@ -26,40 +26,51 @@ export default function SignupPage() {
 
   return (
     <Layout pageTitle='register'>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor='name'>
-          Nom
-          <input
-            required
-            id='name'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-        <label htmlFor='email'>
-          Email
-          <input
-            required
-            id='email'
-            type='email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </label>
+      <div className='mt-16 flex flex-col justify-center items-center '>
+        <h1 className='pageTitle text-center '>Inscription</h1>
+        <form
+          onSubmit={handleSubmit}
+          className='p-6 bg-slate-700/50 mt-6 rounded-xl'
+        >
+          <label htmlFor='name'>
+            Nom
+            <input
+              className='block mb-6'
+              required
+              id='name'
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </label>
+          <label htmlFor='email'>
+            Email
+            <input
+              required
+              className='block mb-6'
+              id='email'
+              type='email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </label>
 
-        <label htmlFor='password'>
-          Mot de passe
-          <input
-            required
-            id='password'
-            type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-        <button type='submit'>Register</button>
-        {error && <p>{error}</p>}
-      </form>
+          <label htmlFor='password'>
+            Mot de passe
+            <input
+              className='block mb-6'
+              required
+              id='password'
+              type='password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </label>
+          <button className='w-full' type='submit'>
+            Allez hop !
+          </button>
+          {error && <p>{error}</p>}
+        </form>
+      </div>
     </Layout>
   );
 }
