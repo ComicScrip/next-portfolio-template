@@ -3,8 +3,9 @@ import Link from 'next/link';
 export default function Footer() {
   return (
     <footer className='bg-slate-700 p-6 text-white'>
-      <nav className='flex justify-between'>
+      <nav className='flex justify-center'>
         <div className='flex'>
+          {/* eslint-disable-next-line */}
           <img
             width={20}
             height={20}
@@ -13,12 +14,8 @@ export default function Footer() {
             className='mr-4'
             style={{ filter: 'invert(1)' }}
           />
-          CopyLeft 2021
+          CopyLeft - 2021
         </div>
-
-        <Link href='/admin'>
-          <a>Admin</a>
-        </Link>
       </nav>
     </footer>
   );

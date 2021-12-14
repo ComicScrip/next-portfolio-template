@@ -8,10 +8,12 @@ export default function Project({
 }) {
   return (
     <Layout pageTitle={title}>
-      <div className={styles.projectDetailsContainer}>
-        <h1 className={styles.title}>{title}</h1>
+      <div className='max-w-4xl m-auto mt-4'>
+        <h1 className='pageTitle lg:ml-0'>{title}</h1>
+        <div className=''></div>
         <Image src={mainPictureUrl} alt={title} width={1000} height={600} />
-        <p>{description}</p>
+
+        <p className='md:columns-2 m-6 lg:ml-0 gap-12 '>{description}</p>
       </div>
     </Layout>
   );

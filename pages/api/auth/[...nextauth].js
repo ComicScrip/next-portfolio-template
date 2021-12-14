@@ -1,6 +1,5 @@
 import NextAuth from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import db from '@db';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { findByEmail, findById, verifyPassword } from '@models/user';
@@ -26,23 +25,23 @@ export default NextAuth({
       },
     }),
   ],
-  session: {
-    strategy: 'jwt',
-  },
-  adapter: PrismaAdapter(db),
   secret: process.env.SECRET,
   callbacks: {
     async jwt({ token }) {
+      console.log(token);
       if (token && !token.role) {
-        token.role = (await findById(token.sub)).role;
+        const user = await findByEmail(token.email);
+        token.role = user?.role;
       }
       return token;
     },
     async session({ session, user, token }) {
+      console.log({ session, user, token });
       if (token) {
         session.user.id = token.sub;
         session.user.role = token.role;
-      } else if (user) {
+      }
+      if (user) {
         session.user.id = user.id;
       }
       return session;

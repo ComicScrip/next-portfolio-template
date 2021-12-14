@@ -1,14 +1,16 @@
-import { forwardRef } from 'react';
-
-export default forwardRef(function Avatar(
-  {
-    size = 32,
-    src = 'https://d29fhpw069ctt2.cloudfront.net/icon/image/84587/preview.svg',
-    alt,
-  },
-  ref
-) {
+export default function Avatar({ size = 32, src, alt }) {
   return (
-    <img ref={ref} width={size} src={src} alt={alt} className='rounded-full' />
+    <>
+      {/* eslint-disable-next-line */}
+      <img
+        width={size}
+        src={
+          src ||
+          'https://d29fhpw069ctt2.cloudfront.net/icon/image/84587/preview.svg'
+        }
+        alt={alt}
+        className='rounded-full'
+      />
+    </>
   );
-});
+}

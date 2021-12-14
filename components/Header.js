@@ -2,15 +2,11 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
 import { useState } from 'react';
-import Popup from 'reactjs-popup';
-import Avatar from './Avatar';
-import 'reactjs-popup/dist/index.css';
 import CurrentUserMenu from './CurrentUserMenu';
 
 export default function Header() {
-  const { data } = useSession();
+  const { data, status } = useSession();
   const currentUser = data?.user;
-  console.log(data);
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen((open) => !open);
 
@@ -18,13 +14,16 @@ export default function Header() {
     <header>
       <nav className='flex items-center justify-between flex-wrap bg-slate-800 p-6'>
         <div className='flex items-center flex-shrink-0 text-white mr-6'>
-          <span className='font-semibold text-xl '>DaveLopper.pro</span>
+          <Link href='/'>
+            <a className='font-semibold text-xl '>DaveLopper.pro</a>
+          </Link>
         </div>
         <div className='flex md:order-3'>
           <div className='mr-6 md:mr-0'>
-            {currentUser ? (
+            {status === 'authenticated' && (
               <CurrentUserMenu currentUser={currentUser} />
-            ) : (
+            )}
+            {status === 'unauthenticated' && (
               <Link href='/login'>
                 <a className='inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-slate-800 hover:bg-white'>
                   Se connecter
@@ -35,7 +34,7 @@ export default function Header() {
 
           <div className='block md:hidden'>
             <button
-              className='flex items-center px-3 py-2 border rounded text-sky-200 border-slate-600 hover:text-white hover:border-white'
+              className='flex items-center px-3 py-2 border rounded text-sky-200 border-slate-600 hover:text-white hover:border-white bg-transparent hover:bg-transparent'
               onClick={toggleMenu}
             >
               <svg

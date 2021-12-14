@@ -3,13 +3,14 @@ const Joi = require('joi');
 const argon2 = require('argon2');
 
 export const isAdmin = async (email) => {
-  let currentUser = null;
   try {
-    currentUser = await db.user.findUnique({
+    const currentUser = await db.user.findUnique({
       where: { email },
     });
-    if (currentUser?.active && currentUser?.role === 'admin') return true;
-  } catch (err) {}
+    return currentUser && currentUser.active && currentUser.role === 'admin';
+  } catch (err) {
+    console.error(err);
+  }
   return false;
 };
 
@@ -17,7 +18,8 @@ export const emailAlreadyExists = (email) =>
   db.user.findFirst({ where: { email } }).then((user) => !!user);
 
 export const findByEmail = (email) => db.user.findFirst({ where: { email } });
-export const findById = (id) => db.user.findFirst({ where: { id } });
+export const findById = (id) =>
+  db.user.findFirst({ where: { id: parseInt(id, 10) } });
 
 export const validateUser = (data, forUpdate = false) =>
   Joi.object({

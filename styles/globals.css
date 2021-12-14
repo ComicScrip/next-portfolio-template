@@ -29,7 +29,26 @@ main {
 }
 
 .pageTitle {
-  @apply p-6 text-4xl font-bold;
+  @apply m-6 text-4xl font-bold;
+}
+
+button {
+  @apply bg-amber-500 cursor-pointer text-slate-100 rounded;
+  padding: 10px 20px;
+  font-weight: 500;
+}
+
+button:hover {
+  @apply bg-amber-600 text-white;
+}
+
+input,
+textarea {
+  @apply p-3 pl-4 pr-4 mt-2 bg-slate-100 border-slate-300 border rounded text-slate-800;
+}
+
+textarea {
+  @apply min-h-[300px];
 }
 
 /*
@@ -57,18 +76,7 @@ nav a:hover {
   color: rgb(255, 221, 159);
 }
 
-button {
-  cursor: pointer;
-  padding: 10px;
-  background-color: rgb(197, 197, 197);
-  border-radius: 5px;
-  border: 0;
-  margin: 10px;
-}
 
-button:hover {
-  background-color: rgb(202, 202, 202);
-}
 
 h1 {
   font-size: 2.5rem;
