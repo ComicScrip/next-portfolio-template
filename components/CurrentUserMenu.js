@@ -1,17 +1,21 @@
+import CurrentUserContext from 'contexts/currentUserContext';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { useOutsideClick } from 'rooks';
 import Avatar from './Avatar';
 
 export default function CurrentUserMenu({ currentUser }) {
+  const { currentUserProfile } = useContext(CurrentUserContext);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const toggleUserMenu = () => setUserMenuOpen((open) => !open);
   const ref = useRef();
   useOutsideClick(ref, () => setUserMenuOpen(false));
 
+  if (!currentUserProfile) return null;
+
   const visibleLinks =
-    currentUser?.role === 'admin'
+    currentUserProfile.role === 'admin'
       ? [
           {
             label: 'Back-office',
@@ -32,7 +36,7 @@ export default function CurrentUserMenu({ currentUser }) {
   return (
     <div ref={ref}>
       <div onClick={toggleUserMenu} className='cursor-pointer'>
-        <Avatar src={currentUser.image} alt={currentUser.name} />
+        <Avatar src={currentUserProfile.image} alt={currentUserProfile.name} />
       </div>
       <div
         style={{

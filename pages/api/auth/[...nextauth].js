@@ -18,7 +18,6 @@ export default NextAuth({
     CredentialsProvider({
       name: 'Credentials',
       async authorize(credentials) {
-        console.log(credentials);
         const user = await findByEmail(credentials.username);
         if (
           user &&
@@ -34,7 +33,6 @@ export default NextAuth({
   secret: process.env.SECRET,
   callbacks: {
     async jwt({ token, profile, account }) {
-      console.log('prof', profile);
       if (account && account.provider === 'github' && profile) {
         const matchingUser = await findByEmail(profile.email);
         if (!matchingUser)
@@ -53,7 +51,6 @@ export default NextAuth({
       return token;
     },
     async session({ session, user, token }) {
-      console.log({ session, user, token });
       if (token) {
         session.user.id = token.sub;
         session.user.role = token.role;

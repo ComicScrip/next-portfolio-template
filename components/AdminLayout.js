@@ -1,8 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import styles from '@styles/AdminLayout.module.css';
 import { useSession, signIn, signOut } from 'next-auth/react';
-import { useEffect } from 'react';
 import CurrentUserMenu from './CurrentUserMenu';
 
 export default function AdminLayout({ children, pageTitle }) {

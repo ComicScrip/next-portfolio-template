@@ -1,39 +1,38 @@
 import Avatar from '@components/Avatar';
 import Layout from '@components/Layout';
-import axios from 'axios';
+import CurrentUserContext from 'contexts/currentUserContext';
 import { signIn, useSession } from 'next-auth/react';
-import { useRouter } from 'next/dist/client/router';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 
 export default function ProfilePage() {
   const { status } = useSession();
-  const router = useRouter();
+  const { currentUserProfile, updateProfileOnAPI } =
+    useContext(CurrentUserContext);
 
   const [name, setName] = useState('');
   const [image, setImage] = useState('');
   const [email, setEmail] = useState('');
-  const [error, setError] = useState('');
+
   const avatarUploadRef = useRef();
+
+  useEffect(() => {
+    if (currentUserProfile) {
+      setName(currentUserProfile.name);
+      setEmail(currentUserProfile.email);
+      setImage(currentUserProfile.image);
+    }
+  }, [currentUserProfile]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError('');
-    axios
-      .patch('/api/profile', { name, image })
-      .then(() => {
-        alert('ok');
-      })
-      .catch((err) => {});
+    const data = new FormData();
+    data.append('name', name);
+    data.append('image', avatarUploadRef.current.files[0]);
+    updateProfileOnAPI(data);
   };
 
   useEffect(() => {
-    if (status === 'authenticated') {
-      axios.get('/api/profile').then(({ data: { name, image, email } }) => {
-        setName(name);
-        setImage(image);
-        setEmail(email);
-      });
-    } else if (status !== 'loading') {
+    if (status === 'unauthenticated') {
       signIn();
     }
   }, [status]);
@@ -49,7 +48,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <Layout pageTitle='register'>
+    <Layout pageTitle='Profil'>
       <div className='mt-8 flex flex-col justify-center items-center '>
         <h1 className='pageTitle text-center '>Mon profil</h1>
 
@@ -98,7 +97,6 @@ export default function ProfilePage() {
           <button className='w-full' type='submit'>
             Enregistrer
           </button>
-          {error && <p>{error}</p>}
         </form>
       </div>
     </Layout>
