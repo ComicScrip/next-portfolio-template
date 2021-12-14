@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model project {
+model Project {
   id             Int      @id @default(autoincrement())
   title          String   @db.VarChar(255)
   mainPictureUrl String   @db.VarChar(255)
@@ -22,4 +22,6 @@ model User {
   email          String? @unique
   image          String?
   hashedPassword String?
+  role           String  @default("visitor")
+  active         Boolean @default(true)
 }

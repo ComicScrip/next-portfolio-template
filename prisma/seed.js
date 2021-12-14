@@ -1,7 +1,17 @@
-const db = require('@db');
+require('module-alias/register');
+import { hashPassword } from '@models/user';
+import db from '@db';
 
 async function seed() {
   await db.user.deleteMany();
+  await db.user.create({
+    data: {
+      name: 'admin',
+      email: 'admin@website.com',
+      role: 'admin',
+      hashedPassword: await hashPassword('verysecure'),
+    },
+  });
 
   await db.project.deleteMany();
   await db.project.createMany({

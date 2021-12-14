@@ -2,11 +2,25 @@ const db = require('@db');
 const Joi = require('joi');
 const argon2 = require('argon2');
 
+export const isAdmin = async (email) => {
+  try {
+    const currentUser = await db.user.findUnique({
+      where: { email },
+    });
+    return currentUser && currentUser.active && currentUser.role === 'admin';
+  } catch (err) {
+    console.error(err);
+  }
+  return false;
+};
+
 export const emailAlreadyExists = (email) =>
   db.user.findFirst({ where: { email } }).then((user) => !!user);
 
-export const findByEmail = (email) => db.user.findFirst({ where: { email } });
-export const findById = (id) => db.user.findFirst({ where: { id } });
+export const findByEmail = (email = '') =>
+  db.user.findUnique({ where: { email } });
+export const findById = (id) =>
+  db.user.findFirst({ where: { id: parseInt(id, 10) } });
 
 export const validateUser = (data, forUpdate = false) =>
   Joi.object({
@@ -36,9 +50,20 @@ export const hashPassword = (plainPassword) =>
 export const verifyPassword = (plainPassword, hashedPassword) =>
   argon2.verify(hashedPassword, plainPassword, hashingOptions);
 
-export const createUser = async ({ email, password, name, image }) => {
+export const createUser = async ({ email, password, name, role, image }) => {
   const hashedPassword = await hashPassword(password);
   return db.user.create({
-    data: { email, hashedPassword, name, image },
+    data: { email, hashedPassword, name, role, image },
   });
 };
+
+export const getSafeAttributes = (user) => ({
+  ...user,
+  hashedPassword: undefined,
+});
+
+export const updateUser = async (id, data) =>
+  db.user.update({
+    where: { id: parseInt(id, 10) },
+    data,
+  });

@@ -1,5 +1,6 @@
+import base from '@middlewares/common';
+import requireAdmin from '@middlewares/requireAdmin';
 import { createProject, getProjects, validateProject } from '@models/project';
-import base from '../../../middlewares/common';
 
 const handleGet = async (req, res) => {
   res.send(await getProjects());
@@ -11,4 +12,4 @@ const handlePost = async (req, res) => {
   res.status(201).send(await createProject(req.body));
 };
 
-export default base().get(handleGet).post(handlePost);
+export default base().use(requireAdmin).post(handlePost).get(handleGet);

@@ -1,9 +1,0 @@
-.menu {
-  display: flex;
-  justify-content: center;
-}
-
-.menu a {
-  display: block;
-  padding: 15px;
-}

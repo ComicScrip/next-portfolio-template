@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body,
 #__next {
@@ -24,6 +28,49 @@ main {
   flex-grow: 1;
 }
 
+.pageTitle {
+  @apply m-6 text-4xl font-bold;
+}
+
+button {
+  @apply bg-amber-500 cursor-pointer text-slate-100 rounded;
+  padding: 10px 20px;
+  font-weight: 500;
+}
+
+button:hover {
+  @apply bg-amber-600 text-white;
+}
+
+input,
+textarea {
+  @apply p-3 pl-4 pr-4 mt-2 bg-slate-100 border-slate-300 border rounded text-slate-800;
+}
+
+textarea {
+  @apply min-h-[300px];
+}
+
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  @apply bg-amber-400 text-white cursor-pointer;
+}
+
+button:hover,
+[type='button']:hover,
+[type='reset']:hover,
+[type='submit']:hover,
+button:focus,
+[type='button']:focus,
+[type='reset']:focus,
+[type='submit']:focus {
+  @apply bg-amber-500 text-white;
+  outline: none;
+}
+
+/*
 header,
 footer {
   color: white;
@@ -48,18 +95,7 @@ nav a:hover {
   color: rgb(255, 221, 159);
 }
 
-button {
-  cursor: pointer;
-  padding: 10px;
-  background-color: rgb(197, 197, 197);
-  border-radius: 5px;
-  border: 0;
-  margin: 10px;
-}
 
-button:hover {
-  background-color: rgb(202, 202, 202);
-}
 
 h1 {
   font-size: 2.5rem;
@@ -87,3 +123,4 @@ h2 {
   background-color: rgb(223, 63, 0);
   text-shadow: 0 0 10px black;
 }
+*/
