@@ -2,10 +2,17 @@ import Link from 'next/link';
 import Image from 'next/image';
 import portfolioImg from '../public/images/portfolio.jpg';
 import Layout from '../components/Layout';
+import { useTranslation } from 'react-i18next';
 
 export default function Home() {
+  const { t, i18n } = useTranslation();
+
   return (
     <Layout pageTitle='Home'>
+      <button onClick={() => i18n.changeLanguage('fr')}>
+        changer la langue
+      </button>
+      <h1>{t('welcome')}</h1>
       <div>
         <Image
           src={portfolioImg}

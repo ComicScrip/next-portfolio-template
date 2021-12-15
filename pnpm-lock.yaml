@@ -12,6 +12,7 @@ specifiers:
   eslint-config-next: 12.0.4
   esm: ^3.2.25
   hcaptcha: ^0.1.0
+  i18next: ^21.6.0
   joi: ^17.5.0
   lodash: ^4.17.21
   module-alias: ^2.2.2
@@ -25,6 +26,7 @@ specifiers:
   prisma: ^3.6.0
   react: 17.0.2
   react-dom: 17.0.2
+  react-i18next: ^11.15.1
   rooks: ^5.8.0
   sharp: ^0.29.3
   tailwindcss: ^3.0.1
@@ -40,6 +42,7 @@ dependencies:
   dotenv: 10.0.0
   esm: 3.2.25
   hcaptcha: 0.1.0
+  i18next: 21.6.0
   joi: 17.5.0
   lodash: 4.17.21
   module-alias: 2.2.2
@@ -51,6 +54,7 @@ dependencies:
   nodemailer: 6.7.2
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
+  react-i18next: 11.15.1_i18next@21.6.0+react@17.0.2
   rooks: 5.8.0_react-dom@17.0.2+react@17.0.2
   sharp: 0.29.3
   uniqid: 5.4.0
@@ -2069,6 +2073,16 @@ packages:
       minimalistic-crypto-utils: 1.0.1
     dev: false
 
+  /html-escaper/2.0.2:
+    resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
+    dev: false
+
+  /html-parse-stringify/3.0.1:
+    resolution: {integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==}
+    dependencies:
+      void-elements: 3.1.0
+    dev: false
+
   /http-errors/1.7.3:
     resolution: {integrity: sha512-ZTTX0MWrsQ2ZAhA1cejAwDLycFsd7I7nVtnkT3Ol0aqodaKW+0CTZDQ1uBv5whptCnc8e8HeRRJxRs0kmm/Qfw==}
     engines: {node: '>= 0.6'}
@@ -2092,6 +2106,12 @@ packages:
       debug: 4.3.3
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /i18next/21.6.0:
+    resolution: {integrity: sha512-RjNuACL35wWZgtkyMcjcCmK7R72u3P6jTNbGKzrvHGI9M0iK5Vn1DsBIwOByppaXLIbe0viJ79Nz2h8w1UwPoQ==}
+    dependencies:
+      '@babel/runtime': 7.16.3
     dev: false
 
   /iconv-lite/0.4.24:
@@ -3344,6 +3364,19 @@ packages:
     resolution: {integrity: sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==}
     dev: false
 
+  /react-i18next/11.15.1_i18next@21.6.0+react@17.0.2:
+    resolution: {integrity: sha512-lnje1uKu5XeM5MLvfbt1oygF+nEIZnpOM4Iu8bkx5ECD4XRYgi3SJDmolrp0EDxDHeK2GgFb+vEEK0hsZ9sjeA==}
+    peerDependencies:
+      i18next: '>= 19.0.0'
+      react: '>= 16.8.0'
+    dependencies:
+      '@babel/runtime': 7.16.3
+      html-escaper: 2.0.2
+      html-parse-stringify: 3.0.1
+      i18next: 21.6.0
+      react: 17.0.2
+    dev: false
+
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: true
@@ -4092,6 +4125,11 @@ packages:
 
   /vm-browserify/1.1.2:
     resolution: {integrity: sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==}
+    dev: false
+
+  /void-elements/3.1.0:
+    resolution: {integrity: sha1-YU9/v42AHwu18GYfWy9XhXUOTwk=}
+    engines: {node: '>=0.10.0'}
     dev: false
 
   /watchpack/2.1.1:
