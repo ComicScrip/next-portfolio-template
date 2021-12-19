@@ -1,6 +1,7 @@
 FROM node:14.15-alpine
 
 ENV PORT 80
+ENV DATABASE_URL=${DATABASE_URL}
 
 # Create app directory
 RUN mkdir -p /usr/src/app
