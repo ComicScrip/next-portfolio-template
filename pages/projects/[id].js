@@ -32,5 +32,6 @@ export async function getStaticProps(ctx) {
   const project = await getOneProject(ctx.params.id);
   return {
     props: { project },
+    revalidate: 10,
   };
 }
