@@ -14,7 +14,9 @@ RUN pnpm install
 # Copying source files
 COPY . /usr/src/app
 
-RUN DATABASE_URL=mysql://root:root@host.docker.internal:3309/portfolio_template pnpm run pre-start
+ARG DATABASE_URL=${DATABASE_URL}
+
+RUN pnpm run pre-start
 
 # Building app
 EXPOSE 80
