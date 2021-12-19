@@ -11,27 +11,23 @@ async function handleGet(req, res) {
 }
 
 async function handlePatch(req, res) {
-  try {
-    const data = _.omit(req.body, 'image');
-    const validationErrors = validateUser(data, true);
-    if (validationErrors) res.status(422).send(validationErrors);
+  const data = _.omit(req.body, 'image');
+  const validationErrors = validateUser(data, true);
+  if (validationErrors) res.status(422).send(validationErrors);
 
-    if (req.file && req.file.path) {
-      const ext = path.extname(req.file.path);
-      const outputFilePath = `${req.file.path.replace(ext, '')}_thumb.webp`;
+  if (req.file && req.file.path) {
+    const ext = path.extname(req.file.path);
+    const outputFilePath = `${req.file.path.replace(ext, '')}_thumb.webp`;
 
-      await sharp(req.file.path)
-        .resize(250, 250, 'contain')
-        .webp({ quality: 85 })
-        .toFile(outputFilePath);
+    await sharp(req.file.path)
+      .resize(250, 250, 'contain')
+      .webp({ quality: 85 })
+      .toFile(outputFilePath);
 
-      data.image = outputFilePath.replace('public/', '/');
-    }
-
-    res.send(getSafeAttributes(await updateUser(req.currentUser.id, data)));
-  } catch (err) {
-    console.error('error pathing', err);
+    data.image = outputFilePath.replace('public/', '/');
   }
+
+  res.send(getSafeAttributes(await updateUser(req.currentUser.id, data)));
 }
 
 export const config = {
