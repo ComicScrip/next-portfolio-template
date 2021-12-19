@@ -35,3 +35,4 @@ yarn-error.log*
 .vercel
 
 public/uploads/*
+!public/uploads/.gitkeep 
