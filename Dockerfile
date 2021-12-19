@@ -15,9 +15,6 @@ RUN pnpm install
 COPY . /usr/src/app
 
 # Building app
-RUN npx prisma migrate deploy
-RUN npx prisma generate
-RUN pnpm run build
 EXPOSE 80
 
 # Running the app
