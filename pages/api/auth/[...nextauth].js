@@ -21,6 +21,7 @@ export default NextAuth({
         const user = await findByEmail(credentials.username);
         if (
           user &&
+          user.emailVerificationCode === null && // can only login via credentials if email confirmed after signup
           user.hashedPassword &&
           (await verifyPassword(credentials.password, user.hashedPassword))
         ) {
