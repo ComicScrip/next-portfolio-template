@@ -1,4 +1,4 @@
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import { createContext, useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -7,6 +7,7 @@ const CurrentUserContext = createContext();
 export const CurrentUserContextProvider = ({ children }) => {
   const [currentUserProfile, setCurrentUserProfile] = useState(null);
   const { status } = useSession();
+  const currentUserIsAdmin = currentUserProfile?.role === 'admin';
 
   const updateProfileOnAPI = (data) => {
     axios.patch('/api/profile', data).then(({ data }) => {
@@ -21,7 +22,10 @@ export const CurrentUserContextProvider = ({ children }) => {
       .then(({ data }) => {
         setCurrentUserProfile(data);
       })
-      .catch(() => {});
+      .catch(() => {
+        // when we have a stale cookie, disconnect
+        signOut();
+      });
   };
 
   useEffect(() => {
@@ -39,6 +43,7 @@ export const CurrentUserContextProvider = ({ children }) => {
         setCurrentUserProfile,
         updateProfileOnAPI,
         getProfile,
+        currentUserIsAdmin,
       }}
     >
       {children}

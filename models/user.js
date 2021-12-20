@@ -50,10 +50,17 @@ export const hashPassword = (plainPassword) =>
 export const verifyPassword = (plainPassword, hashedPassword) =>
   argon2.verify(hashedPassword, plainPassword, hashingOptions);
 
-export const createUser = async ({ email, password, name, role, image }) => {
+export const createUser = async ({
+  email,
+  password,
+  name,
+  role,
+  image,
+  emailVerificationCode,
+}) => {
   const hashedPassword = await hashPassword(password);
   return db.user.create({
-    data: { email, hashedPassword, name, role, image },
+    data: { email, hashedPassword, name, role, image, emailVerificationCode },
   });
 };
 
@@ -61,6 +68,21 @@ export const getSafeAttributes = (user) => ({
   ...user,
   hashedPassword: undefined,
 });
+
+export const confirmEmail = async (emailVerificationCode) => {
+  try {
+    if (await db.user.findUnique({ where: { emailVerificationCode } })) {
+      await db.user.update({
+        where: { emailVerificationCode },
+        data: { emailVerificationCode: null },
+      });
+      return true;
+    }
+  } catch (err) {
+    console.error(err);
+  }
+  return false;
+};
 
 export const updateUser = async (id, data) =>
   db.user.update({

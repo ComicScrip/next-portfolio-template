@@ -5,8 +5,7 @@ import { useState } from 'react';
 import CurrentUserMenu from './CurrentUserMenu';
 
 export default function Header() {
-  const { data, status } = useSession();
-  const currentUser = data?.user;
+  const { status } = useSession();
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen((open) => !open);
 
@@ -20,9 +19,7 @@ export default function Header() {
         </div>
         <div className='flex md:order-3'>
           <div className='mr-6 md:mr-0'>
-            {status === 'authenticated' && (
-              <CurrentUserMenu currentUser={currentUser} />
-            )}
+            {status === 'authenticated' && <CurrentUserMenu />}
             {status === 'unauthenticated' && (
               <Link href='/login'>
                 <a className='inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-slate-800 hover:bg-white'>

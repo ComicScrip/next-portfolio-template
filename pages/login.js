@@ -1,17 +1,20 @@
 import Layout from '@components/Layout';
-import { useSession, signIn, signOut, getCsrfToken } from 'next-auth/react';
+import CurrentUserContext from 'contexts/currentUserContext';
+import { signIn, signOut, getCsrfToken } from 'next-auth/react';
 import { useRouter } from 'next/dist/client/router';
+import Link from 'next/link';
+import { useContext } from 'react';
 
 export default function LoginPage({ csrfToken }) {
-  const { data: session } = useSession();
+  const { currentUserProfile } = useContext(CurrentUserContext);
   const { query } = useRouter();
 
   return (
     <Layout pageTitle='login'>
       <div className='m-6'>
-        {session ? (
+        {currentUserProfile ? (
           <div className='flex flex-col items-center'>
-            connecté en tant que {session.user.email} <br />
+            connecté en tant que {currentUserProfile.email} <br />
             <button className='mt-6' onClick={() => signOut()}>
               Se déconnecter
             </button>
@@ -20,7 +23,7 @@ export default function LoginPage({ csrfToken }) {
           <>
             <h1 className='pageTitle text-center'>Se connecter</h1>
 
-            <div className='max-w-3xl m-auto flex flex-col items-center'>
+            <div className='max-w-xl m-auto flex flex-col items-center'>
               <button className='' onClick={() => signIn('github')}>
                 Avec Github
               </button>
@@ -29,7 +32,7 @@ export default function LoginPage({ csrfToken }) {
 
               <form
                 method='post'
-                className='bg-slate-700 p-12 rounded-2xl shadow-black/30 shadow-lg'
+                className='bg-slate-700 p-12 rounded-2xl shadow-black/30 shadow-lg min-w-[400px]'
                 action='/api/auth/callback/credentials'
               >
                 <input
@@ -38,21 +41,39 @@ export default function LoginPage({ csrfToken }) {
                   defaultValue={csrfToken}
                 />
                 <label>
-                  Username
-                  <input name='username' type='text' className='block' />
+                  Nom d{"'"}utilisateur
+                  <input
+                    name='username'
+                    type='text'
+                    className='block w-full'
+                    placeholder='me@something.com'
+                  />
                 </label>
                 <label>
-                  Password
-                  <input className='block' name='password' type='password' />
+                  Mot de passe
+                  <input
+                    className='block w-full'
+                    name='password'
+                    type='password'
+                  />
                 </label>
-                <button className='bg-amber-500 mt-6' type='submit'>
+                <button className='bg-amber-500 mt-6 w-full' type='submit'>
                   Tenter ces identifients
                 </button>
                 {query.error === 'CredentialsSignin' && (
-                  <p className='p-6 bg-slate-700 text-red-400 font-bold'>
-                    wrong credentials
+                  <p className='p-6 bg-slate-700 text-red-400 font-bold text-center'>
+                    Ces identifiants ne corresspondent à aucun utilisateur
+                    actif. Si vous n{"'"}avez pas encore vérifié votre e-mail,
+                    rendez-vous dans votre boite de reception pour cliquez sur
+                    le lien d{"'"}activation et rééssayez la connexion avec ces
+                    identifiants.
                   </p>
                 )}
+                <Link href='/signup'>
+                  <a className='mt-6 text-sky-300 hover:text-sky-400 text-center w-full block'>
+                    Pas encore de compte ?
+                  </a>
+                </Link>
               </form>
             </div>
           </>

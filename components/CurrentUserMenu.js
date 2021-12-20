@@ -5,8 +5,9 @@ import { useContext, useRef, useState } from 'react';
 import { useOutsideClick } from 'rooks';
 import Avatar from './Avatar';
 
-export default function CurrentUserMenu({ currentUser }) {
-  const { currentUserProfile } = useContext(CurrentUserContext);
+export default function CurrentUserMenu() {
+  const { currentUserProfile, currentUserIsAdmin } =
+    useContext(CurrentUserContext);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const toggleUserMenu = () => setUserMenuOpen((open) => !open);
   const ref = useRef();
@@ -14,24 +15,23 @@ export default function CurrentUserMenu({ currentUser }) {
 
   if (!currentUserProfile) return null;
 
-  const visibleLinks =
-    currentUserProfile.role === 'admin'
-      ? [
-          {
-            label: 'Back-office',
-            href: '/admin',
-          },
-          {
-            label: 'Profil',
-            href: '/profile',
-          },
-        ]
-      : [
-          {
-            label: 'Profil',
-            href: '/profile',
-          },
-        ];
+  const visibleLinks = currentUserIsAdmin
+    ? [
+        {
+          label: 'Back-office',
+          href: '/admin',
+        },
+        {
+          label: 'Profil',
+          href: '/profile',
+        },
+      ]
+    : [
+        {
+          label: 'Profil',
+          href: '/profile',
+        },
+      ];
 
   return (
     <div ref={ref}>
