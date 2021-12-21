@@ -55,7 +55,7 @@ button,
 [type='button'],
 [type='reset'],
 [type='submit'] {
-  @apply bg-amber-400 text-white cursor-pointer;
+  @apply bg-amber-200 text-slate-900 cursor-pointer;
 }
 
 button:hover,
@@ -66,7 +66,7 @@ button:focus,
 [type='button']:focus,
 [type='reset']:focus,
 [type='submit']:focus {
-  @apply bg-amber-500 text-white;
+  @apply bg-amber-100 text-slate-900;
   outline: none;
 }
 
