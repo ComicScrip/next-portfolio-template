@@ -9,7 +9,8 @@
     "migrate:dev": "npx prisma migrate dev",
     "migrate:deploy": "npx prisma migrate deploy",
     "pre-start": "NODE_ENV=production npm-run-all migrate:deploy generate-db-client build ",
-    "start": "NODE_ENV=production npm run start:server"
+    "start": "NODE_ENV=production npm run start:server",
+    "serve:lhci": "npm start"
   },
   "dependencies": {
     "@hcaptcha/react-hcaptcha": "^0.3.9",
