@@ -38,3 +38,5 @@ public/uploads/*
 !public/uploads/.gitkeep 
 
 .lighthouseci
+public/sw*
+public/workbox-*
