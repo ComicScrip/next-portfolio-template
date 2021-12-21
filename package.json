@@ -9,7 +9,8 @@
     "migrate:dev": "npx prisma migrate dev",
     "migrate:deploy": "npx prisma migrate deploy",
     "pre-start": "NODE_ENV=production npm-run-all migrate:deploy generate-db-client build ",
-    "start": "NODE_ENV=production npm run start:server"
+    "start": "NODE_ENV=production npm run start:server",
+    "resetsw-and-lauch": "rm public/sw.js && rm public/workbox-* ; next build && next start"
   },
   "dependencies": {
     "@hcaptcha/react-hcaptcha": "^0.3.9",
@@ -35,7 +36,8 @@
     "react-dom": "17.0.2",
     "rooks": "^5.8.0",
     "sharp": "^0.29.3",
-    "uniqid": "^5.4.0"
+    "uniqid": "^5.4.0",
+    "next-pwa": "^5.4.4"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.0",

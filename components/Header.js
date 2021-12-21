@@ -14,7 +14,7 @@ export default function Header() {
       <nav className='flex items-center justify-between flex-wrap bg-slate-800 p-6'>
         <div className='flex items-center flex-shrink-0 text-white mr-6'>
           <Link href='/'>
-            <a className='font-semibold text-xl '>DaveLopper.pro</a>
+            <a className='font-semibold sm:text-xl text-sm'>DaveLopper.pro</a>
           </Link>
         </div>
         <div className='flex md:order-3'>
@@ -22,7 +22,7 @@ export default function Header() {
             {status === 'authenticated' && <CurrentUserMenu />}
             {status === 'unauthenticated' && (
               <Link href='/login'>
-                <a className='inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-slate-800 hover:bg-white'>
+                <a className='sm:text-sm inline-block text-xs px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-slate-800 hover:bg-white'>
                   Se connecter
                 </a>
               </Link>
@@ -68,7 +68,7 @@ const NavLink = ({ href, children }) => {
   return (
     <Link href={href}>
       <a
-        className={`block mt-4 md:inline-block md:mt-0 ${
+        className={`bg-slate-800 block mt-4 md:inline-block md:mt-0 ${
           active ? 'text-white' : 'text-sky-200'
         } hover:text-white mr-4`}
       >
