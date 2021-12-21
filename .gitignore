@@ -36,3 +36,5 @@ yarn-error.log*
 
 public/uploads/*
 !public/uploads/.gitkeep 
+public/sw*
+public/workbox-*
