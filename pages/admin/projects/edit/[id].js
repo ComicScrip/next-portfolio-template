@@ -9,6 +9,7 @@ export default function CreateProject() {
   const [title, setTitle] = useState('');
   const [mainPictureUrl, setMainPictureUrl] = useState('');
   const [description, setDescription] = useState('');
+  const [mainPictureUrlError, setMainPictureUrlError] = useState('');
   const router = useRouter();
   const {
     query: { id },
@@ -17,12 +18,15 @@ export default function CreateProject() {
 
   const saveProject = async () => {
     const formValues = { title, mainPictureUrl, description };
+    if (!mainPictureUrl)
+      return setMainPictureUrlError('Please choose an image');
     try {
       if (isUpdate) {
         await axios.patch(`/api/projects/${id}`, formValues);
       } else {
         await axios.post('/api/projects', formValues);
       }
+      router.push('/admin/projects');
     } catch (err) {
       console.error(err);
     }
@@ -52,19 +56,25 @@ export default function CreateProject() {
         onSubmit={async (e) => {
           e.preventDefault();
           await saveProject();
-          router.push('/admin/projects');
         }}
       >
-        <label htmlFor='mainPictureUrl'>
+        <label htmlFor='mainPictureUrl' className='block mb-3'>
           Main picture :{' '}
           <Widget
             publicKey={process.env.NEXT_PUBLIC_UPLOADCARE_KEY}
             id='file'
             tabs='file url'
             crop='16:9'
+            required
             value={mainPictureUrl}
-            onChange={({ cdnUrl }) => setMainPictureUrl(cdnUrl)}
+            onChange={({ cdnUrl }) => {
+              setMainPictureUrlError('');
+              setMainPictureUrl(cdnUrl);
+            }}
           />
+          {mainPictureUrlError && (
+            <div className='text-red-500'>{mainPictureUrlError}</div>
+          )}
         </label>
 
         {mainPictureUrl && (
@@ -72,7 +82,7 @@ export default function CreateProject() {
             <Image src={mainPictureUrl} alt={title} width={800} height={450} />
           </div>
         )}
-        <label htmlFor='title'>
+        <label htmlFor='title' className='block mb-3'>
           Title :{' '}
           <input
             required
