@@ -5,7 +5,7 @@ const relativeUrlsToCheck = [
   '/signup',
   '/contact',
   '/projects',
-  'projects/1',
+  '/projects/1',
 ];
 
 module.exports = {
@@ -16,6 +16,7 @@ module.exports = {
     collect: {
       url: relativeUrlsToCheck.map((path) => baseUrl + path),
       // staticDistDir: '.next/server/pages',
+      runs: 2,
     },
     assert: {
       assertions: {
@@ -23,6 +24,7 @@ module.exports = {
         'categories:accessibility': ['error', { minScore: 0.9 }],
         'categories:best-practices': ['error', { minScore: 0.9 }],
         'categories:seo': ['error', { minScore: 0.9 }],
+        'categories:pwa': ['error', { minScore: 1 }],
       },
     },
   },
