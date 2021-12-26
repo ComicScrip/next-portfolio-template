@@ -1,6 +1,7 @@
 {
   "name": "portfolio-template",
   "scripts": {
+    "resetsw-and-lauch": "rm public/sw.js && rm public/workbox-* ; next build && next start",
     "dev": "next dev",
     "build": "next build",
     "start:server": "node server.js",
@@ -10,7 +11,7 @@
     "migrate:deploy": "npx prisma migrate deploy",
     "pre-start": "NODE_ENV=production npm-run-all migrate:deploy generate-db-client build ",
     "start": "NODE_ENV=production npm run start:server",
-    "resetsw-and-lauch": "rm public/sw.js && rm public/workbox-* ; next build && next start"
+    "serve:lhci": "npm start"
   },
   "dependencies": {
     "@hcaptcha/react-hcaptcha": "^0.3.9",

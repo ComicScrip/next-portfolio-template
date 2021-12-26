@@ -10,8 +10,12 @@ export default function Project({
       <div className='max-w-4xl m-auto mt-4'>
         <h1 className='pageTitle lg:ml-0'>{title}</h1>
         <div className=''></div>
-        <Image src={mainPictureUrl} alt={title} width={1000} height={600} />
-
+        <Image
+          src={mainPictureUrl}
+          alt={title}
+          width={600 * (16 / 9)}
+          height={600}
+        />
         <p className='md:columns-2 m-6 lg:ml-0 gap-12 '>{description}</p>
       </div>
     </Layout>

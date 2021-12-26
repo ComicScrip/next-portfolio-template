@@ -33,7 +33,7 @@ export default function SignupPage() {
         <h1 className='pageTitle text-center '>Inscription</h1>
         <form
           onSubmit={handleSubmit}
-          className='p-6 bg-slate-700/50 mt-6 rounded-xl w-96'
+          className='p-6 bg-slate-700/50 mt-6 rounded-xl w-80'
         >
           <label htmlFor='name'>
             Nom
