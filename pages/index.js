@@ -43,7 +43,7 @@ export default function Home() {
         </p>
       </div>
       <Link href='/projects' passHref>
-        <a className='w-1/2 flex bg-orange-600 justify-center max-w-xs m-auto p-8 text-3xl text-center rounded-lg mt-8 mb-8 font-bold hover:bg-orange-300 hover:text-black'>
+        <a className='w-72 sm:w-1/2 sm:max-w-md flex bg-orange-600 justify-center m-auto p-8 text-3xl text-center rounded-lg mt-8 mb-8 font-bold hover:bg-orange-300 hover:text-black'>
           Mes réalisations
         </a>
       </Link>
