@@ -8,7 +8,12 @@ export default function ProjectCard({
     <Link href={`/projects/${id}`}>
       <a>
         <div className='z-[0] relative m-8 rounded-lg overflow-hidden hover:scale-[1.05] transition-all shadow-black/20 hover:shadow-black/30 shadow-lg hover:shadow-xl'>
-          <Image src={mainPictureUrl} width={400} height={250} alt={title} />
+          <Image
+            src={mainPictureUrl}
+            width={(250 * 16) / 9}
+            height={250}
+            alt={title}
+          />
           <div className='z-10 absolute top-0 w-full bottom-0'>
             <h2
               style={{ textShadow: '1px 1px 2px black' }}
