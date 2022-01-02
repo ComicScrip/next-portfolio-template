@@ -4,7 +4,8 @@ import { getSafeAttributes, updateUser, validateUser } from '@models/user';
 import handleImageUpload from '@middlewares/handleImageUpload';
 import sharp from 'sharp';
 import _ from 'lodash';
-import path from 'path';
+import FormData from 'form-data';
+import axios from 'axios';
 
 async function handleGet(req, res) {
   res.send(getSafeAttributes(req.currentUser));
@@ -15,16 +16,17 @@ async function handlePatch(req, res) {
   const validationErrors = validateUser(data, true);
   if (validationErrors) res.status(422).send(validationErrors);
 
-  if (req.file && req.file.path) {
-    const ext = path.extname(req.file.path);
-    const outputFilePath = `${req.file.path.replace(ext, '')}_thumb.webp`;
-
-    await sharp(req.file.path)
+  if (req.file) {
+    const buffer = await sharp(req.file.buffer)
       .resize(250, 250, 'contain')
       .webp({ quality: 85 })
-      .toFile(outputFilePath);
-
-    data.image = outputFilePath.replace('public/', '/');
+      .toBuffer();
+    const form = new FormData();
+    form.append('files', buffer, { filename: req.file.originalname });
+    const res = await axios.post(process.env.UPLOAD_API_URL, form, {
+      headers: form.getHeaders(),
+    });
+    data.image = res.data[0].url;
   }
 
   res.send(getSafeAttributes(await updateUser(req.currentUser.id, data)));
