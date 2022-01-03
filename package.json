@@ -1,7 +1,6 @@
 {
   "name": "portfolio-template",
   "scripts": {
-    "resetsw-and-lauch": "rm public/sw.js && rm public/workbox-* ; next build && next start",
     "dev": "next dev",
     "build": "next build",
     "start:server": "node server.js",
@@ -32,7 +31,6 @@
     "next": "12.0.4",
     "next-auth": "^4.0.2",
     "next-connect": "^0.11.0",
-    "next-pwa": "^5.4.4",
     "nodemailer": "^6.7.2",
     "npm-run-all": "^4.1.5",
     "react": "17.0.2",
