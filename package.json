@@ -12,7 +12,8 @@
     "pre-start": "NODE_ENV=production npm-run-all migrate:deploy generate-db-client build ",
     "start": "NODE_ENV=production npm run start:server",
     "serve:lhci": "npm start",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "dependencies": {
     "@hcaptcha/react-hcaptcha": "^0.3.9",
