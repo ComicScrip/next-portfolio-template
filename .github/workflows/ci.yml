@@ -19,7 +19,7 @@ jobs:
       - name: Run Cypress 🌲
         uses: cypress-io/github-action@v2
         with:
-          command: pnpm run cypress:run
+          command: npm run cypress:run
         env:
           CYPRESS_BASE_URL: ${{ github.event.deployment_status.target_url }}
 
