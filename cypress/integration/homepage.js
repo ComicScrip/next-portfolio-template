@@ -1,6 +1,6 @@
 describe('Homepage', () => {
   it('loads correctly', () => {
     cy.visit('/');
-    cy.contains('Salut');
+    cy.contains('Saluttt');
   });
 });
