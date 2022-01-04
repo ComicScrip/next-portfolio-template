@@ -5,7 +5,7 @@ export default function ProjectCard({
   project: { title, mainPictureUrl, id },
 }) {
   return (
-    <Link href={`/projects/${id}`}>
+    <Link href={`/projects/${id}`} data-cy='projectCard'>
       <a>
         <div className='z-[0] relative m-8 rounded-lg overflow-hidden hover:scale-[1.05] transition-all shadow-black/20 hover:shadow-black/30 shadow-lg hover:shadow-xl'>
           <Image
