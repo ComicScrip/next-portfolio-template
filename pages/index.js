@@ -15,7 +15,7 @@ export default function Home() {
         />
         <h1 className='pageTitle'>Salut ! Je suis Dave Lopper</h1>
 
-        <p className='p-6 pt-0 md:columns-2 lg:columns-3 gap-12'>
+        <p className='p-6 pt-0 md:columns-2 lg:columns-3 gap-12' data-cy='bio'>
           Lorem Elsass Ipsum mitt picon bière munster du ftomi! Ponchour bisame.
           Bibbeleskaas jetz rossbolla sech choucroute un schwanz geburtstàg,
           Chinette dû, ìch bier deppfele schiesser. Flammekueche de knèkes

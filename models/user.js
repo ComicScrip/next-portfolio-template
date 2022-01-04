@@ -1,8 +1,8 @@
-const db = require('@db');
+const db = require('../db');
 const Joi = require('joi');
 const argon2 = require('argon2');
 
-export const isAdmin = async (email) => {
+module.exports.isAdmin = async (email) => {
   try {
     const currentUser = await db.user.findUnique({
       where: { email },
@@ -14,15 +14,16 @@ export const isAdmin = async (email) => {
   return false;
 };
 
-export const emailAlreadyExists = (email) =>
+module.exports.emailAlreadyExists = (email) =>
   db.user.findFirst({ where: { email } }).then((user) => !!user);
 
-export const findByEmail = (email = '') =>
+module.exports.findByEmail = (email = '') =>
   db.user.findUnique({ where: { email } });
-export const findById = (id) =>
+
+module.exports.findById = (id) =>
   db.user.findFirst({ where: { id: parseInt(id, 10) } });
 
-export const validateUser = (data, forUpdate = false) =>
+module.exports.validateUser = (data, forUpdate = false) =>
   Joi.object({
     email: Joi.string()
       .email()
@@ -44,13 +45,17 @@ const hashingOptions = {
   type: argon2.argon2id,
 };
 
-export const hashPassword = (plainPassword) =>
+const hashPassword = (plainPassword) =>
   argon2.hash(plainPassword, hashingOptions);
 
-export const verifyPassword = (plainPassword, hashedPassword) =>
+module.exports.hashPassword = hashPassword;
+
+const verifyPassword = (plainPassword, hashedPassword) =>
   argon2.verify(hashedPassword, plainPassword, hashingOptions);
 
-export const createUser = async ({
+module.exports.verifyPassword = verifyPassword;
+
+module.exports.createUser = async ({
   email,
   password,
   name,
@@ -64,12 +69,12 @@ export const createUser = async ({
   });
 };
 
-export const getSafeAttributes = (user) => ({
+module.exports.getSafeAttributes = (user) => ({
   ...user,
   hashedPassword: undefined,
 });
 
-export const confirmEmail = async (emailVerificationCode) => {
+module.exports.confirmEmail = async (emailVerificationCode) => {
   try {
     if (await db.user.findUnique({ where: { emailVerificationCode } })) {
       await db.user.update({
@@ -84,8 +89,10 @@ export const confirmEmail = async (emailVerificationCode) => {
   return false;
 };
 
-export const updateUser = async (id, data) =>
+module.exports.updateUser = async (id, data) =>
   db.user.update({
     where: { id: parseInt(id, 10) },
     data,
   });
+
+module.exports.deleteMany = db.user.deleteMany;

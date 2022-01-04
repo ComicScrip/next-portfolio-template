@@ -1,7 +1,7 @@
-import db from '@db';
-import Joi from 'joi';
+const db = require('../db');
+const Joi = require('joi');
 
-export const validateProject = (data, forUpdate = false) =>
+module.exports.validateProject = (data, forUpdate = false) =>
   Joi.object({
     title: Joi.string()
       .max(255)
@@ -14,38 +14,40 @@ export const validateProject = (data, forUpdate = false) =>
       .presence(forUpdate ? 'optional' : 'required'),
   }).validate(data, { abortEarly: false }).error;
 
-export const projectPropsToShow = {
+const projectPropsToShow = {
   title: true,
   id: true,
   description: true,
   mainPictureUrl: true,
 };
 
-export const getProjects = async () => {
+module.exports.getProjects = async () => {
   return db.project.findMany({
     select: projectPropsToShow,
   });
 };
 
-export const getOneProject = (id) => {
+module.exports.getOneProject = (id) => {
   return db.project.findUnique({
     where: { id: parseInt(id, 10) },
     select: projectPropsToShow,
   });
 };
 
-export const deleteOneProject = (id) => {
+module.exports.deleteOneProject = (id) => {
   return db.project
     .delete({ where: { id: parseInt(id, 10) } })
     .catch((_) => false);
 };
 
-export const createProject = ({ title, description, mainPictureUrl }) => {
+module.exports.createProject = ({ title, description, mainPictureUrl }) => {
   return db.project.create({ data: { title, description, mainPictureUrl } });
 };
 
-export const updateProject = (id, data) => {
+module.exports.updateProject = (id, data) => {
   return db.project
     .update({ where: { id: parseInt(id, 10) }, data })
     .catch((_) => false);
 };
+
+module.exports.deleteMany = db.project.deleteMany;

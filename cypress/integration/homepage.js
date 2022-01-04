@@ -1,6 +1,7 @@
 describe('Homepage', () => {
-  it('loads correctly', () => {
+  it('shows some content', () => {
     cy.visit('/');
-    cy.contains('Saluttt');
+    cy.contains('Salut');
+    cy.get('[data-cy=bio]').should('be.visible');
   });
 });
