@@ -21,6 +21,7 @@ describe('/signup', () => {
 
     cy.get('button[type=submit]').click();
     cy.contains('Votre inscription est presque terminée').should('be.visible');
+
     cy.get('#name').should('have.value', '');
     cy.get('#email').should('have.value', '');
     cy.get('#password').should('have.value', '');

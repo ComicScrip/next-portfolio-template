@@ -21,7 +21,9 @@ jobs:
         run: |
           npm install
       - name: Reset DB
-        run: DATABASE_URL=mysql://root:root@localhost:3306/test npx prisma migrate deploy
+        run: | 
+          DATABASE_URL=mysql://root:root@localhost:3306/test npx prisma migrate deploy
+          DATABASE_URL=mysql://root:root@localhost:3306/test npx prisma db seed
       - name: npm install, build
         run: |
           npm install
