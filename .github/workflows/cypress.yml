@@ -28,7 +28,7 @@ jobs:
       - name: Start dev server
         run: (npm run dev &)
         env:
-          CI: "true"
+          CI: true
           DATABASE_URL: mysql://root:root@localhost:3306/portfolio_database_test
 
       - name: Run Cypress 🌲
