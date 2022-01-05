@@ -36,7 +36,6 @@ jobs:
           record: true
         env:
           DATABASE_URL: mysql://root:root@localhost:3306/portfolio_database_test
-          CYPRESS_BASE_URL: ${{ github.event.deployment_status.target_url }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
       # if you are NOT using Cypress GitHub Integration App, then set commit status manually
