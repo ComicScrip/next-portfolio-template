@@ -1,27 +1,41 @@
-name: ci
-# https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+name: cypress
 on: [deployment_status]
 jobs:
   e2e:
-    # only runs this job on successful deploy
-    if: github.event.deployment_status.state == 'success'
     runs-on: ubuntu-latest
     steps:
-      - name: Print URL 🖨
-        run: echo Testing URL ${{ github.event.deployment_status.target_url }}
-
-      - name: Print GitHub env variables 🖨
-        run: npx @bahmutov/print-env GITHUB
-
+      - name: "Setup mySQL"
+        uses: haltuf/mysql-action@master
+        with:
+          host port: 3306
+          mysql database: 'portfolio_database_test'
+          mysql root password: 'root'
+      - name: Setup Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      
       - name: Checkout 🛎
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
+
+      - name: Install deps
+        run: |
+          npm install
+      
+      - name: Migrate DB
+        run: DATABASE_URL=mysql://root:root@localhost:3306/portfolio_database_test npx prisma migrate deploy
+
+      - name: Start dev server
+        run: npm run dev
+        env:
+          DATABASE_URL: mysql://root:root@localhost:3306/portfolio_database_test
 
       - name: Run Cypress 🌲
         uses: cypress-io/github-action@v2
         with:
           record: true
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_URL: mysql://root:root@localhost:3306/portfolio_database_test
           CYPRESS_BASE_URL: ${{ github.event.deployment_status.target_url }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
