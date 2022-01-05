@@ -11,21 +11,16 @@ async function handlePost(req, res) {
   const emailVerificationCode = crypto.randomBytes(50).toString('hex');
   const { id, email, name } = await createUser({
     ...req.body,
-    emailVerificationCode:
-      process.env.NODE_ENV === 'ci' ? null : emailVerificationCode,
+    emailVerificationCode,
   });
-
-  if (process.env.NODE_ENV !== 'ci') {
-    const mailBody = `Rendez-vous sur ce lien pour vérifier votre email : ${process.env.HOST}/confirm-email?emailVerificationCode=${emailVerificationCode}`;
-    await mailer.sendMail({
-      from: process.env.MAILER_FROM,
-      to: email,
-      subject: `Vérifier votre email`,
-      text: mailBody,
-      html: mailBody,
-    });
-  }
-
+  const mailBody = `Rendez-vous sur ce lien pour vérifier votre email : ${process.env.HOST}/confirm-email?emailVerificationCode=${emailVerificationCode}`;
+  await mailer.sendMail({
+    from: process.env.MAILER_FROM,
+    to: email,
+    subject: `Vérifier votre email`,
+    text: mailBody,
+    html: mailBody,
+  });
   res.status(201).send({ id, email, name });
 }
 

@@ -1,7 +1,8 @@
+/// <reference types="cypress" />
 const User = require('../../models/user');
 const Project = require('../../models/project');
+const ms = require('smtp-tester');
 
-/// <reference types="cypress" />
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
 //
@@ -21,6 +22,15 @@ const Project = require('../../models/project');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (on, config) => {
+  const mailServer = ms.init(7777);
+  const lastEmail = {};
+  mailServer.bind((addr, id, email) => {
+    lastEmail[email.headers.to] = {
+      body: email.body,
+      html: email.html,
+    };
+  });
+
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
   on('task', {
@@ -35,5 +45,8 @@ module.exports = (on, config) => {
     deleteAllUsers: User.deleteMany,
     findUserByEmail: User.findByEmail,
     createUser: User.createUser,
+    getLastEmail(userEmail) {
+      return lastEmail[userEmail] || null;
+    },
   });
 };
