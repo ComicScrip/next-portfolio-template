@@ -16,7 +16,7 @@ module.exports = {
     collect: {
       url: relativeUrlsToCheck.map((path) => baseUrl + path),
       // staticDistDir: '.next/server/pages',
-      numberOfRuns: 1,
+      numberOfRuns: 2,
     },
     assert: {
       assertions: {

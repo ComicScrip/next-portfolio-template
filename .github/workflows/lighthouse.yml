@@ -2,7 +2,7 @@ name: Lighthouse
 on: [push]
 jobs:
   lhci:
-    name: Lighthouse
+    name: perform audits
     runs-on: ubuntu-latest
     steps:
       - name: "Setup mySQL"
