@@ -27,7 +27,7 @@ describe('/signup', () => {
     cy.get('#password').should('have.value', '');
 
     cy.task('getLastEmail', 'john.doe@gmail.com').then((email) => {
-      expect(email).to.be.null;
+      expect(email.body).to.be.null;
       cy.log(email);
       cy.wait(3000);
       /*
