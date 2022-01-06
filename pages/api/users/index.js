@@ -1,6 +1,5 @@
 import base from '@middlewares/common';
 import mailer from '@mailer';
-import requireAdmin from '@middlewares/requireAdmin';
 import { createUser, emailAlreadyExists, validateUser } from '@models/user';
 import crypto from 'crypto';
 

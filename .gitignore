@@ -40,3 +40,5 @@ public/uploads/*
 .lighthouseci
 public/sw*
 public/workbox-*
+
+cypress/videos
