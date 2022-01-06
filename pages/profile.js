@@ -1,6 +1,6 @@
-import Avatar from '@components/Avatar';
-import Layout from '@components/Layout';
-import CurrentUserContext from 'contexts/currentUserContext';
+import Avatar from '../components/Avatar';
+import Layout from '../components/Layout';
+import CurrentUserContext from '../contexts/currentUserContext';
 import { signIn, useSession } from 'next-auth/react';
 import { useContext, useEffect, useRef, useState } from 'react';
 

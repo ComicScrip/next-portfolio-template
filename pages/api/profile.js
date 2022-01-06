@@ -1,7 +1,7 @@
-import base from '@middlewares/common';
-import requireCurrentUser from '@middlewares/requireCurrentUser';
-import { getSafeAttributes, updateUser, validateUser } from '@models/user';
-import handleImageUpload from '@middlewares/handleImageUpload';
+import base from '../../middlewares/common';
+import requireCurrentUser from '../../middlewares/requireCurrentUser';
+import { getSafeAttributes, updateUser, validateUser } from '../../models/user';
+import handleImageUpload from '../../middlewares/handleImageUpload';
 import sharp from 'sharp';
 import _ from 'lodash';
 import FormData from 'form-data';

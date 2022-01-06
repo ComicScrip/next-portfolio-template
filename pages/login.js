@@ -1,5 +1,5 @@
-import Layout from '@components/Layout';
-import CurrentUserContext from 'contexts/currentUserContext';
+import Layout from '../components/Layout';
+import CurrentUserContext from '../contexts/currentUserContext';
 import { signIn, signOut, getCsrfToken } from 'next-auth/react';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
