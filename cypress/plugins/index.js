@@ -22,6 +22,9 @@ const ms = require('smtp-tester');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (on, config) => {
+  // modify config values
+  config.defaultCommandTimeout = 15000;
+
   const mailServer = ms.init(7777);
   const lastEmail = {};
   mailServer.bind((addr, id, email) => {
