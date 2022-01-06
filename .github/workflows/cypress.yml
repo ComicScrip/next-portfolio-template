@@ -1,30 +1,25 @@
-name: cypress
-on: [deployment_status]
+name: Cypress
+on: [push]
 jobs:
-  e2e:
+  run-e2e-tests:
     runs-on: ubuntu-latest
     steps:
       - name: "Setup mySQL"
         uses: haltuf/mysql-action@master
         with:
-          host port: 3307
-          mysql database: 'portfolio_database_test'
+          host port: 3306
+          mysql database: 'test'
           mysql root password: 'root'
       - name: Setup Node.js 14.x
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
-      
-      - name: Checkout 🛎
+      - name: Checkout
         uses: actions/checkout@v2
-
       - name: Install deps
-        run: |
-          npm install
-      
+        run: npm install
       - name: Migrate DB
-        run: DATABASE_URL=mysql://root:root@localhost:3307/portfolio_database_test npx prisma migrate deploy
-
+        run: DATABASE_URL=mysql://root:root@localhost:3306/test npx prisma migrate deploy
       - name: Start dev server
         run: (npm run dev &)
         env:
@@ -37,44 +32,11 @@ jobs:
           MAILER_FROM: admin@app.com
           NEXT_PUBLIC_HCAPTCHA_SITEKEY: 6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI # see https://developers.google.com/recaptcha/docs/faq#id-like-to-run-automated-tests-with-recaptcha.-what-should-i-do
           HCAPTCHA_SECRET: 6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
-          DATABASE_URL: mysql://root:root@localhost:3307/portfolio_database_test
-
+          DATABASE_URL: mysql://root:root@localhost:3306/test
       - name: Run Cypress 🌲
         uses: cypress-io/github-action@v2
         with:
           record: true
         env:
-          DATABASE_URL: mysql://root:root@localhost:3307/portfolio_database_test
+          DATABASE_URL: mysql://root:root@localhost:3306/test
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-
-      # if you are NOT using Cypress GitHub Integration App, then set commit status manually
-      # https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#job-status-check-functions
-      - name: Cypress tests ✅
-        if: ${{ success() }}
-        # set the merge commit status check
-        # using GitHub REST API
-        # see https://docs.github.com/en/rest/reference/repos#create-a-commit-status
-        run: |
-          curl --request POST \
-          --url https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.sha }} \
-          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-          --header 'content-type: application/json' \
-          --data '{
-            "context": "e2e",
-            "state": "success",
-            "description": "Cypress tests passed",
-            "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          }'
-      - name: Cypress tests 🚨
-        if: ${{ failure() }}
-        run: |
-          curl --request POST \
-          --url https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.sha }} \
-          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-          --header 'content-type: application/json' \
-          --data '{
-            "context": "e2e",
-            "state": "failure",
-            "description": "Cypress tests failed",
-            "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          }'
