@@ -27,10 +27,7 @@ describe('/signup', () => {
     cy.get('#password').should('have.value', '');
 
     cy.task('getLastEmail', 'john.doe@gmail.com').then((email) => {
-      expect(email.body).to.be.null;
-      cy.log(email);
-      cy.wait(3000);
-      /*
+      expect(email).not.to.be.null;
       const link = email.body.match(/https?:\/\/\S+/gi)[0];
       const confirmationCodeUrlInEmail = new URL(link);
       const confirmationCodeInEmail =
@@ -40,7 +37,6 @@ describe('/signup', () => {
         expect(user).to.not.be.null;
         expect(user.emailVerificationCode).to.equal(confirmationCodeInEmail);
       });
-      */
     });
   });
 
