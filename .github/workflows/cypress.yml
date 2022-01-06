@@ -7,7 +7,7 @@ jobs:
       - name: "Setup mySQL"
         uses: haltuf/mysql-action@master
         with:
-          host port: 3306
+          host port: 3307
           mysql database: 'portfolio_database_test'
           mysql root password: 'root'
       - name: Setup Node.js 14.x
@@ -23,20 +23,20 @@ jobs:
           npm install
       
       - name: Migrate DB
-        run: DATABASE_URL=mysql://root:root@localhost:3306/portfolio_database_test npx prisma migrate deploy
+        run: DATABASE_URL=mysql://root:root@localhost:3307/portfolio_database_test npx prisma migrate deploy
 
       - name: Start dev server
         run: (npm run dev &)
         env:
           CI: true
-          DATABASE_URL: mysql://root:root@localhost:3306/portfolio_database_test
+          DATABASE_URL: mysql://root:root@localhost:3307/portfolio_database_test
 
       - name: Run Cypress 🌲
         uses: cypress-io/github-action@v2
         with:
           record: true
         env:
-          DATABASE_URL: mysql://root:root@localhost:3306/portfolio_database_test
+          DATABASE_URL: mysql://root:root@localhost:3307/portfolio_database_test
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
       # if you are NOT using Cypress GitHub Integration App, then set commit status manually
