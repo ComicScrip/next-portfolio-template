@@ -6,7 +6,7 @@ module.exports = withPWA({
     domains: ['ucarecdn.com'],
   },
   pwa: {
-    disable: process.env.NODE_ENV === 'development',
+    disable: process.env.NODE_ENV !== 'production',
     dest: 'public',
   },
 });

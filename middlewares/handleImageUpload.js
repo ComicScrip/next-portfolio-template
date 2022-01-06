@@ -1,16 +1,7 @@
 const multer = require('multer');
-const uniqid = require('uniqid');
 const path = require('path');
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/uploads');
-  },
-  filename: (req, file, cb) => {
-    const extname = path.extname(file.originalname).toLowerCase();
-    cb(null, `${uniqid()}${extname}`);
-  },
-});
+const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, cb) => {
   const filetypes = /jpeg|jpg|png|gif/;
@@ -29,7 +20,7 @@ const upload = multer({
   storage,
   fileFilter,
   limits: {
-    fileSize: 20000 * 1024, // 20M
+    fileSize: 5000 * 1024, // 5M max on Vercel
   },
 });
 

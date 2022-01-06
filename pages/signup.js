@@ -2,6 +2,8 @@ import Layout from '@components/Layout';
 import axios from 'axios';
 import { useState } from 'react';
 import Link from 'next/link';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 export default function SignupPage() {
   const [name, setName] = useState('');
@@ -15,9 +17,12 @@ export default function SignupPage() {
     axios
       .post('/api/users', { email, name, password })
       .then(() => {
-        alert(
+        toast.success(
           `Votre inscription est presque terminée, merci de bien vouloir confirmer votre addresse e-mail en cliquant sur le lien d'activation envoyé à ${email}.`
         );
+        setName('');
+        setEmail('');
+        setPassword('');
       })
       .catch((err) => {
         if (err.response && err.response.status === 409)
@@ -33,7 +38,7 @@ export default function SignupPage() {
         <h1 className='pageTitle text-center '>Inscription</h1>
         <form
           onSubmit={handleSubmit}
-          className='p-6 bg-slate-700/50 mt-6 rounded-xl w-96'
+          className='p-6 bg-slate-700/50 mt-6 rounded-xl w-80'
         >
           <label htmlFor='name'>
             Nom

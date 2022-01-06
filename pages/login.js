@@ -32,7 +32,7 @@ export default function LoginPage({ csrfToken }) {
 
               <form
                 method='post'
-                className='bg-slate-700 p-12 rounded-2xl shadow-black/30 shadow-lg min-w-[400px]'
+                className='bg-slate-700 p-12 rounded-2xl shadow-black/30 shadow-lg min-w-[320px]'
                 action='/api/auth/callback/credentials'
               >
                 <input
