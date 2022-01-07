@@ -2,12 +2,7 @@ import NextAuth from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 import crypto from 'crypto';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import {
-  createUser,
-  findByEmail,
-  findById,
-  verifyPassword,
-} from '@models/user';
+import { createUser, findByEmail, verifyPassword } from '@models/user';
 
 export default NextAuth({
   providers: [
@@ -18,6 +13,7 @@ export default NextAuth({
     CredentialsProvider({
       name: 'Credentials',
       async authorize(credentials) {
+        console.log(credentials);
         const user = await findByEmail(credentials.username);
         if (
           user &&

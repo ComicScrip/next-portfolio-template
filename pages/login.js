@@ -36,6 +36,7 @@ export default function LoginPage({ csrfToken }) {
                 action='/api/auth/callback/credentials'
               >
                 <input
+                  id='csrfToken'
                   name='csrfToken'
                   type='hidden'
                   defaultValue={csrfToken}
@@ -43,6 +44,7 @@ export default function LoginPage({ csrfToken }) {
                 <label>
                   Nom d{"'"}utilisateur
                   <input
+                    id='username'
                     name='username'
                     type='text'
                     className='block w-full'
@@ -55,9 +57,14 @@ export default function LoginPage({ csrfToken }) {
                     className='block w-full'
                     name='password'
                     type='password'
+                    id='password'
                   />
                 </label>
-                <button className='bg-amber-500 mt-6 w-full' type='submit'>
+                <button
+                  id='credentials-login-btn'
+                  className='bg-amber-500 mt-6 w-full'
+                  type='submit'
+                >
                   Tenter ces identifients
                 </button>
                 {query.error === 'CredentialsSignin' && (
@@ -84,9 +91,26 @@ export default function LoginPage({ csrfToken }) {
 }
 
 export async function getServerSideProps(context) {
+  // capturing the callback url if any, which should include the current domain for security ?
+  const host =
+    typeof context.query?.callbackUrl === 'string' &&
+    context.query?.callbackUrl.startsWith(process.env.NEXTAUTH_URL)
+      ? context.query?.callbackUrl
+      : process.env.NEXTAUTH_URL;
+  const redirectURL = encodeURIComponent(host);
+  // getting both the csrf form token and (next-auth.csrf-token cookie + next-auth.callback-url cookie)
+  const res = await fetch(
+    `${process.env.HOST}/api/auth/csrf?callbackUrl=${redirectURL}`
+  );
+  const { csrfToken } = await res.json();
+  const headers = await res.headers;
+  // placing the cookies
+  const [csrfCookie, redirectCookie] = headers.get('set-cookie').split(',');
+  context.res.setHeader('set-cookie', [csrfCookie, redirectCookie]);
+  // placing form csrf token
   return {
     props: {
-      csrfToken: await getCsrfToken(context),
+      csrfToken,
     },
   };
 }

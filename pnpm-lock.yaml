@@ -23,6 +23,7 @@ specifiers:
   next: 12.0.4
   next-auth: ^4.0.2
   next-connect: ^0.11.0
+  next-cookies: ^2.0.3
   next-pwa: ^5.4.4
   nodemailer: ^6.7.2
   npm-run-all: ^4.1.5
@@ -58,6 +59,7 @@ dependencies:
   next: 12.0.4_react-dom@17.0.2+react@17.0.2
   next-auth: 4.0.2_a5abe9a782f257b98b0228cd6e151b08
   next-connect: 0.11.0
+  next-cookies: 2.0.3
   next-pwa: 5.4.4_next@12.0.4
   nodemailer: 6.7.2
   npm-run-all: 4.1.5
@@ -1651,6 +1653,10 @@ packages:
       json5: 2.2.0
       magic-string: 0.25.7
       string.prototype.matchall: 4.0.6
+    dev: false
+
+  /@types/cookie/0.3.3:
+    resolution: {integrity: sha512-LKVP3cgXBT9RYj+t+9FDKwS5tdI+rPBXaNSkma7hvqy35lc7mAokC2zsqWJH0LaqIt3B962nuYI77hsJoT1gow==}
     dev: false
 
   /@types/estree/0.0.39:
@@ -5048,6 +5054,12 @@ packages:
       trouter: 3.2.0
     dev: false
 
+  /next-cookies/2.0.3:
+    resolution: {integrity: sha512-YVCQzwZx+sz+KqLO4y9niHH9jjz6jajlEQbAKfsYVT6DOfngb/0k5l6vFK4rmpExVug96pGag8OBsdSRL9FZhQ==}
+    dependencies:
+      universal-cookie: 4.0.4
+    dev: false
+
   /next-pwa/5.4.4_next@12.0.4:
     resolution: {integrity: sha512-Wo7DctXO9ZZzMCuRK/q2U3x5k49LBRv7p31woJIUfiR6tJChSMoojHUvvgeCY72gSo4mtovS5KRm6iHIs/kxeg==}
     peerDependencies:
@@ -7062,6 +7074,13 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       crypto-random-string: 2.0.0
+    dev: false
+
+  /universal-cookie/4.0.4:
+    resolution: {integrity: sha512-lbRVHoOMtItjWbM7TwDLdl8wug7izB0tq3/YVKhT/ahB4VDvWMyvnADfnJI8y6fSvsjh51Ix7lTGC6Tn4rMPhw==}
+    dependencies:
+      '@types/cookie': 0.3.3
+      cookie: 0.4.1
     dev: false
 
   /universalify/2.0.0:
