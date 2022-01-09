@@ -34,7 +34,7 @@ export default function CurrentUserMenu() {
       ];
 
   return (
-    <div ref={ref}>
+    <div ref={ref} data-cy='currentUserMenu'>
       <div onClick={toggleUserMenu} className='cursor-pointer'>
         <Avatar src={currentUserProfile.image} alt={currentUserProfile.name} />
       </div>

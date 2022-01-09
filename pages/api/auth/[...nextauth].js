@@ -13,7 +13,6 @@ export default NextAuth({
     CredentialsProvider({
       name: 'Credentials',
       async authorize(credentials) {
-        console.log(credentials);
         const user = await findByEmail(credentials.username);
         if (
           user &&

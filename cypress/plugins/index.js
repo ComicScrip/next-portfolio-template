@@ -51,5 +51,8 @@ module.exports = (on, config) => {
     getLastEmail(userEmail) {
       return lastEmail[userEmail] || null;
     },
+    deleteUserByEmail(email) {
+      return User.delete({ where: { email } }).catch(() => false);
+    },
   });
 };
