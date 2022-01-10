@@ -2,6 +2,7 @@
 const User = require('../../models/user');
 const Project = require('../../models/project');
 const ms = require('smtp-tester');
+const dotenvPlugin = require('cypress-dotenv');
 
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
@@ -22,6 +23,7 @@ const ms = require('smtp-tester');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (on, config) => {
+  config = dotenvPlugin(config);
   const mailServer = ms.init(7777);
   const lastEmail = {};
   mailServer.bind((addr, id, email) => {
@@ -50,4 +52,5 @@ module.exports = (on, config) => {
       return User.delete({ where: { email } }).catch(() => false);
     },
   });
+  return config;
 };

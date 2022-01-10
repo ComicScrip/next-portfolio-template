@@ -3,6 +3,7 @@
   "scripts": {
     "resetsw-and-lauch": "rm public/sw.js && rm public/workbox-* ; next build && next start",
     "dev": "next dev",
+    "dev:test": "CI=true next dev",
     "build": "next build",
     "start:server": "node server.js",
     "lint": "next lint",
@@ -12,8 +13,8 @@
     "pre-start": "NODE_ENV=production npm-run-all migrate:deploy generate-db-client build ",
     "start": "NODE_ENV=production npm run start:server",
     "serve:lhci": "npm start",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "test:gui": "cypress open",
+    "test": "cypress run"
   },
   "dependencies": {
     "@hcaptcha/react-hcaptcha": "^0.3.9",
@@ -22,6 +23,7 @@
     "argon2": "^0.28.3",
     "axios": "^0.24.0",
     "cypress": "^9.2.0",
+    "cypress-dotenv": "^2.0.0",
     "dotenv": "^10.0.0",
     "esm": "^3.2.25",
     "express": "^4.17.2",

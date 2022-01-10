@@ -9,6 +9,7 @@ specifiers:
   axios: ^0.24.0
   cypress: ^9.2.0
   cypress-data-session: ^1.15.1
+  cypress-dotenv: ^2.0.0
   cypress-file-upload: ^5.0.8
   dotenv: ^10.0.0
   eslint: 7.32.0
@@ -47,6 +48,7 @@ dependencies:
   argon2: 0.28.3
   axios: 0.24.0
   cypress: 9.2.0
+  cypress-dotenv: 2.0.0_cypress@9.2.0+dotenv@10.0.0
   dotenv: 10.0.0
   esm: 3.2.25
   express: 4.17.2
@@ -2432,6 +2434,11 @@ packages:
     engines: {node: '>= 6'}
     dev: true
 
+  /camelcase/6.3.0:
+    resolution: {integrity: sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==}
+    engines: {node: '>=10'}
+    dev: false
+
   /caniuse-lite/1.0.30001298:
     resolution: {integrity: sha512-AcKqikjMLlvghZL/vfTHorlQsLDhGRalYf1+GmWCf5SCMziSGjRYQW/JEksj14NaYHIR6KIhrFAy0HV5C25UzQ==}
 
@@ -2838,6 +2845,22 @@ packages:
       - supports-color
     dev: true
 
+  /cypress-dotenv/2.0.0_cypress@9.2.0+dotenv@10.0.0:
+    resolution: {integrity: sha512-MHCkWuTU51n/Q6LT2FgjNVZx/OmnrP3Jve7TUGZvSbjgGOpBOVZTbm3tomjvn+2S6HhloRXSAOmT5fY9pvWkpQ==}
+    engines: {node: '>=10.x'}
+    peerDependencies:
+      cypress: '>= 8.x'
+      dotenv: '>= 10.x'
+    dependencies:
+      camelcase: 6.3.0
+      cypress: 9.2.0
+      dotenv: 10.0.0
+      dotenv-parse-variables: 2.0.0
+      lodash.clonedeep: 4.5.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /cypress-file-upload/5.0.8_cypress@9.2.0:
     resolution: {integrity: sha512-+8VzNabRk3zG6x8f8BWArF/xA/W0VK4IZNx3MV0jFWrJS/qKn8eHfa5nU73P9fOQAgwHFJx7zjg4lwOnljMO8g==}
     engines: {node: '>=8.2.1'}
@@ -3115,6 +3138,16 @@ packages:
     dependencies:
       dom-serializer: 0.2.2
       domelementtype: 1.3.1
+    dev: false
+
+  /dotenv-parse-variables/2.0.0:
+    resolution: {integrity: sha512-/Tezlx6xpDqR6zKg1V4vLCeQtHWiELhWoBz5A/E0+A1lXN9iIkNbbfc4THSymS0LQUo8F1PMiIwVG8ai/HrnSA==}
+    engines: {node: '>= 8.3.0'}
+    dependencies:
+      debug: 4.3.3
+      is-string-and-not-blank: 0.0.2
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /dotenv/10.0.0:
@@ -4412,6 +4445,17 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
+  /is-string-and-not-blank/0.0.2:
+    resolution: {integrity: sha512-FyPGAbNVyZpTeDCTXnzuwbu9/WpNXbCfbHXLpCRpN4GANhS00eEIP5Ef+k5HYSNIzIhdN9zRDoBj6unscECvtQ==}
+    engines: {node: '>=6.4.0'}
+    dependencies:
+      is-string-blank: 1.0.1
+    dev: false
+
+  /is-string-blank/1.0.1:
+    resolution: {integrity: sha512-9H+ZBCVs3L9OYqv8nuUAzpcT9OTgMD1yAWrG7ihlnibdkbtB850heAmYWxHuXc4CHy4lKeK69tN+ny1K7gBIrw==}
+    dev: false
+
   /is-string/1.0.7:
     resolution: {integrity: sha512-tE2UXzivje6ofPW7l23cjDOMa09gb7xlAqG6jG5ej6uPV32TlWP3NKPigtaGeHNu9fohccRYvIiZMfOOnOYUtg==}
     engines: {node: '>= 0.4'}
@@ -4746,6 +4790,10 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       p-locate: 4.1.0
+    dev: false
+
+  /lodash.clonedeep/4.5.0:
+    resolution: {integrity: sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=}
     dev: false
 
   /lodash.debounce/4.0.8:
