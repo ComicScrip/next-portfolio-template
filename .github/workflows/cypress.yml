@@ -38,7 +38,7 @@ jobs:
           DATABASE_URL: mysql://root:root@localhost:3306/test
       - name: Run Cypress 🌲
         uses: cypress-io/github-action@v2
-        timeout-minutes: 5
+        timeout-minutes: 30
         with:
           install: false
           record: true
