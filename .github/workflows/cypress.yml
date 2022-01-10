@@ -39,7 +39,7 @@ jobs:
         with:
           record: true
           browser: chrome
-          config: pageLoadTimeout=15000,defaultCommandTimeout=15000
+          config: pageLoadTimeout=150,defaultCommandTimeout=150
         env:
           DATABASE_URL: mysql://root:root@localhost:3306/test
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
