@@ -19,6 +19,8 @@ jobs:
           node-version: 14.x
       - name: Set up pnpm and install deps
         uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.0.2
       - name: Reset DB
         run: | 
           DATABASE_URL=mysql://root:root@localhost:3306/test npx prisma migrate deploy
