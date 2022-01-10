@@ -46,6 +46,7 @@ module.exports = (on, config) => {
           'https://ucarecdn.com/be32d5a2-4ef2-4a47-8e73-7142f80ae188/ms_project_2013_2.jpg',
       }),
     deleteAllUsers: User.deleteMany,
+    deleteAllProjects: Project.deleteMany,
     findUserByEmail: User.findByEmail,
     createUser: User.createUser,
     getLastEmail(userEmail) {

@@ -27,7 +27,7 @@ jobs:
           HOST: http://localhost:3000
           SECRET: VRdzayiObk6c7SaadzzaTxP+YZpIJ9AfhrbnZ+Q
           NEXTAUTH_URL: http://localhost:3000
-          NEXT_PUBLIC_UPLOADCARE_KEY: 0c3b61b93ab7892adb38
+          NEXT_PUBLIC_UPLOADCARE_KEY: demopublickey
           CONTACT_FORM_RECIPIENT: admin@app.com
           MAILER_FROM: admin@app.com
           NEXT_PUBLIC_HCAPTCHA_SITEKEY: 6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI # see https://developers.google.com/recaptcha/docs/faq#id-like-to-run-automated-tests-with-recaptcha.-what-should-i-do

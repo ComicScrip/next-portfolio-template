@@ -13,10 +13,11 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
+import 'cypress-data-session';
+import 'cypress-file-upload';
+
 // Import commands.js using ES2015 syntax:
 import './commands';
-
-import 'cypress-data-session';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

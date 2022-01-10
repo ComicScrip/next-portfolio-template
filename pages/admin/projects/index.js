@@ -31,14 +31,20 @@ export default function ProjectListAdmin() {
                 <td className='text-lg p-3 font-bold'>{title}</td>
                 <td className='pt-3 pb-3'>
                   <Link passHref href={`/projects/${id}`}>
-                    <button className='mr-6 bg-sky-600 hover:bg-sky-700'>
+                    <button
+                      data-cy={`see-btn-${id}`}
+                      className='mr-6 bg-sky-600 hover:bg-sky-700'
+                    >
                       See
                     </button>
                   </Link>
                   <Link passHref href={`/admin/projects/edit/${id}`}>
-                    <button className='mr-6'>Edit</button>
+                    <button data-cy={`edit-btn-${id}`} className='mr-6'>
+                      Edit
+                    </button>
                   </Link>
                   <button
+                    data-cy={`delete-btn-${id}`}
                     className='bg-red-400 hover:bg-red-500'
                     onClick={() => deleteProject(id)}
                   >
