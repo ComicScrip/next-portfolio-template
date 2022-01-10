@@ -38,7 +38,7 @@ jobs:
         timeout-minutes: 5
         with:
           record: true
+          config: pageLoadTimeout=15000,defaultCommandTimeout=15000,baseUrl=http://localhost:3000
         env:
           DATABASE_URL: mysql://root:root@localhost:3306/test
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          CYPRESS_PAGE_LOAD_TIMEOUT: 100000
