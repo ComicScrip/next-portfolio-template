@@ -22,9 +22,6 @@ const ms = require('smtp-tester');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (on, config) => {
-  // modify config values
-  config.defaultCommandTimeout = 15000;
-
   const mailServer = ms.init(7777);
   const lastEmail = {};
   mailServer.bind((addr, id, email) => {
@@ -33,9 +30,6 @@ module.exports = (on, config) => {
       html: email.html,
     };
   });
-
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
   on('task', {
     cleanDb: async () => Promise.all([User.deleteMany(), Project.deleteMany()]),
     createSampleProject: async (title = 'P1') =>
