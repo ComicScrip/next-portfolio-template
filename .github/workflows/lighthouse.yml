@@ -11,15 +11,14 @@ jobs:
           host port: 3306
           mysql database: 'test'
           mysql root password: 'root'
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Setup Node.js 14.x
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install deps
-        run: |
-          npm install
+      - name: Set up pnpm and install deps
+        uses: pnpm/action-setup@v2.0.1
       - name: Reset DB
         run: | 
           DATABASE_URL=mysql://root:root@localhost:3306/test npx prisma migrate deploy

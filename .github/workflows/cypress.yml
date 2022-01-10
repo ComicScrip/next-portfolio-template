@@ -16,8 +16,8 @@ jobs:
           node-version: 14.x
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install deps
-        run: npm install
+      - name: Set up pnpm and install deps
+        uses: pnpm/action-setup@v2.0.1
       - name: Migrate DB
         run: DATABASE_URL=mysql://root:root@localhost:3306/test npx prisma migrate deploy
       - name: Start dev server
@@ -37,8 +37,8 @@ jobs:
         uses: cypress-io/github-action@v2
         timeout-minutes: 5
         with:
+          install: false
           record: true
-          browser: chrome
           config: pageLoadTimeout=30000,defaultCommandTimeout=30000
         env:
           DATABASE_URL: mysql://root:root@localhost:3306/test

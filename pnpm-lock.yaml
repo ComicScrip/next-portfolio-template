@@ -9,6 +9,7 @@ specifiers:
   axios: ^0.24.0
   cypress: ^9.2.0
   cypress-data-session: ^1.15.1
+  cypress-file-upload: ^5.0.8
   dotenv: ^10.0.0
   eslint: 7.32.0
   eslint-config-next: 12.0.4
@@ -73,6 +74,7 @@ dependencies:
 devDependencies:
   autoprefixer: 10.4.2_postcss@8.4.5
   cypress-data-session: 1.15.1
+  cypress-file-upload: 5.0.8_cypress@9.2.0
   eslint: 7.32.0
   eslint-config-next: 12.0.4_e81be7d1ca1bbab87068554ecb71ac53
   postcss: 8.4.5
@@ -2834,6 +2836,15 @@ packages:
       simple-sha256: 1.1.0
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /cypress-file-upload/5.0.8_cypress@9.2.0:
+    resolution: {integrity: sha512-+8VzNabRk3zG6x8f8BWArF/xA/W0VK4IZNx3MV0jFWrJS/qKn8eHfa5nU73P9fOQAgwHFJx7zjg4lwOnljMO8g==}
+    engines: {node: '>=8.2.1'}
+    peerDependencies:
+      cypress: '>3.0.0'
+    dependencies:
+      cypress: 9.2.0
     dev: true
 
   /cypress/9.2.0:
