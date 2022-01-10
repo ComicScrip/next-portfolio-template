@@ -1,5 +1,4 @@
 {
   "baseUrl": "http://localhost:3000",
-  "projectId": "vhy919",
-  "experimentalSessionSupport": true
+  "projectId": "vhy919"
 }
