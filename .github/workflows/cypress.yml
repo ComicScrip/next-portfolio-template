@@ -21,7 +21,7 @@ jobs:
       - name: Migrate DB
         run: DATABASE_URL=mysql://root:root@localhost:3306/test npx prisma migrate deploy
       - name: Start dev server
-        run: (npm run dev &)
+        run: (pnpm run dev &)
         env:
           CI: true
           HOST: http://localhost:3000

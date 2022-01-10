@@ -24,10 +24,10 @@ jobs:
           DATABASE_URL=mysql://root:root@localhost:3306/test npx prisma migrate deploy
           DATABASE_URL=mysql://root:root@localhost:3306/test npx prisma db seed
       - name: Build
-        run: DATABASE_URL=mysql://root:root@localhost:3306/test NEXTAUTH_URL=http://localhost:3000 npm run build
+        run: DATABASE_URL=mysql://root:root@localhost:3306/test NEXTAUTH_URL=http://localhost:3000 pnpm run build
       - name: run Lighthouse CI
         run: |
-          npm install -g @lhci/cli@0.8.x
+          pnpm install -g @lhci/cli@0.8.x
           lhci autorun
         env:
           LHCI_GITHUB_APP_TOKEN: ${{secrets.LHCI_GITHUB_APP_TOKEN}}
