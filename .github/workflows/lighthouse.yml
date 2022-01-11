@@ -11,24 +11,26 @@ jobs:
           host port: 3306
           mysql database: 'test'
           mysql root password: 'root'
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Setup Node.js 14.x
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install deps
-        run: |
-          npm install
+      - name: Set up pnpm and install deps
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.0.2
+          run_install: true
       - name: Reset DB
         run: | 
           DATABASE_URL=mysql://root:root@localhost:3306/test npx prisma migrate deploy
           DATABASE_URL=mysql://root:root@localhost:3306/test npx prisma db seed
       - name: Build
-        run: DATABASE_URL=mysql://root:root@localhost:3306/test npm run build
+        run: DATABASE_URL=mysql://root:root@localhost:3306/test NEXTAUTH_URL=http://localhost:3000 pnpm run build
       - name: run Lighthouse CI
         run: |
-          npm install -g @lhci/cli@0.8.x
+          pnpm install -g @lhci/cli@0.8.x
           lhci autorun
         env:
           LHCI_GITHUB_APP_TOKEN: ${{secrets.LHCI_GITHUB_APP_TOKEN}}

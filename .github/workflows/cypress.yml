@@ -16,18 +16,21 @@ jobs:
           node-version: 14.x
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install deps
-        run: npm install
+      - name: Set up pnpm and install deps
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.0.2
+          run_install: true
       - name: Migrate DB
         run: DATABASE_URL=mysql://root:root@localhost:3306/test npx prisma migrate deploy
       - name: Start dev server
-        run: (npm run dev &)
+        run: (pnpm run dev &)
         env:
           CI: true
           HOST: http://localhost:3000
           SECRET: VRdzayiObk6c7SaadzzaTxP+YZpIJ9AfhrbnZ+Q
           NEXTAUTH_URL: http://localhost:3000
-          NEXT_PUBLIC_UPLOADCARE_KEY: 0c3b61b93ab7892adb38
+          NEXT_PUBLIC_UPLOADCARE_KEY: demopublickey
           CONTACT_FORM_RECIPIENT: admin@app.com
           MAILER_FROM: admin@app.com
           NEXT_PUBLIC_HCAPTCHA_SITEKEY: 6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI # see https://developers.google.com/recaptcha/docs/faq#id-like-to-run-automated-tests-with-recaptcha.-what-should-i-do
@@ -35,8 +38,11 @@ jobs:
           DATABASE_URL: mysql://root:root@localhost:3306/test
       - name: Run Cypress 🌲
         uses: cypress-io/github-action@v2
+        timeout-minutes: 30
         with:
+          install: false
           record: true
+          config: pageLoadTimeout=30000,defaultCommandTimeout=30000
         env:
           DATABASE_URL: mysql://root:root@localhost:3306/test
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
