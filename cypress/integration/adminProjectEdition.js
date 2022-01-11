@@ -46,4 +46,32 @@ describe('/admin/projects/edit/[...id]', () => {
       cy.contains('example');
     });
   });
+
+  describe('existing project', () => {
+    let p1;
+    before(() => {});
+
+    beforeEach(() => {
+      cy.task('deleteAllProjects');
+      cy.signup({ email: 'admin@website.com', role: 'admin' });
+      cy.login({ email: 'admin@website.com', role: 'admin' });
+      cy.task('createSampleProject').then((p) => {
+        p1 = p;
+        cy.visit(`/admin/projects/edit/${p1.id}`);
+      });
+    });
+
+    it('fills the fields with the project information from DB', () => {
+      cy.get('#title').should('have.value', p1.title);
+      cy.get('#description').should('have.value', p1.description);
+      cy.contains('Choose a file');
+    });
+    it('can update a project', () => {
+      cy.get('#title').type('{selectall}test title');
+      cy.get('#description').type('{selectall}test description');
+      cy.get('form').submit();
+      cy.url().should('match', /\/projects$/);
+      cy.contains('test title');
+    });
+  });
 });

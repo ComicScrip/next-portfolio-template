@@ -1,7 +1,7 @@
 describe('/admin/projects', () => {
   let p1, p2;
   before(() => {
-    //cy.task('cleanDb');
+    cy.task('cleanDb');
   });
   beforeEach(() => {
     cy.task('deleteAllProjects');
