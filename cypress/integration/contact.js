@@ -1,7 +1,13 @@
 describe('/contact', () => {
   beforeEach(() => {
     cy.task('cleanDb');
-    cy.visit('/contact');
+    cy.visit('/contact', {
+      onBeforeLoad(win) {
+        Object.defineProperty(win.navigator, 'language', {
+          value: 'fr',
+        });
+      },
+    });
   });
 
   it('does not send the form if there are validation errors', () => {
