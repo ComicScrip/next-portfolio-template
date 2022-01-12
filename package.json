@@ -3,7 +3,7 @@
   "scripts": {
     "resetsw-and-lauch": "rm public/sw.js && rm public/workbox-* ; next build && next start",
     "dev": "next dev",
-    "dev:test": "CI=true next dev",
+    "dev:test": "CI=true NEXT_PUBLIC_UPLOADCARE_KEY=demopublickey CONTACT_FORM_RECIPIENT=user@app.com NEXT_PUBLIC_HCAPTCHA_SITEKEY=10000000-ffff-ffff-ffff-000000000001 HCAPTCHA_SECRET=0x0000000000000000000000000000000000000000 next dev",
     "build": "next build",
     "start:server": "node server.js",
     "lint": "next lint",

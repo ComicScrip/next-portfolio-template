@@ -24,25 +24,26 @@ jobs:
       - name: Migrate DB
         run: DATABASE_URL=mysql://root:root@localhost:3306/test npx prisma migrate deploy
       - name: Start dev server
-        run: (pnpm run dev &)
+        run: (pnpm run dev:test &)
         env:
           CI: true
           HOST: http://localhost:3000
           SECRET: VRdzayiObk6c7SaadzzaTxP+YZpIJ9AfhrbnZ+Q
           NEXTAUTH_URL: http://localhost:3000
           NEXT_PUBLIC_UPLOADCARE_KEY: demopublickey
-          CONTACT_FORM_RECIPIENT: admin@app.com
-          MAILER_FROM: admin@app.com
-          NEXT_PUBLIC_HCAPTCHA_SITEKEY: 6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI # see https://developers.google.com/recaptcha/docs/faq#id-like-to-run-automated-tests-with-recaptcha.-what-should-i-do
-          HCAPTCHA_SECRET: 6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
+          MAILER_FROM: user@app.com
           DATABASE_URL: mysql://root:root@localhost:3306/test
+          NEXT_PUBLIC_HCAPTCHA_SITEKEY: '10000000-ffff-ffff-ffff-000000000001'
+          HCAPTCHA_SECRET: '0x0000000000000000000000000000000000000000'
       - name: Run Cypress 🌲
         uses: cypress-io/github-action@v2
         timeout-minutes: 30
         with:
           install: false
           record: true
+          browser: chrome
           config: pageLoadTimeout=30000,defaultCommandTimeout=30000
         env:
           DATABASE_URL: mysql://root:root@localhost:3306/test
+          CONTACT_FORM_RECIPIENT: 'user@app.com'
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}

@@ -3,7 +3,6 @@ describe('/admin/projects/edit/[...id]', () => {
     before(() => {
       cy.task('cleanDb');
     });
-
     beforeEach(() => {
       cy.task('deleteAllProjects');
       cy.signup({ email: 'admin@website.com', role: 'admin' });
@@ -49,7 +48,9 @@ describe('/admin/projects/edit/[...id]', () => {
 
   describe('existing project', () => {
     let p1;
-    before(() => {});
+    before(() => {
+      cy.task('cleanDb');
+    });
 
     beforeEach(() => {
       cy.task('deleteAllProjects');
