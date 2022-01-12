@@ -45,4 +45,5 @@ jobs:
           config: pageLoadTimeout=30000,defaultCommandTimeout=30000
         env:
           DATABASE_URL: mysql://root:root@localhost:3306/test
+          CONTACT_FORM_RECIPIENT: 'user@app.com'
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
