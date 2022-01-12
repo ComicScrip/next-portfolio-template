@@ -39,6 +39,7 @@ jobs:
         with:
           install: false
           record: true
+          browser: chrome
           config: pageLoadTimeout=30000,defaultCommandTimeout=30000
         env:
           DATABASE_URL: mysql://root:root@localhost:3306/test
