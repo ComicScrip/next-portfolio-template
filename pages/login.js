@@ -100,7 +100,9 @@ export async function getServerSideProps(context) {
   const redirectURL = encodeURIComponent(host);
   // getting both the csrf form token and (next-auth.csrf-token cookie + next-auth.callback-url cookie)
   const res = await fetch(
-    `${process.env.NEXTAUTH_URL}/api/auth/csrf?callbackUrl=${redirectURL}`
+    `${
+      process.env.NEXTAUTH_URL || process.env.VERCEL_URL
+    }/api/auth/csrf?callbackUrl=${redirectURL}`
   );
   const { csrfToken } = await res.json();
   const headers = await res.headers;
