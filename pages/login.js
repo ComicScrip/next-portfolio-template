@@ -95,10 +95,10 @@ export async function getServerSideProps(context) {
   if (!baseUrl.startsWith('http')) {
     baseUrl = `https://${baseUrl}`;
   }
-  console.log('host', req.host);
-  console.log('pro', req.protocol);
-  console.log('port', req.port);
-  console.log('url', req.resolvedUrl);
+  console.log('host', context.req.host);
+  console.log('pro', context.req.protocol);
+  console.log('port', context.req.port);
+  console.log('url', context.req.resolvedUrl);
   // capturing the callback url if any, which should include the current domain for security ?
   const host =
     typeof context.query?.callbackUrl === 'string' &&
