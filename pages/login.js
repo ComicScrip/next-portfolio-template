@@ -91,29 +91,34 @@ export default function LoginPage({ csrfToken }) {
 }
 
 export async function getServerSideProps(context) {
+  let baseUrl = process.env.NEXTAUTH_URL || process.env.VERCEL_URL;
+  if (!baseUrl.startsWith('http')) {
+    baseUrl = `https://${baseUrl}`;
+  }
+  console.log('host', req.host);
+  console.log('pro', req.protocol);
+  console.log('port', req.port);
+  console.log('url', req.resolvedUrl);
   // capturing the callback url if any, which should include the current domain for security ?
   const host =
     typeof context.query?.callbackUrl === 'string' &&
-    context.query?.callbackUrl.startsWith(process.env.NEXTAUTH_URL)
+    context.query?.callbackUrl.startsWith(baseUrl)
       ? context.query?.callbackUrl
-      : process.env.NEXTAUTH_URL;
+      : baseUrl;
   const redirectURL = encodeURIComponent(host);
   // getting both the csrf form token and (next-auth.csrf-token cookie + next-auth.callback-url cookie)
-  const baseUrl = process.env.NEXTAUTH_URL || process.env.VERCEL_URL;
+
   const csrfUrl = `${baseUrl}/api/auth/csrf?callbackUrl=${redirectURL}`;
-  console.log('next auth', process.env.NEXTAUTH_URL);
-  console.log('vercel', process.env.VERCEL_URL);
-  console.log('vercel public', process.env.NEXT_PUBLIC_VERCEL_UR);
-  // const res = await fetch(csrfUrl);
-  // const { csrfToken } = await res.json();
-  // const headers = res.headers;
+  const res = await fetch(csrfUrl);
+  const { csrfToken } = await res.json();
+  const headers = res.headers;
   // placing the cookies
-  // const [csrfCookie, redirectCookie] = headers.get('set-cookie').split(',');
-  // context.res.setHeader('set-cookie', [csrfCookie, redirectCookie]);
+  const [csrfCookie, redirectCookie] = headers.get('set-cookie').split(',');
+  context.res.setHeader('set-cookie', [csrfCookie, redirectCookie]);
   // placing form csrf token
   return {
     props: {
-      csrfToken: '',
+      csrfToken,
     },
   };
 }
