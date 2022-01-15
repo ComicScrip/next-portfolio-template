@@ -95,10 +95,6 @@ export async function getServerSideProps(context) {
   if (!baseUrl.startsWith('http')) {
     baseUrl = `https://${baseUrl}`;
   }
-  console.log('host', context.req.host);
-  console.log('pro', context.req.protocol);
-  console.log('port', context.req.port);
-  console.log('url', context.req.resolvedUrl);
   // capturing the callback url if any, which should include the current domain for security ?
   const host =
     typeof context.query?.callbackUrl === 'string' &&
@@ -107,7 +103,6 @@ export async function getServerSideProps(context) {
       : baseUrl;
   const redirectURL = encodeURIComponent(host);
   // getting both the csrf form token and (next-auth.csrf-token cookie + next-auth.callback-url cookie)
-
   const csrfUrl = `${baseUrl}/api/auth/csrf?callbackUrl=${redirectURL}`;
   const res = await fetch(csrfUrl);
   const { csrfToken } = await res.json();
