@@ -1,6 +1,6 @@
 import Layout from '../components/Layout';
 import CurrentUserContext from '../contexts/currentUserContext';
-import { signIn, signOut, getCsrfToken } from 'next-auth/react';
+import { signIn, signOut } from 'next-auth/react';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
 import { useContext } from 'react';
@@ -36,6 +36,7 @@ export default function LoginPage({ csrfToken }) {
                 action='/api/auth/callback/credentials'
               >
                 <input
+                  id='csrfToken'
                   name='csrfToken'
                   type='hidden'
                   defaultValue={csrfToken}
@@ -43,6 +44,7 @@ export default function LoginPage({ csrfToken }) {
                 <label>
                   Nom d{"'"}utilisateur
                   <input
+                    id='username'
                     name='username'
                     type='text'
                     className='block w-full'
@@ -55,9 +57,14 @@ export default function LoginPage({ csrfToken }) {
                     className='block w-full'
                     name='password'
                     type='password'
+                    id='password'
                   />
                 </label>
-                <button className='bg-amber-500 mt-6 w-full' type='submit'>
+                <button
+                  id='credentials-login-btn'
+                  className='bg-amber-500 mt-6 w-full'
+                  type='submit'
+                >
                   Tenter ces identifients
                 </button>
                 {query.error === 'CredentialsSignin' && (
@@ -84,9 +91,29 @@ export default function LoginPage({ csrfToken }) {
 }
 
 export async function getServerSideProps(context) {
+  let baseUrl = process.env.NEXTAUTH_URL || process.env.VERCEL_URL;
+  if (!baseUrl.startsWith('http')) {
+    baseUrl = `https://${baseUrl}`;
+  }
+  // capturing the callback url if any, which should include the current domain for security ?
+  const host =
+    typeof context.query?.callbackUrl === 'string' &&
+    context.query?.callbackUrl.startsWith(baseUrl)
+      ? context.query?.callbackUrl
+      : baseUrl;
+  const redirectURL = encodeURIComponent(host);
+  // getting both the csrf form token and (next-auth.csrf-token cookie + next-auth.callback-url cookie)
+  const csrfUrl = `${baseUrl}/api/auth/csrf?callbackUrl=${redirectURL}`;
+  const res = await fetch(csrfUrl);
+  const { csrfToken } = await res.json();
+  const headers = res.headers;
+  // placing the cookies
+  const [csrfCookie, redirectCookie] = headers.get('set-cookie').split(',');
+  context.res.setHeader('set-cookie', [csrfCookie, redirectCookie]);
+  // placing form csrf token
   return {
     props: {
-      csrfToken: await getCsrfToken(context),
+      csrfToken,
     },
   };
 }

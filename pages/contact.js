@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 
 import axios from 'axios';
@@ -19,7 +21,7 @@ export default function Projects() {
     axios
       .post('/api/contactRequests', { email, message, hcaptchaToken })
       .then(() => {
-        alert('Merci, je vous recontacterai au plus vite');
+        toast.success('Merci, je vous recontacterai au plus vite');
         setMessage('');
         setEmail('');
       });
@@ -71,6 +73,7 @@ export default function Projects() {
                   setHcaptchaToken(token);
                 }}
                 size='compact'
+                id='contact-captcha'
               />
               {missingHcaptchaError && (
                 <div className='text-red-400 mb-3'>{missingHcaptchaError}</div>

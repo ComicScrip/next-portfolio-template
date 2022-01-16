@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import portfolioImg from '../public/images/portfolio.jpg';
 import Layout from '../components/Layout';
+import { forwardRef } from 'react';
 
 export default function Home() {
   return (

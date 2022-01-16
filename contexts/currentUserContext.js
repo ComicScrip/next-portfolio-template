@@ -1,7 +1,7 @@
 import { signOut, useSession } from 'next-auth/react';
 import { createContext, useEffect, useState } from 'react';
 import axios from 'axios';
-
+import { toast } from 'react-toastify';
 const CurrentUserContext = createContext();
 
 export const CurrentUserContextProvider = ({ children }) => {
@@ -12,7 +12,7 @@ export const CurrentUserContextProvider = ({ children }) => {
   const updateProfileOnAPI = (data) => {
     axios.patch('/api/profile', data).then(({ data }) => {
       setCurrentUserProfile(data);
-      alert('ok');
+      toast.success('Votre profil a bien été enregistré');
     });
   };
 

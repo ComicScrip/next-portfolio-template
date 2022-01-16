@@ -3,6 +3,7 @@
   "scripts": {
     "resetsw-and-lauch": "rm public/sw.js && rm public/workbox-* ; next build && next start",
     "dev": "next dev",
+    "dev:test": "CI=true NEXT_PUBLIC_UPLOADCARE_KEY=demopublickey CONTACT_FORM_RECIPIENT=user@app.com NEXT_PUBLIC_HCAPTCHA_SITEKEY=10000000-ffff-ffff-ffff-000000000001 HCAPTCHA_SECRET=0x0000000000000000000000000000000000000000 next dev",
     "build": "next build",
     "start:server": "node server.js",
     "lint": "next lint",
@@ -12,8 +13,8 @@
     "pre-start": "NODE_ENV=production npm-run-all migrate:deploy generate-db-client build ",
     "start": "NODE_ENV=production npm run start:server",
     "serve:lhci": "npm start",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "test:gui": "cypress open",
+    "test": "cypress run"
   },
   "dependencies": {
     "@hcaptcha/react-hcaptcha": "^0.3.9",
@@ -21,6 +22,8 @@
     "@uploadcare/react-widget": "^1.3.8",
     "argon2": "^0.28.3",
     "axios": "^0.24.0",
+    "cypress": "^9.2.0",
+    "cypress-dotenv": "^2.0.0",
     "dotenv": "^10.0.0",
     "esm": "^3.2.25",
     "express": "^4.17.2",
@@ -46,6 +49,8 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.0",
+    "cypress-data-session": "^1.15.1",
+    "cypress-file-upload": "^5.0.8",
     "eslint": "7.32.0",
     "eslint-config-next": "12.0.4",
     "postcss": "^8.4.4",

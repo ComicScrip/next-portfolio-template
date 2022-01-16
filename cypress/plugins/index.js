@@ -2,6 +2,7 @@
 const User = require('../../models/user');
 const Project = require('../../models/project');
 const ms = require('smtp-tester');
+const dotenvPlugin = require('cypress-dotenv');
 
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
@@ -22,9 +23,7 @@ const ms = require('smtp-tester');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (on, config) => {
-  // modify config values
-  config.defaultCommandTimeout = 15000;
-
+  config = dotenvPlugin(config);
   const mailServer = ms.init(7777);
   const lastEmail = {};
   mailServer.bind((addr, id, email) => {
@@ -33,9 +32,10 @@ module.exports = (on, config) => {
       html: email.html,
     };
   });
-
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
+  on('before:browser:launch', (browser, launchOptions) => {
+    launchOptions.preferences.default.intl = { accept_languages: 'en' };
+    return launchOptions;
+  });
   on('task', {
     cleanDb: async () => Promise.all([User.deleteMany(), Project.deleteMany()]),
     createSampleProject: async (title = 'P1') =>
@@ -46,10 +46,15 @@ module.exports = (on, config) => {
           'https://ucarecdn.com/be32d5a2-4ef2-4a47-8e73-7142f80ae188/ms_project_2013_2.jpg',
       }),
     deleteAllUsers: User.deleteMany,
+    deleteAllProjects: Project.deleteMany,
     findUserByEmail: User.findByEmail,
     createUser: User.createUser,
     getLastEmail(userEmail) {
       return lastEmail[userEmail] || null;
     },
+    deleteUserByEmail(email) {
+      return User.delete({ where: { email } }).catch(() => false);
+    },
   });
+  return config;
 };
