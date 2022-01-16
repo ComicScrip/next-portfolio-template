@@ -91,19 +91,22 @@ export default function LoginPage({ csrfToken }) {
 }
 
 export async function getServerSideProps(context) {
+  let baseUrl = process.env.NEXTAUTH_URL || process.env.VERCEL_URL;
+  if (!baseUrl.startsWith('http')) {
+    baseUrl = `https://${baseUrl}`;
+  }
   // capturing the callback url if any, which should include the current domain for security ?
   const host =
     typeof context.query?.callbackUrl === 'string' &&
-    context.query?.callbackUrl.startsWith(process.env.NEXTAUTH_URL)
+    context.query?.callbackUrl.startsWith(baseUrl)
       ? context.query?.callbackUrl
-      : process.env.NEXTAUTH_URL;
+      : baseUrl;
   const redirectURL = encodeURIComponent(host);
   // getting both the csrf form token and (next-auth.csrf-token cookie + next-auth.callback-url cookie)
-  const res = await fetch(
-    `${process.env.NEXTAUTH_URL}/api/auth/csrf?callbackUrl=${redirectURL}`
-  );
+  const csrfUrl = `${baseUrl}/api/auth/csrf?callbackUrl=${redirectURL}`;
+  const res = await fetch(csrfUrl);
   const { csrfToken } = await res.json();
-  const headers = await res.headers;
+  const headers = res.headers;
   // placing the cookies
   const [csrfCookie, redirectCookie] = headers.get('set-cookie').split(',');
   context.res.setHeader('set-cookie', [csrfCookie, redirectCookie]);
