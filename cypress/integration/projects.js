@@ -1,6 +1,6 @@
 describe('/projects', () => {
   beforeEach(() => {
-    cy.task('cleanDb');
+    cy.task('deleteAllProjects');
     cy.task('createSampleProject', 'P1');
     cy.task('createSampleProject', 'P2');
     cy.visit('/projects');

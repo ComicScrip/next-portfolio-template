@@ -1,6 +1,5 @@
-require('module-alias/register');
-import { hashPassword } from '@models/user';
-import db from '@db';
+const { hashPassword } = require('../models/user');
+const db = require('../db');
 
 async function seed() {
   await db.user.deleteMany();
@@ -34,4 +33,4 @@ async function seed() {
 
 seed();
 
-export default seed;
+module.exports = seed;

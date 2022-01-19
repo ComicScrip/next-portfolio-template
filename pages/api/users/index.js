@@ -1,6 +1,10 @@
-import base from '@middlewares/common';
-import mailer from '@mailer';
-import { createUser, emailAlreadyExists, validateUser } from '@models/user';
+import base from '../../../middlewares/common';
+import mailer from '../../../mailer';
+import {
+  createUser,
+  emailAlreadyExists,
+  validateUser,
+} from '../../../models/user';
 import crypto from 'crypto';
 
 async function handlePost(req, res) {

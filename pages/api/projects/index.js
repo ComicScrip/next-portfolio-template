@@ -1,6 +1,10 @@
-import base from '@middlewares/common';
-import requireAdmin from '@middlewares/requireAdmin';
-import { createProject, getProjects, validateProject } from '@models/project';
+import base from '../../../middlewares/common';
+import requireAdmin from '../../../middlewares/requireAdmin';
+import {
+  createProject,
+  getProjects,
+  validateProject,
+} from '../../../models/project';
 
 const handleGet = async (req, res) => {
   res.send(await getProjects());

@@ -1,8 +1,4 @@
-describe('Dashboard', () => {
-  before(() => {
-    cy.task('cleanDb');
-  });
-
+describe('/admin', () => {
   describe('with admin session', () => {
     beforeEach(() => {
       cy.signup({ role: 'admin' });

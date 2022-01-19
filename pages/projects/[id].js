@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import Layout from '@components/Layout';
-import { getOneProject, getProjects } from '@models/project';
+import Layout from '../../components/Layout';
+import { getOneProject, getProjects } from '../../models/project';
 
 export default function Project({
   project: { title, mainPictureUrl, description },

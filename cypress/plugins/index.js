@@ -32,10 +32,6 @@ module.exports = (on, config) => {
       html: email.html,
     };
   });
-  on('before:browser:launch', (browser, launchOptions) => {
-    launchOptions.preferences.default.intl = { accept_languages: 'en' };
-    return launchOptions;
-  });
   on('task', {
     cleanDb: async () => Promise.all([User.deleteMany(), Project.deleteMany()]),
     createSampleProject: async (title = 'P1') =>

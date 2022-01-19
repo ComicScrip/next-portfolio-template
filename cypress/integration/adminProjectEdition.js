@@ -1,12 +1,10 @@
 describe('/admin/projects/edit/[...id]', () => {
+  beforeEach(() => {
+    cy.setupCurrentUser({ role: 'admin' });
+    cy.task('deleteAllProjects');
+  });
   describe('new project', () => {
-    before(() => {
-      cy.task('cleanDb');
-    });
     beforeEach(() => {
-      cy.task('deleteAllProjects');
-      cy.signup({ email: 'admin@website.com', role: 'admin' });
-      cy.login({ email: 'admin@website.com', role: 'admin' });
       cy.visit('/admin/projects/edit/new');
     });
 
@@ -48,14 +46,7 @@ describe('/admin/projects/edit/[...id]', () => {
 
   describe('existing project', () => {
     let p1;
-    before(() => {
-      cy.task('cleanDb');
-    });
-
     beforeEach(() => {
-      cy.task('deleteAllProjects');
-      cy.signup({ email: 'admin@website.com', role: 'admin' });
-      cy.login({ email: 'admin@website.com', role: 'admin' });
       cy.task('createSampleProject').then((p) => {
         p1 = p;
         cy.visit(`/admin/projects/edit/${p1.id}`);

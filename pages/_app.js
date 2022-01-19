@@ -1,7 +1,7 @@
 import '../styles/globals.css';
 
 import { SessionProvider } from 'next-auth/react';
-import { CurrentUserContextProvider } from 'contexts/currentUserContext';
+import { CurrentUserContextProvider } from '../contexts/currentUserContext';
 import { ToastContainer } from 'react-toastify';
 import { Flip } from 'react-toastify';
 

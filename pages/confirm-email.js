@@ -1,5 +1,5 @@
-import Layout from '@components/Layout';
-import { confirmEmail } from '@models/user';
+import Layout from '../components/Layout';
+import { confirmEmail } from '../models/user';
 import Link from 'next/link';
 
 export default function ConfirmEmailPage({ verified }) {

@@ -1,5 +1,5 @@
-import base from '@middlewares/common';
-import mailer from '@mailer';
+import base from '../../middlewares/common';
+import mailer from '../../mailer';
 import { verify } from 'hcaptcha';
 
 async function handlePost({ body: { email, message, hcaptchaToken } }, res) {

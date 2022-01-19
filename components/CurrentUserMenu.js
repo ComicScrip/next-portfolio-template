@@ -1,4 +1,4 @@
-import CurrentUserContext from 'contexts/currentUserContext';
+import CurrentUserContext from '../contexts/currentUserContext';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useContext, useRef, useState } from 'react';

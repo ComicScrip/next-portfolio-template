@@ -1,5 +1,5 @@
-import Layout from '@components/Layout';
-import CurrentUserContext from 'contexts/currentUserContext';
+import Layout from '../components/Layout';
+import CurrentUserContext from '../contexts/currentUserContext';
 import { signIn, signOut } from 'next-auth/react';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
@@ -90,30 +90,31 @@ export default function LoginPage({ csrfToken }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  let baseUrl = process.env.NEXTAUTH_URL || process.env.VERCEL_URL;
-  if (!baseUrl.startsWith('http')) {
-    baseUrl = `https://${baseUrl}`;
-  }
+const getCsrfTokenAndSetCookies = async ({ res, query }) => {
+  // to make it work on Vercel
+  let baseUrl = process.env.NEXTAUTH_URL || `https://${process.env.VERCEL_URL}`;
   // capturing the callback url if any, which should include the current domain for security ?
-  const host =
-    typeof context.query?.callbackUrl === 'string' &&
-    context.query?.callbackUrl.startsWith(baseUrl)
-      ? context.query?.callbackUrl
-      : baseUrl;
+  const callbackUrlIsPresent = typeof query?.callbackUrl === 'string';
+  const callbackUrlIsValid =
+    callbackUrlIsPresent && query?.callbackUrl.startsWith(baseUrl);
+  const host = callbackUrlIsValid ? query?.callbackUrl : baseUrl;
   const redirectURL = encodeURIComponent(host);
   // getting both the csrf form token and (next-auth.csrf-token cookie + next-auth.callback-url cookie)
   const csrfUrl = `${baseUrl}/api/auth/csrf?callbackUrl=${redirectURL}`;
-  const res = await fetch(csrfUrl);
-  const { csrfToken } = await res.json();
-  const headers = res.headers;
+  const csrfResponse = await fetch(csrfUrl);
+  const { csrfToken } = await csrfResponse.json();
+  const { headers } = csrfResponse;
   // placing the cookies
   const [csrfCookie, redirectCookie] = headers.get('set-cookie').split(',');
-  context.res.setHeader('set-cookie', [csrfCookie, redirectCookie]);
+  res.setHeader('set-cookie', [csrfCookie, redirectCookie]);
   // placing form csrf token
+  return csrfToken;
+};
+
+export async function getServerSideProps(context) {
   return {
     props: {
-      csrfToken,
+      csrfToken: await getCsrfTokenAndSetCookies(context),
     },
   };
 }

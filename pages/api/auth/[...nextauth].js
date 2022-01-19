@@ -2,7 +2,7 @@ import NextAuth from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 import crypto from 'crypto';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { createUser, findByEmail, verifyPassword } from '@models/user';
+import { createUser, findByEmail, verifyPassword } from '../../../models/user';
 
 export default NextAuth({
   providers: [
