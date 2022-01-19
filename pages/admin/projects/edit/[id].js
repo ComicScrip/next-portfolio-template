@@ -6,6 +6,7 @@ import { Widget } from '@uploadcare/react-widget';
 import Image from 'next/image';
 
 export default function CreateProject() {
+  const [error, setError] = useState('');
   const [title, setTitle] = useState('');
   const [mainPictureUrl, setMainPictureUrl] = useState('');
   const [description, setDescription] = useState('');
@@ -40,7 +41,8 @@ export default function CreateProject() {
           setTitle(title);
           setDescription(description);
           setMainPictureUrl(mainPictureUrl);
-        });
+        })
+        .catch(() => setError('could not retrive projects from the API'));
     }
   }, [isUpdate, id]);
 
@@ -51,6 +53,7 @@ export default function CreateProject() {
       <h1 className='text-4xl font-bold mb-6'>
         {isUpdate ? 'Update a project' : 'Create a projet'}
       </h1>
+      {error && <div className='text-red-500'>{error}</div>}
       <form
         className=''
         onSubmit={async (e) => {
@@ -88,6 +91,7 @@ export default function CreateProject() {
             required
             id='title'
             type='text'
+            data-cy='project-title-input'
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />

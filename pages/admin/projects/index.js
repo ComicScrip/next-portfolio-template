@@ -5,9 +5,14 @@ import Link from 'next/link';
 
 export default function ProjectListAdmin() {
   const [projects, setProjects] = useState();
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    axios.get('/api/projects').then((res) => setProjects(res.data));
+    setError('');
+    axios
+      .get('/api/projects')
+      .then((res) => setProjects(res.data))
+      .catch(() => setError('could not retrive projects from the API'));
   }, []);
 
   const deleteProject = async (id) => {
@@ -21,6 +26,7 @@ export default function ProjectListAdmin() {
   return (
     <AdminLayout pageTitle='Gérer les projets'>
       <h1 className='text-4xl font-bold'>Manage projects</h1>
+      {error && <div className='text-red-500'>{error}</div>}
       {!projects && <p>Loading...</p>}
       {projects?.length === 0 && <p>No projects for now</p>}
       {projects && projects.length !== 0 && (

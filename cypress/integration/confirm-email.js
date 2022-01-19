@@ -1,6 +1,6 @@
 describe('/confirm-email', () => {
   beforeEach(() => {
-    cy.task('cleanDb');
+    cy.task('deleteUserByEmail', 'john.doe@gmail.com');
     cy.task('createUser', {
       email: 'john.doe@gmail.com',
       password: 'zijfaizfjoaijaf',

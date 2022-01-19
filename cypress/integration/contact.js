@@ -1,6 +1,5 @@
 describe('/contact', () => {
   beforeEach(() => {
-    cy.task('cleanDb');
     cy.visit('/contact', {
       onBeforeLoad(win) {
         Object.defineProperty(win.navigator, 'language', {

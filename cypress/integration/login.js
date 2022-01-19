@@ -1,9 +1,6 @@
 describe('/login', () => {
   describe('without session', () => {
     describe('with credentials', () => {
-      before(() => {
-        cy.task('cleanDb');
-      });
       beforeEach(() => {
         cy.signup({ password: 'verysecure' });
         cy.visit('/login');
@@ -49,7 +46,7 @@ describe('/login', () => {
         );
       });
       it('cannot login without having a confirmed email', () => {
-        cy.task('cleanDb');
+        cy.task('deleteUserByEmail', 'admin@website.com');
         cy.task('createUser', {
           email: 'admin@website.com',
           role: 'admin',
@@ -69,12 +66,8 @@ describe('/login', () => {
   });
 
   describe('with an active session', () => {
-    before(() => {
-      cy.task('cleanDb');
-    });
     beforeEach(() => {
-      cy.signup();
-      cy.login();
+      cy.setupCurrentUser({ email: 'visitor@website.com' });
       cy.visit('/login');
     });
     it('shows the email of the current user', () => {

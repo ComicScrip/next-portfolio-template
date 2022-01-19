@@ -1,15 +1,7 @@
 describe('/profile', () => {
   before(() => {
-    cy.task('cleanDb');
+    cy.task('deleteAllUsers');
   });
-
-  describe('without session', () => {
-    it('redirects to login', function () {
-      cy.visit('/profile');
-      cy.url().should('contain', 'login');
-    });
-  });
-
   describe('with an active session', () => {
     beforeEach(() => {
       cy.setupCurrentUser({ name: 'John doe' });
@@ -29,6 +21,12 @@ describe('/profile', () => {
         cy.get('form').submit();
         cy.contains('Votre profil a bien été enregistré');
       });
+    });
+  });
+  describe('without session', () => {
+    it('redirects to login', function () {
+      cy.visit('/profile');
+      cy.url().should('contain', 'login');
     });
   });
 });

@@ -1,14 +1,10 @@
 describe('/admin/projects', () => {
   let p1, p2;
-  before(() => {
-    cy.task('cleanDb');
-  });
   beforeEach(() => {
     cy.task('deleteAllProjects');
     cy.task('createSampleProject', 'P1').then((p) => (p1 = p));
     cy.task('createSampleProject', 'P2').then((p) => (p2 = p));
-    cy.signup({ email: 'admin@website.com', role: 'admin' });
-    cy.login({ email: 'admin@website.com', role: 'admin' });
+    cy.setupCurrentUser({ role: 'admin' });
     cy.visit('/admin/projects');
   });
   it('shows the projects in db', () => {
