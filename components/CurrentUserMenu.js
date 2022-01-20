@@ -1,4 +1,4 @@
-import CurrentUserContext from 'contexts/currentUserContext';
+import CurrentUserContext from '../contexts/currentUserContext';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useContext, useRef, useState } from 'react';
@@ -34,7 +34,7 @@ export default function CurrentUserMenu() {
       ];
 
   return (
-    <div ref={ref}>
+    <div ref={ref} data-cy='currentUserMenu'>
       <div onClick={toggleUserMenu} className='cursor-pointer'>
         <Avatar src={currentUserProfile.image} alt={currentUserProfile.name} />
       </div>

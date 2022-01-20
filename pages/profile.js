@@ -1,8 +1,9 @@
-import Avatar from '@components/Avatar';
-import Layout from '@components/Layout';
-import CurrentUserContext from 'contexts/currentUserContext';
+import Avatar from '../components/Avatar';
+import Layout from '../components/Layout';
+import CurrentUserContext from '../contexts/currentUserContext';
 import { signIn, useSession } from 'next-auth/react';
 import { useContext, useEffect, useRef, useState } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function ProfilePage() {
   const { status } = useSession();
@@ -17,7 +18,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (currentUserProfile) {
-      setName(currentUserProfile.name);
+      setName(currentUserProfile.name || '');
       setEmail(currentUserProfile.email);
       setImage(currentUserProfile.image);
     }

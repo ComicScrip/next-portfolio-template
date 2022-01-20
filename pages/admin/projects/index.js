@@ -5,9 +5,14 @@ import Link from 'next/link';
 
 export default function ProjectListAdmin() {
   const [projects, setProjects] = useState();
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    axios.get('/api/projects').then((res) => setProjects(res.data));
+    setError('');
+    axios
+      .get('/api/projects')
+      .then((res) => setProjects(res.data))
+      .catch(() => setError('could not retrive projects from the API'));
   }, []);
 
   const deleteProject = async (id) => {
@@ -21,6 +26,7 @@ export default function ProjectListAdmin() {
   return (
     <AdminLayout pageTitle='Gérer les projets'>
       <h1 className='text-4xl font-bold'>Manage projects</h1>
+      {error && <div className='text-red-500'>{error}</div>}
       {!projects && <p>Loading...</p>}
       {projects?.length === 0 && <p>No projects for now</p>}
       {projects && projects.length !== 0 && (
@@ -31,14 +37,20 @@ export default function ProjectListAdmin() {
                 <td className='text-lg p-3 font-bold'>{title}</td>
                 <td className='pt-3 pb-3'>
                   <Link passHref href={`/projects/${id}`}>
-                    <button className='mr-6 bg-sky-600 hover:bg-sky-700'>
+                    <button
+                      data-cy={`see-btn-${id}`}
+                      className='mr-6 bg-sky-600 hover:bg-sky-700'
+                    >
                       See
                     </button>
                   </Link>
                   <Link passHref href={`/admin/projects/edit/${id}`}>
-                    <button className='mr-6'>Edit</button>
+                    <button data-cy={`edit-btn-${id}`} className='mr-6'>
+                      Edit
+                    </button>
                   </Link>
                   <button
+                    data-cy={`delete-btn-${id}`}
                     className='bg-red-400 hover:bg-red-500'
                     onClick={() => deleteProject(id)}
                   >

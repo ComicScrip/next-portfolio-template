@@ -1,4 +1,4 @@
-import { findByEmail } from '@models/user';
+import { findByEmail } from '../models/user';
 import { getSession } from 'next-auth/react';
 
 const requireCurrentUser = async (req, res, next) => {

@@ -23,3 +23,106 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add(
+  'signup',
+  ({
+    email = 'visitor@website.com',
+    role = 'visitor',
+    password = 'verysecure',
+    name = 'visitor',
+  } = {}) => {
+    cy.dataSession({
+      name: 'userInDb',
+      setup: () => {
+        cy.task('deleteUserByEmail', email);
+        cy.task('createUser', {
+          email,
+          password,
+          role,
+          name,
+        }).then((user) => {
+          return Promise.resolve(user);
+        });
+      },
+      validate: (saved) => {
+        return cy.task('findUserByEmail', saved.email).then((user) => {
+          if (user?.email === email && user?.role === role)
+            return Promise.resolve(!!user);
+          else return Promise.resolve(false);
+        });
+      },
+    });
+  }
+);
+
+Cypress.Commands.add(
+  'login',
+  ({ email = 'visitor@website.com', password = 'verysecure' } = {}) => {
+    cy.dataSession({
+      name: 'userSession',
+      setup: () => {
+        cy.visit('/login');
+        cy.get('#username').type(email);
+        cy.get('#password').type(password);
+        cy.get('form').submit();
+        cy.get('[data-cy="currentUserMenu"]').should('be.visible');
+        cy.getCookie('next-auth.session-token')
+          .should('exist')
+          .then((cookie) => {
+            return cy
+              .request({
+                url: '/api/profile',
+                failOnStatusCode: false,
+                headers: {
+                  Cookie: `next-auth.session-token=${cookie.value}`,
+                },
+              })
+              .then(({ body: user }) =>
+                Promise.resolve({
+                  cookie,
+                  user,
+                })
+              );
+          });
+      },
+      validate: (saved) => {
+        return cy
+          .request({
+            url: '/api/profile',
+            failOnStatusCode: false,
+            headers: {
+              Cookie: `next-auth.session-token=${saved.cookie.value}`,
+            },
+          })
+          .then(({ body: user }) =>
+            Promise.resolve(
+              user.email === saved.user.email && user.role === saved.user.role
+            )
+          );
+      },
+      recreate: (saved) => {
+        cy.setCookie('next-auth.session-token', saved.cookie.value);
+      },
+      dependsOn: ['userInDb'],
+    });
+  }
+);
+
+Cypress.Commands.add(
+  'setupCurrentUser',
+  ({
+    email = 'visitor@website.com',
+    role = 'visitor',
+    name = 'Visitor',
+  } = {}) => {
+    cy.dataSession({
+      name: 'currentUser',
+      setup: () => {
+        cy.signup({ name, role, email });
+        cy.login({ email });
+        cy.get('@userSession').then((session) => session.user);
+      },
+    });
+  }
+);

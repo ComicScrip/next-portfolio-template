@@ -1,4 +1,4 @@
-import { isAdmin } from '@models/user';
+import { isAdmin } from '../models/user';
 import { getSession } from 'next-auth/react';
 
 const requireAdmin = async (req, res, next) => {

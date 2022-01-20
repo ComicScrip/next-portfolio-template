@@ -1,6 +1,6 @@
-import Layout from '@components/Layout';
-import ProjectCard from '@components/ProjectCard';
-import { getProjects } from '@models/project';
+import Layout from '../../components/Layout';
+import ProjectCard from '../../components/ProjectCard';
+import { getProjects } from '../../models/project';
 
 export default function Projects({ projects }) {
   return (
