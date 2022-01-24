@@ -7,7 +7,6 @@ import {
   useCallback,
 } from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 const CurrentUserContext = createContext();
 
 export const CurrentUserContextProvider = ({ children }) => {
@@ -18,10 +17,10 @@ export const CurrentUserContextProvider = ({ children }) => {
     [currentUserProfile]
   );
 
-  const updateProfileOnAPI = useCallback((data) => {
-    axios.patch('/api/profile', data).then(({ data }) => {
-      setCurrentUserProfile(data);
-      toast.success('Votre profil a bien été enregistré');
+  const updateProfileOnAPI = useCallback((payload, onSuccess) => {
+    axios.patch('/api/profile', payload).then(({ data: profile }) => {
+      setCurrentUserProfile(profile);
+      onSuccess(profile);
     });
   }, []);
 

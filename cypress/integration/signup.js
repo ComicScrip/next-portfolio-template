@@ -5,7 +5,7 @@ describe('/signup', () => {
     cy.visitInLanguage('/signup', 'fr');
   });
 
-  it.only('has an english translation', () => {
+  it('has an english translation', () => {
     cy.get('[data-cy="switch-to-en"]').click();
     cy.contains('Register');
     cy.contains('Name');

@@ -4,8 +4,12 @@ import CurrentUserContext from '../contexts/currentUserContext';
 import { signIn, useSession } from 'next-auth/react';
 import { useContext, useEffect, useRef, useState, useCallback } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
+import { toast } from 'react-toastify';
 
 export default function ProfilePage() {
+  const { t } = useTranslation('profile');
   const { status } = useSession();
   const { currentUserProfile, updateProfileOnAPI } =
     useContext(CurrentUserContext);
@@ -30,9 +34,11 @@ export default function ProfilePage() {
       const data = new FormData();
       data.append('name', name);
       data.append('image', avatarUploadRef.current.files[0]);
-      updateProfileOnAPI(data);
+      updateProfileOnAPI(data, () => {
+        toast.success(t('profileSaved'));
+      });
     },
-    [name, updateProfileOnAPI]
+    [name, updateProfileOnAPI, t]
   );
 
   useEffect(() => {
@@ -52,9 +58,9 @@ export default function ProfilePage() {
   };
 
   return (
-    <Layout pageTitle='Profil'>
+    <Layout pageTitle={t('profile')}>
       <div className='mt-8 flex flex-col justify-center items-center '>
-        <h1 className='pageTitle text-center '>Mon profil</h1>
+        <h1 className='pageTitle text-center '>{t('myProfile')}</h1>
 
         <div
           className='cursor-pointer p-[1px] bg-white hover:bg-slate-300 w-[128px] h-[128px] flex justify-center items-center rounded-full'
@@ -88,7 +94,7 @@ export default function ProfilePage() {
             />
           </label>
           <label htmlFor='name'>
-            Nom
+            {t('name')}
             <input
               className='block mb-10 w-full'
               required
@@ -99,10 +105,18 @@ export default function ProfilePage() {
           </label>
 
           <button className='w-full' type='submit'>
-            Enregistrer
+            {t('save')}
           </button>
         </form>
       </div>
     </Layout>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common', 'profile'])),
+    },
+  };
 }

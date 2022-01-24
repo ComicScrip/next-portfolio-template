@@ -3,7 +3,7 @@ describe('/contact', () => {
     cy.visitInLanguage('/contact', 'fr');
   });
 
-  it.only('has an english translation', () => {
+  it('has an english translation', () => {
     cy.get('[data-cy="switch-to-en"]').click();
     cy.contains('Contact me');
     cy.contains('Email');
