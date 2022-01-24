@@ -4,8 +4,8 @@
   "loggedInAs": "logged in as",
   "with": "With",
   "or": "OR",
-  "username": "username",
-  "password": "password",
+  "username": "Username",
+  "password": "Password",
   "tryThoseCredentials": "Try those credentials",
   "notRegistered": "Not already registered ?",
   "invalidCredsMessage": "Those credentials do not match an active user. If you havn't checked your email, go to your inbox to click on the activation link and retry with those credentials."

@@ -5,6 +5,15 @@ describe('/login', () => {
     cy.url().should('include', '/login');
   });
 
+  it('has an english translation', () => {
+    cy.visitInLanguage('/login', 'fr');
+    cy.get('[data-cy="switch-to-en"]').click();
+    cy.contains('Log In');
+    cy.contains('Username');
+    cy.contains('Password').click();
+    cy.contains('Try those credentials');
+  });
+
   describe('without session', () => {
     beforeEach(() => {
       cy.signup({ password: 'verysecure' });
