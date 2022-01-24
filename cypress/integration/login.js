@@ -1,67 +1,71 @@
 describe('/login', () => {
+  it('is accessible from the menu', () => {
+    cy.visit('/');
+    cy.contains('Se connecter').click();
+    cy.url().should('include', '/login');
+  });
+
   describe('without session', () => {
-    describe('with credentials', () => {
-      beforeEach(() => {
-        cy.signup({ password: 'verysecure' });
-        cy.visit('/login');
-      });
+    beforeEach(() => {
+      cy.signup({ password: 'verysecure' });
+      cy.visit('/login');
+    });
 
-      it('can login with correct credentials', function () {
-        cy.get('[data-cy="currentUserMenu"]').should('not.exist');
-        cy.get('#username').type(this.userInDb.email);
-        cy.get('#password').type('verysecure');
-        cy.get('form').submit();
-        cy.get('[data-cy="currentUserMenu"]').should('be.visible');
-      });
+    it('can login with correct credentials', function () {
+      cy.get('[data-cy="currentUserMenu"]').should('not.exist');
+      cy.get('#username').type(this.userInDb.email);
+      cy.get('#password').type('verysecure');
+      cy.get('form').submit();
+      cy.get('[data-cy="currentUserMenu"]').should('be.visible');
+    });
 
-      it('should redirect to previously visited page when callbackUrl is present in the url', function () {
-        cy.visit('/login?callbackUrl=http://localhost:3000/projects');
-        cy.get('[data-cy="currentUserMenu"]').should('not.exist');
-        cy.get('#username').type(this.userInDb.email);
-        cy.get('#password').type('verysecure');
-        cy.get('form').submit();
-        cy.get('[data-cy="currentUserMenu"]').should('be.visible');
-        cy.url().should('equal', 'http://localhost:3000/projects');
-      });
+    it('should redirect to previously visited page when callbackUrl is present in the url', function () {
+      cy.visit('/login?callbackUrl=http://localhost:3000/projects');
+      cy.get('[data-cy="currentUserMenu"]').should('not.exist');
+      cy.get('#username').type(this.userInDb.email);
+      cy.get('#password').type('verysecure');
+      cy.get('form').submit();
+      cy.get('[data-cy="currentUserMenu"]').should('be.visible');
+      cy.url().should('equal', 'http://localhost:3000/projects');
+    });
 
-      it('cannot login with incorrect email', () => {
-        cy.get('[data-cy="currentUserMenu"]').should('not.exist');
-        cy.get('#username').type('adin@website.com');
-        cy.get('#password').type('verysecure');
-        cy.get('form').submit();
-        cy.get('[data-cy="currentUserMenu"]').should('not.exist');
-        cy.contains(
-          'Ces identifiants ne corresspondent à aucun utilisateur actif.'
-        );
-      });
+    it('cannot login with incorrect email', () => {
+      cy.get('[data-cy="currentUserMenu"]').should('not.exist');
+      cy.get('#username').type('adin@website.com');
+      cy.get('#password').type('verysecure');
+      cy.get('form').submit();
+      cy.get('[data-cy="currentUserMenu"]').should('not.exist');
+      cy.contains(
+        'Ces identifiants ne corresspondent à aucun utilisateur actif.'
+      );
+    });
 
-      it('cannot login with incorrect password', function () {
-        cy.get('[data-cy="currentUserMenu"]').should('not.exist');
-        cy.get('#username').type(this.userInDb.email);
-        cy.get('#password').type('veryscure');
-        cy.get('form').submit();
-        cy.get('[data-cy="currentUserMenu"]').should('not.exist');
-        cy.contains(
-          'Ces identifiants ne corresspondent à aucun utilisateur actif.'
-        );
+    it('cannot login with incorrect password', function () {
+      cy.get('[data-cy="currentUserMenu"]').should('not.exist');
+      cy.get('#username').type(this.userInDb.email);
+      cy.get('#password').type('veryscure');
+      cy.get('form').submit();
+      cy.get('[data-cy="currentUserMenu"]').should('not.exist');
+      cy.contains(
+        'Ces identifiants ne corresspondent à aucun utilisateur actif.'
+      );
+    });
+    it('cannot login without having a confirmed email', () => {
+      cy.task('deleteUserByEmail', 'admin@website.com');
+      cy.task('createUser', {
+        email: 'admin@website.com',
+        role: 'admin',
+        password: 'verysecure',
+        emailVerificationCode: 'test',
       });
-      it('cannot login without having a confirmed email', () => {
-        cy.task('deleteUserByEmail', 'admin@website.com');
-        cy.task('createUser', {
-          email: 'admin@website.com',
-          role: 'admin',
-          password: 'verysecure',
-          emailVerificationCode: 'test',
-        });
-        cy.get('[data-cy="currentUserMenu"]').should('not.exist');
-        cy.get('#username').type('admin@website.com');
-        cy.get('#password').type('verysecure');
-        cy.get('form').submit();
-        cy.get('[data-cy="currentUserMenu"]').should('not.exist');
-        cy.contains(
-          'Ces identifiants ne corresspondent à aucun utilisateur actif.'
-        );
-      });
+      cy.get('[data-cy="currentUserMenu"]').should('not.exist');
+      cy.get('#username').type('admin@website.com');
+      cy.get('#password').type('verysecure');
+      cy.get('form').submit();
+      cy.get('[data-cy="currentUserMenu"]').should('not.exist');
+      cy.contains(
+        'Ces identifiants ne corresspondent à aucun utilisateur actif.'
+      );
     });
   });
 

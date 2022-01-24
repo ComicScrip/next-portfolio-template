@@ -3,6 +3,7 @@ export default function Avatar({ size = 32, src, alt }) {
     <>
       {/* eslint-disable-next-line */}
       <img
+        data-cy='currentUserAvatar'
         width={size}
         height={size}
         src={

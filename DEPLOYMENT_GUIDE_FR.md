@@ -106,3 +106,4 @@ GITHUB_SECRET=[GITHUB SECRET]
   - Aller sur https://[URL_REPO_API]/settings/hooks
   - Cliquer sur "add webhook"
   - Coller la valeur de l'input copiée précédement dans le champs Payload URL de github, cliquer sur le bouton vert "Add webhook". Desormais, après chaque push sur la branche main du repository de l'API, elle sera redéployée automatiquement pour intégrer les nouveaux développements.
+

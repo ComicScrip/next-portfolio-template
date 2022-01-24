@@ -1,8 +1,12 @@
 describe('/admin', () => {
   describe('with admin session', () => {
     beforeEach(() => {
-      cy.signup({ role: 'admin' });
-      cy.login({ role: 'admin' });
+      cy.setupCurrentUser({ role: 'admin' });
+    });
+    it('is accessible from the menu', () => {
+      cy.get('[data-cy="currentUserMenu"]').click();
+      cy.get('[data-cy="currentUserMenu"]').contains('Back-office').click();
+      cy.url().should('include', '/admin');
     });
     it('shows dashboard when logged in with an admin account', () => {
       cy.visit('/admin');
@@ -29,9 +33,16 @@ describe('/admin', () => {
 
   describe('with visitor session', () => {
     beforeEach(() => {
-      cy.signup({ email: 'visitor@website.com', role: 'visitor' });
-      cy.login({ email: 'visitor@website.com', role: 'visitor' });
+      cy.setupCurrentUser({ role: 'visitor' });
     });
+    it('is not accessible from the menu for visitors', () => {
+      cy.get('[data-cy="currentUserMenu"]').click();
+      cy.get('[data-cy="currentUserMenu"]').should(
+        'not.contain',
+        'Back-office'
+      );
+    });
+
     it('shows a message asking to login in with an admin account', () => {
       cy.visit('/admin');
       cy.contains(
