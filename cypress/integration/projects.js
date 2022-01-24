@@ -13,4 +13,9 @@ describe('/projects', () => {
     cy.contains('P1').click();
     cy.url().should('match', /\/projects\/\d+/);
   });
+
+  it('has an english translation', () => {
+    cy.get('[data-cy="switch-to-en"]').click();
+    cy.contains('Achievements');
+  });
 });

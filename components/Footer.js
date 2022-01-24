@@ -1,9 +1,7 @@
-import Link from 'next/link';
-
 export default function Footer() {
   return (
     <footer className='bg-slate-700 p-6 text-white'>
-      <nav className='flex justify-center'>
+      <nav className='flex flex-col items-center'>
         <div className='flex'>
           {/* eslint-disable-next-line */}
           <img

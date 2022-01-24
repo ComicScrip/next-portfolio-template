@@ -4,13 +4,14 @@ import { SessionProvider } from 'next-auth/react';
 import { CurrentUserContextProvider } from '../contexts/currentUserContext';
 import { ToastContainer } from 'react-toastify';
 import { Flip } from 'react-toastify';
+import { appWithTranslation } from 'next-i18next';
 
-export default function App({
+const TranslatedContent = appWithTranslation(function Content({
   Component,
-  pageProps: { session, ...pageProps },
+  pageProps,
 }) {
   return (
-    <SessionProvider session={session}>
+    <>
       <CurrentUserContextProvider>
         <Component {...pageProps} />
       </CurrentUserContextProvider>
@@ -27,6 +28,14 @@ export default function App({
         transition={Flip}
         theme='dark'
       />
+    </>
+  );
+});
+
+export default function App(props) {
+  return (
+    <SessionProvider session={props.pageProps.session}>
+      <TranslatedContent {...props} />
     </SessionProvider>
   );
 }

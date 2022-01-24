@@ -2,9 +2,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import portfolioImg from '../public/images/portfolio.jpg';
 import Layout from '../components/Layout';
-import { forwardRef } from 'react';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 export default function Home() {
+  const { t } = useTranslation('home');
   return (
     <Layout pageTitle='Home'>
       <div>
@@ -14,7 +16,7 @@ export default function Home() {
           layout='responsive'
           priority
         />
-        <h1 className='pageTitle'>Salut ! Je suis Dave Lopper</h1>
+        <h1 className='pageTitle'>{t('welcomeMessage')}</h1>
 
         <p className='p-6 pt-0 md:columns-2 lg:columns-3 gap-12' data-cy='bio'>
           Lorem Elsass Ipsum mitt picon bière munster du ftomi! Ponchour bisame.
@@ -45,9 +47,17 @@ export default function Home() {
       </div>
       <Link href='/projects' passHref>
         <a className='w-72 sm:w-1/2 sm:max-w-md flex bg-orange-600 justify-center m-auto p-8 text-3xl text-center rounded-lg mt-8 mb-8 font-bold hover:bg-orange-300 hover:text-black'>
-          Mes réalisations
+          {t('seeMyWork')}
         </a>
       </Link>
     </Layout>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common', 'home'])),
+    },
+  };
 }
