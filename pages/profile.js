@@ -2,7 +2,7 @@ import Avatar from '../components/Avatar';
 import Layout from '../components/Layout';
 import CurrentUserContext from '../contexts/currentUserContext';
 import { signIn, useSession } from 'next-auth/react';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState, useCallback } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function ProfilePage() {
@@ -24,13 +24,16 @@ export default function ProfilePage() {
     }
   }, [currentUserProfile]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const data = new FormData();
-    data.append('name', name);
-    data.append('image', avatarUploadRef.current.files[0]);
-    updateProfileOnAPI(data);
-  };
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      const data = new FormData();
+      data.append('name', name);
+      data.append('image', avatarUploadRef.current.files[0]);
+      updateProfileOnAPI(data);
+    },
+    [name, updateProfileOnAPI]
+  );
 
   useEffect(() => {
     if (status === 'unauthenticated') {

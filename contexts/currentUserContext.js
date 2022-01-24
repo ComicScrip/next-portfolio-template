@@ -1,5 +1,11 @@
 import { signOut, useSession } from 'next-auth/react';
-import { createContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  useEffect,
+  useMemo,
+  useState,
+  useCallback,
+} from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 const CurrentUserContext = createContext();
@@ -7,16 +13,19 @@ const CurrentUserContext = createContext();
 export const CurrentUserContextProvider = ({ children }) => {
   const [currentUserProfile, setCurrentUserProfile] = useState(null);
   const { status } = useSession();
-  const currentUserIsAdmin = currentUserProfile?.role === 'admin';
+  const currentUserIsAdmin = useMemo(
+    () => currentUserProfile?.role === 'admin',
+    [currentUserProfile]
+  );
 
-  const updateProfileOnAPI = (data) => {
+  const updateProfileOnAPI = useCallback((data) => {
     axios.patch('/api/profile', data).then(({ data }) => {
       setCurrentUserProfile(data);
       toast.success('Votre profil a bien été enregistré');
     });
-  };
+  }, []);
 
-  const getProfile = () => {
+  const getProfile = useCallback(() => {
     axios
       .get('/api/profile')
       .then(({ data }) => {
@@ -26,7 +35,7 @@ export const CurrentUserContextProvider = ({ children }) => {
         // when we have a stale cookie, disconnect
         signOut();
       });
-  };
+  }, []);
 
   useEffect(() => {
     if (status === 'authenticated') {
@@ -34,7 +43,7 @@ export const CurrentUserContextProvider = ({ children }) => {
     } else if (status === 'unauthenticated') {
       setCurrentUserProfile(null);
     }
-  }, [status]);
+  }, [status, getProfile]);
 
   return (
     <CurrentUserContext.Provider
