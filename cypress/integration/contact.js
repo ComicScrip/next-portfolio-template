@@ -1,12 +1,6 @@
 describe('/contact', () => {
   beforeEach(() => {
-    cy.visit('/contact', {
-      onBeforeLoad(win) {
-        Object.defineProperty(win.navigator, 'language', {
-          value: 'fr',
-        });
-      },
-    });
+    cy.visitInLanguage('/contact', 'fr');
   });
 
   it('does not send the form if there are validation errors', () => {

@@ -126,3 +126,13 @@ Cypress.Commands.add(
     });
   }
 );
+
+Cypress.Commands.add('visitInLanguage', (url, lang) => {
+  cy.visit(url, {
+    onBeforeLoad(win) {
+      Object.defineProperty(win.navigator, 'language', {
+        value: lang,
+      });
+    },
+  });
+});

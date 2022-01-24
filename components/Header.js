@@ -62,7 +62,9 @@ export default function Header() {
           </div>
           <div className='mt-4 text-white sm:text-3xl text-xl sm:mb-3 sm:mr-3'>
             <Link href={router.pathname} locale={inFr ? 'en' : 'fr'}>
-              <a>{inFr ? '🇬🇧' : '🇫🇷'}</a>
+              <a data-cy={`switch-to-${inFr ? 'en' : 'fr'}`}>
+                {inFr ? '🇬🇧' : '🇫🇷'}
+              </a>
             </Link>
           </div>
         </div>
