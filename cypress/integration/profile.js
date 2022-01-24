@@ -32,19 +32,19 @@ describe('/profile', () => {
     });
 
     it('can update the avatar', function () {
-      cy.visit('/profile');
-      cy.get('#name').should('have.value', currentUser.name);
-      cy.get('[data-cy="currentUserAvatar"]')
-        .first()
-        .invoke('attr', 'src')
-        .then((initialAvatarUrl) => {
+      cy.get('@currentUser').then(({ email }) => {
+        cy.task('findUserByEmail', email).then((user) => {
+          const initialAvatarUrl = user.image;
+          cy.visit('/profile');
+          cy.get('#name').should('have.value', user.name);
           cy.get('input[type="file"]').attachFile('zorro.jpg');
           cy.get('form').submit();
           cy.contains('Votre profil a bien été enregistré');
-          cy.task('findUserByEmail', currentUser.email).then((user) => {
+          cy.task('findUserByEmail', email).then((user) => {
             expect(user.image).to.not.equal(initialAvatarUrl);
           });
         });
+      });
     });
   });
   describe('without session', () => {
