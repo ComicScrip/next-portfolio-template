@@ -2,7 +2,6 @@ import Image from 'next/image';
 import Layout from '../../components/Layout';
 import { getOneProject, getProjects } from '../../models/project';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useTranslation } from 'next-i18next';
 
 export default function Project({
   project: { title, mainPictureUrl, description },
