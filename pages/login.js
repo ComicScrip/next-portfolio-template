@@ -50,7 +50,7 @@ export default function LoginPage({ csrfToken }) {
                     id='username'
                     name='username'
                     type='text'
-                    className='block w-full'
+                    className='block w-full mb-2'
                     placeholder='me@something.com'
                   />
                 </label>

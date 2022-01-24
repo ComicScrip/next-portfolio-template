@@ -1,0 +1,9 @@
+{
+  "signup": "Register",
+  "name": "Name",
+  "password": "Password",
+  "letsgo": "Let's go !",
+  "alreadyHaveAnAccount": "Already have an account ?",
+  "signupSuccess": "Your registration is almost complete, please confirm your email by clicking the link we just sent to {{email}}.",
+  "duplicateEmail": "Email already taken. If it's yours, please check your inbox and click on the activation link."
+}

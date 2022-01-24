@@ -3,6 +3,14 @@ describe('/contact', () => {
     cy.visitInLanguage('/contact', 'fr');
   });
 
+  it.only('has an english translation', () => {
+    cy.get('[data-cy="switch-to-en"]').click();
+    cy.contains('Contact me');
+    cy.contains('Email');
+    cy.contains('Message');
+    cy.contains("Let's go !");
+  });
+
   it('does not send the form if there are validation errors', () => {
     cy.get('input:invalid').should('have.length', 1);
     cy.get('textarea:invalid').should('have.length', 1);

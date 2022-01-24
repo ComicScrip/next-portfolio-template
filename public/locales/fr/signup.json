@@ -1,0 +1,9 @@
+{
+  "signup": "Inscription",
+  "name": "Nom",
+  "password": "Mot de passe",
+  "letsgo": "Allez hop !",
+  "alreadyHaveAnAccount": "Vous avez déjà un compte ?",
+  "signupSuccess": "Votre inscription est presque terminée, merci de bien vouloir confirmer votre addresse e-mail en cliquant sur le lien d'activation envoyé à {{email}}.",
+  "duplicateEmail": "Email déjà pris. S'il s'agit du vôtre, vérifiez votre boite de réception et rendez-vous sur le lien d'activation envoyé."
+}

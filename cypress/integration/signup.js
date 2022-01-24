@@ -2,7 +2,17 @@ describe('/signup', () => {
   const email = 'john.doe@gmail.com';
   beforeEach(() => {
     cy.task('deleteUserByEmail', email);
-    cy.visit('/signup');
+    cy.visitInLanguage('/signup', 'fr');
+  });
+
+  it.only('has an english translation', () => {
+    cy.get('[data-cy="switch-to-en"]').click();
+    cy.contains('Register');
+    cy.contains('Name');
+    cy.contains('Email');
+    cy.contains('Password');
+    cy.contains("Let's go !");
+    cy.contains('Already have an account ?');
   });
 
   it('does not send the form if there are validation errors', () => {
