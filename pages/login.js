@@ -4,31 +4,34 @@ import { signIn, signOut } from 'next-auth/react';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
 import { useContext } from 'react';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 export default function LoginPage({ csrfToken }) {
   const { currentUserProfile } = useContext(CurrentUserContext);
   const { query } = useRouter();
+  const { t } = useTranslation('login');
 
   return (
-    <Layout pageTitle='login'>
+    <Layout pageTitle={t('login')}>
       <div className='m-6'>
         {currentUserProfile ? (
           <div className='flex flex-col items-center'>
-            connecté en tant que {currentUserProfile.email} <br />
+            {t('loggedInAs')} {currentUserProfile.email} <br />
             <button className='mt-6' onClick={() => signOut()}>
-              Se déconnecter
+              {t('logout')}
             </button>
           </div>
         ) : (
           <>
-            <h1 className='pageTitle text-center'>Se connecter</h1>
+            <h1 className='pageTitle text-center'>{t('login')}</h1>
 
             <div className='max-w-xl m-auto flex flex-col items-center'>
               <button className='' onClick={() => signIn('github')}>
-                Avec Github
+                {t('with')} Github
               </button>
 
-              <p className='text-2xl mt-8 mb-8 text-center'>OU</p>
+              <p className='text-2xl mt-8 mb-8 text-center'>{t('or')}</p>
 
               <form
                 method='post'
@@ -42,7 +45,7 @@ export default function LoginPage({ csrfToken }) {
                   defaultValue={csrfToken}
                 />
                 <label>
-                  Nom d{"'"}utilisateur
+                  {t('username')}
                   <input
                     id='username'
                     name='username'
@@ -52,7 +55,7 @@ export default function LoginPage({ csrfToken }) {
                   />
                 </label>
                 <label>
-                  Mot de passe
+                  {t('password')}
                   <input
                     className='block w-full'
                     name='password'
@@ -65,20 +68,16 @@ export default function LoginPage({ csrfToken }) {
                   className='bg-amber-500 mt-6 w-full'
                   type='submit'
                 >
-                  Tenter ces identifients
+                  {t('tryThoseCredentials')}
                 </button>
                 {query.error === 'CredentialsSignin' && (
                   <p className='p-6 bg-slate-700 text-red-400 font-bold text-center'>
-                    Ces identifiants ne corresspondent à aucun utilisateur
-                    actif. Si vous n{"'"}avez pas encore vérifié votre e-mail,
-                    rendez-vous dans votre boite de reception pour cliquez sur
-                    le lien d{"'"}activation et rééssayez la connexion avec ces
-                    identifiants.
+                    {t('invalidCredsMessage')}
                   </p>
                 )}
                 <Link href='/signup'>
                   <a className='mt-6 text-sky-300 hover:text-sky-400 text-center w-full block'>
-                    Pas encore de compte ?
+                    {t('notRegistered')}
                   </a>
                 </Link>
               </form>
@@ -115,6 +114,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       csrfToken: await getCsrfTokenAndSetCookies(context),
+      ...(await serverSideTranslations(context.locale, ['common', 'login'])),
     },
   };
 }

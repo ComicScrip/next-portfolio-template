@@ -1,0 +1,12 @@
+{
+  "login": "Se connecter",
+  "logout": "Se déconnecter",
+  "loggedInAs": "connecté en tant que",
+  "with": "Avec",
+  "or": "OU",
+  "username": "Nom d'utilisateur",
+  "password": "Mot de passe",
+  "tryThoseCredentials": "Essayer ces identifiants",
+  "notRegistered": "Pas encore de compte ?",
+  "invalidCredsMessage": "Ces identifiants ne corresspondent à aucun utilisateur actif. Si vous n'avez pas encore vérifié votre e-mail, rendez-vous dans votre boite de reception pour cliquez sur le lien d'activation et rééssayez la connexion avec ces identifiants."
+}
