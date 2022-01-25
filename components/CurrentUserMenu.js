@@ -4,8 +4,10 @@ import Link from 'next/link';
 import { useContext, useRef, useState } from 'react';
 import { useOutsideClick } from 'rooks';
 import Avatar from './Avatar';
+import { useTranslation } from 'next-i18next';
 
 export default function CurrentUserMenu() {
+  const { t } = useTranslation('common');
   const { currentUserProfile, currentUserIsAdmin } =
     useContext(CurrentUserContext);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -22,13 +24,13 @@ export default function CurrentUserMenu() {
           href: '/admin',
         },
         {
-          label: 'Profil',
+          label: t('profile'),
           href: '/profile',
         },
       ]
     : [
         {
-          label: 'Profil',
+          label: t('profile'),
           href: '/profile',
         },
       ];
@@ -56,7 +58,7 @@ export default function CurrentUserMenu() {
           onClick={() => signOut()}
           className='p-4 m-4 block text-sm px-4 py-2 leading-none border rounded text-white border-slate-500 hover:border-transparent hover:text-white hover:bg-slate-400 bg-slate-500'
         >
-          Se déconnecter
+          {t('logout')}
         </button>
       </div>
     </div>

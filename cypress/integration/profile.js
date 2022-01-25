@@ -2,12 +2,23 @@ describe('/profile', () => {
   before(() => {
     cy.task('deleteAllUsers');
   });
+
   describe('with an active session', () => {
     beforeEach(() => {
       cy.setupCurrentUser({ name: 'John doe' });
     });
 
-    it('is accessible form the menu', function () {
+    it('has an english translation', () => {
+      cy.visitInLanguage('/profile', 'fr');
+      cy.get('[data-cy="switch-to-en"]').click();
+      cy.contains('My profile');
+      cy.contains('Name');
+      cy.contains('Save').click();
+      cy.contains('Your profile has been saved');
+    });
+
+    it('is accessible form the menu', () => {
+      cy.visitInLanguage('/', 'fr');
       cy.get('[data-cy="currentUserMenu"]').click();
       cy.get('[data-cy="currentUserMenu"]').contains('Profil').click();
       cy.contains('Mon profil');

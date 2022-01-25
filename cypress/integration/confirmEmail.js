@@ -17,4 +17,11 @@ describe('/confirm-email', () => {
     cy.visit('/confirm-email?emailVerificationCode=notTheCode');
     cy.contains('Code de vérification invalide');
   });
+
+  it('has an english translation', () => {
+    cy.visit('/en/confirm-email?emailVerificationCode=theCode');
+    cy.contains('Thanks');
+    cy.visit('/en/confirm-email?emailVerificationCode=notTheCode');
+    cy.contains('invalid');
+  });
 });

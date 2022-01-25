@@ -1,4 +1,5 @@
 import { useSession } from 'next-auth/react';
+import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -6,6 +7,9 @@ import CurrentUserMenu from './CurrentUserMenu';
 
 export default function Header() {
   const { status } = useSession();
+  const router = useRouter();
+  const { t } = useTranslation('common');
+  const inFr = router.locale === 'fr';
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen((open) => !open);
 
@@ -23,7 +27,7 @@ export default function Header() {
             {status === 'unauthenticated' && (
               <Link href='/login'>
                 <a className='sm:text-sm inline-block text-xs px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-slate-800 hover:bg-white'>
-                  Se connecter
+                  {t('login')}
                 </a>
               </Link>
             )}
@@ -48,13 +52,20 @@ export default function Header() {
 
         <div
           className={`w-full block flex-grow md:flex md:items-center md:w-auto md:h-[35px] ${
-            menuOpen ? 'h-[110px]' : 'h-0'
+            menuOpen ? 'h-[150px]' : 'h-0'
           } overflow-hidden transition-all`}
         >
           <div className='text-sm md:flex-grow'>
-            <NavLink href='/'>Accueil</NavLink>
-            <NavLink href='/projects'>Projets</NavLink>
+            <NavLink href='/'>{t('home')}</NavLink>
+            <NavLink href='/projects'>{t('projects')}</NavLink>
             <NavLink href='/contact'>Contact</NavLink>
+          </div>
+          <div className='mt-4 text-white sm:text-3xl text-xl sm:mb-3 sm:mr-3'>
+            <Link href={router.pathname} locale={inFr ? 'en' : 'fr'}>
+              <a data-cy={`switch-to-${inFr ? 'en' : 'fr'}`}>
+                {inFr ? '🇬🇧' : '🇫🇷'}
+              </a>
+            </Link>
           </div>
         </div>
       </nav>

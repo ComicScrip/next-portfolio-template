@@ -5,12 +5,17 @@ import HCaptcha from '@hcaptcha/react-hcaptcha';
 
 import axios from 'axios';
 import Layout from '../components/Layout';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useRouter } from 'next/dist/client/router';
 
-export default function Projects() {
+export default function ContactPage() {
   const [missingHcaptchaError, setMissingHcaptchaError] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [hcaptchaToken, setHcaptchaToken] = useState(null);
+  const { t } = useTranslation('contact');
+  const router = useRouter();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,7 +26,7 @@ export default function Projects() {
     axios
       .post('/api/contactRequests', { email, message, hcaptchaToken })
       .then(() => {
-        toast.success('Merci, je vous recontacterai au plus vite');
+        toast.success(t('thanksIllGetBackToYou'));
         setMessage('');
         setEmail('');
       });
@@ -30,7 +35,7 @@ export default function Projects() {
   return (
     <Layout pageTitle='Contact'>
       <div className='max-w-4xl m-auto'>
-        <h1 className='pageTitle'>Me contacter</h1>
+        <h1 className='pageTitle'>{t('contactMe')}</h1>
 
         <form
           onSubmit={handleSubmit}
@@ -56,7 +61,7 @@ export default function Projects() {
               Message
               <textarea
                 className='w-full'
-                placeholder='Write something...'
+                placeholder={t('writeSomething')}
                 required
                 id='message'
                 value={message}
@@ -74,6 +79,7 @@ export default function Projects() {
                 }}
                 size='compact'
                 id='contact-captcha'
+                languageOverride={router.locale}
               />
               {missingHcaptchaError && (
                 <div className='text-red-400 mb-3'>{missingHcaptchaError}</div>
@@ -81,11 +87,19 @@ export default function Projects() {
             </div>
 
             <button className='w-full pt-4 pb-4 h-[80px] sm:h-[133px] m-1'>
-              {"C'est parti !"}
+              {t('letsgo')}
             </button>
           </div>
         </form>
       </div>
     </Layout>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common', 'contact'])),
+    },
+  };
 }

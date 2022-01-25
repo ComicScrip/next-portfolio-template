@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Layout from '../../components/Layout';
 import { getOneProject, getProjects } from '../../models/project';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 export default function Project({
   project: { title, mainPictureUrl, description },
@@ -32,10 +33,10 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps(ctx) {
-  const project = await getOneProject(ctx.params.id);
+export async function getStaticProps({ locale, params: { id } }) {
+  const project = await getOneProject(id);
   return {
-    props: { project },
+    props: { project, ...(await serverSideTranslations(locale, ['common'])) },
     revalidate: 10,
   };
 }
