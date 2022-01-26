@@ -61,7 +61,7 @@ export default function Header() {
             <NavLink href='/contact'>Contact</NavLink>
           </div>
           <div className='mt-4 text-white sm:text-3xl text-xl sm:mb-3 sm:mr-3'>
-            <Link href={router.pathname} locale={inFr ? 'en' : 'fr'}>
+            <Link href={router.asPath} locale={inFr ? 'en' : 'fr'}>
               <a data-cy={`switch-to-${inFr ? 'en' : 'fr'}`}>
                 {inFr ? '🇬🇧' : '🇫🇷'}
               </a>

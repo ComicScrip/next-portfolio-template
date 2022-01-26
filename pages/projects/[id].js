@@ -1,6 +1,10 @@
 import Image from 'next/image';
 import Layout from '../../components/Layout';
-import { getOneProject, getProjects } from '../../models/project';
+import {
+  getOneProject,
+  getProjects,
+  getTranslation,
+} from '../../models/project';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 export default function Project({
@@ -25,6 +29,7 @@ export default function Project({
 
 export async function getStaticPaths() {
   const projects = await getProjects();
+
   return {
     paths: projects.map((p) => {
       return { params: { id: p.id.toString() } };
@@ -34,7 +39,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ locale, params: { id } }) {
-  const project = await getOneProject(id);
+  const project = getTranslation(await getOneProject(id), locale);
   return {
     props: { project, ...(await serverSideTranslations(locale, ['common'])) },
     revalidate: 10,

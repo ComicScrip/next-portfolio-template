@@ -5,7 +5,7 @@ describe('/admin/projects/edit/[...id]', () => {
   });
   describe('new project', () => {
     beforeEach(() => {
-      cy.visit('/admin/projects/edit/new');
+      cy.visitInLanguage('/admin/projects/edit/new', 'en');
     });
 
     it('has blank fields', () => {
@@ -16,8 +16,12 @@ describe('/admin/projects/edit/[...id]', () => {
     });
 
     it('can create a project', () => {
-      cy.get('#title').type('example');
-      cy.get('#description').type('example description');
+      cy.get('[data-cy="project-lang-input"]').select('FR');
+      cy.get('#title').type('exampleFR');
+      cy.get('#description').type('example descriptionFR');
+      cy.get('[data-cy="project-lang-input"]').select('EN');
+      cy.get('#title').type('exampleEN');
+      cy.get('#description').type('example descriptionEN');
 
       const fileName = 'project-img.png';
       cy.get('.uploadcare--widget__button_type_open').click();
@@ -39,8 +43,14 @@ describe('/admin/projects/edit/[...id]', () => {
         .should('exist')
         .should('contain.text', fileName);
       cy.get('[type="submit"]').click();
-      cy.url().should('include', '/admin/projects');
-      cy.contains('example');
+      cy.url().should('match', /admin\/projects$/);
+      cy.task('getAllProjects').then(([createdProject]) => {
+        expect(createdProject.titleFR).to.equal('exampleFR');
+        expect(createdProject.titleEN).to.equal('exampleEN');
+        expect(createdProject.descriptionFR).to.equal('example descriptionFR');
+        expect(createdProject.descriptionEN).to.equal('example descriptionEN');
+        expect(createdProject.mainPictureUrl).not.to.equal(null);
+      });
     });
   });
 
@@ -54,16 +64,29 @@ describe('/admin/projects/edit/[...id]', () => {
     });
 
     it('fills the fields with the project information from DB', () => {
-      cy.get('#title').should('have.value', p1.title);
-      cy.get('#description').should('have.value', p1.description);
+      cy.get('[data-cy="project-lang-input"]').select('FR');
+      cy.get('#title').should('have.value', p1.titleFR);
+      cy.get('#description').should('have.value', p1.descriptionFR);
+      cy.get('[data-cy="project-lang-input"]').select('EN');
+      cy.get('#title').should('have.value', p1.titleEN);
+      cy.get('#description').should('have.value', p1.descriptionEN);
       cy.contains('Choose a file');
     });
-    it('can update a project', () => {
-      cy.get('#title').type('{selectall}test title');
-      cy.get('#description').type('{selectall}test description');
+    it('can update a project title and description', () => {
+      cy.get('[data-cy="project-lang-input"]').select('FR');
+      cy.get('#title').type('{selectall}updated title FR');
+      cy.get('#description').type('{selectall}updated description FR');
+      cy.get('[data-cy="project-lang-input"]').select('EN');
+      cy.get('#title').type('{selectall}updated title EN');
+      cy.get('#description').type('{selectall}updated description EN');
       cy.get('form').submit();
       cy.url().should('match', /\/projects$/);
-      cy.contains('test title');
+      cy.task('getAllProjects').then(([updatedProject]) => {
+        expect(updatedProject.titleFR).to.equal('updated title FR');
+        expect(updatedProject.titleEN).to.equal('updated title EN');
+        expect(updatedProject.descriptionFR).to.equal('updated description FR');
+        expect(updatedProject.descriptionEN).to.equal('updated description EN');
+      });
     });
   });
 });

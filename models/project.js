@@ -1,23 +1,35 @@
 const db = require('../db');
 const Joi = require('joi');
 
-module.exports.validateProject = (data, forUpdate = false) =>
-  Joi.object({
-    title: Joi.string()
-      .max(255)
-      .presence(forUpdate ? 'optional' : 'required'),
-    description: Joi.string()
-      .max(65000)
-      .presence(forUpdate ? 'optional' : 'required'),
+module.exports.validateProject = (data, forUpdate = false) => {
+  const titleValidator = Joi.string()
+    .max(255)
+    .presence(forUpdate ? 'optional' : 'required');
+
+  const descriptionValidator = Joi.string()
+    .max(65000)
+    .presence(forUpdate ? 'optional' : 'required');
+
+  return Joi.object({
+    titleFR: titleValidator,
+    titleEN: titleValidator,
+    descriptionFR: descriptionValidator,
+    descriptionEN: descriptionValidator,
     mainPictureUrl: Joi.string()
       .max(255)
       .presence(forUpdate ? 'optional' : 'required'),
-  }).validate(data, { abortEarly: false }).error;
+  })
+    .or('titleFR', 'titleEN')
+    .or('descriptionFR', 'descriptionEN')
+    .validate(data, { abortEarly: false }).error;
+};
 
 const projectPropsToShow = {
-  title: true,
+  titleFR: true,
+  titleEN: true,
   id: true,
-  description: true,
+  descriptionFR: true,
+  descriptionEN: true,
   mainPictureUrl: true,
 };
 
@@ -40,8 +52,29 @@ module.exports.deleteOneProject = (id) => {
     .catch((_) => false);
 };
 
-module.exports.createProject = ({ title, description, mainPictureUrl }) => {
-  return db.project.create({ data: { title, description, mainPictureUrl } });
+module.exports.createProject = ({
+  descriptionFR,
+  descriptionEN,
+  titleFR,
+  titleEN,
+  mainPictureUrl,
+}) => {
+  return db.project.create({
+    data: { descriptionFR, descriptionEN, titleFR, titleEN, mainPictureUrl },
+  });
+};
+
+module.exports.getTranslation = (
+  { id, titleFR, titleEN, descriptionFR, descriptionEN, mainPictureUrl },
+  lang
+) => {
+  const isFR = lang.toUpperCase() === 'FR';
+  return {
+    id,
+    mainPictureUrl,
+    title: isFR ? titleFR : titleEN,
+    description: isFR ? descriptionFR : descriptionEN,
+  };
 };
 
 module.exports.updateProject = (id, data) => {

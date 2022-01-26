@@ -1,6 +1,6 @@
 import Layout from '../../components/Layout';
 import ProjectCard from '../../components/ProjectCard';
-import { getProjects } from '../../models/project';
+import { getProjects, getTranslation } from '../../models/project';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 
@@ -20,7 +20,7 @@ export default function Projects({ projects }) {
 }
 
 export async function getStaticProps({ locale }) {
-  const projects = await getProjects();
+  const projects = (await getProjects()).map((p) => getTranslation(p, locale));
   return {
     props: {
       projects,

@@ -9,7 +9,7 @@ describe('/profile', () => {
     });
 
     it('has an english translation', () => {
-      cy.visitInLanguage('/profile', 'fr');
+      cy.visitInLanguage('/profile', 'en');
       cy.get('[data-cy="switch-to-en"]').click();
       cy.contains('My profile');
       cy.contains('Name');

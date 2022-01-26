@@ -2,8 +2,12 @@ describe('/admin/projects', () => {
   let p1, p2;
   beforeEach(() => {
     cy.task('deleteAllProjects');
-    cy.task('createSampleProject', 'P1').then((p) => (p1 = p));
-    cy.task('createSampleProject', 'P2').then((p) => (p2 = p));
+    cy.task('createSampleProject', { titleFR: 'P1', titleEN: 'P1' }).then(
+      (p) => (p1 = p)
+    );
+    cy.task('createSampleProject', { titleFR: 'P2', titleEN: 'P2' }).then(
+      (p) => (p2 = p)
+    );
     cy.setupCurrentUser({ role: 'admin' });
     cy.visit('/admin/projects');
   });
