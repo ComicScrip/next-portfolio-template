@@ -4,6 +4,7 @@ describe('/admin', () => {
       cy.setupCurrentUser({ role: 'admin' });
     });
     it('is accessible from the menu', () => {
+      cy.visit('/');
       cy.get('[data-cy="currentUserMenu"]').click();
       cy.get('[data-cy="currentUserMenu"]').contains('Back-office').click();
       cy.url().should('include', '/admin');
@@ -36,6 +37,7 @@ describe('/admin', () => {
       cy.setupCurrentUser({ role: 'visitor' });
     });
     it('is not accessible from the menu for visitors', () => {
+      cy.visit('/');
       cy.get('[data-cy="currentUserMenu"]').click();
       cy.get('[data-cy="currentUserMenu"]').should(
         'not.contain',
