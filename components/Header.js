@@ -2,11 +2,12 @@ import { useSession } from 'next-auth/react';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import CurrentUserContext from '../contexts/currentUserContext';
 import CurrentUserMenu from './CurrentUserMenu';
 
 export default function Header() {
-  const { status } = useSession();
+  const { currentUserProfile } = useContext(CurrentUserContext);
   const router = useRouter();
   const { t } = useTranslation('common');
   const inFr = router.locale === 'fr';
@@ -23,8 +24,8 @@ export default function Header() {
         </div>
         <div className='flex md:order-3'>
           <div className='mr-6 md:mr-0'>
-            {status === 'authenticated' && <CurrentUserMenu />}
-            {status === 'unauthenticated' && (
+            {currentUserProfile && <CurrentUserMenu />}
+            {!currentUserProfile && (
               <Link href='/login'>
                 <a className='sm:text-sm inline-block text-xs px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-slate-800 hover:bg-white'>
                   {t('login')}

@@ -37,7 +37,8 @@ export const CurrentUserContextProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (status === 'authenticated') {
+    if (status === 'authenticated' || !window.navigator.onLine) {
+      console.log('getting offline profile');
       getProfile();
     } else if (status === 'unauthenticated') {
       setCurrentUserProfile(null);

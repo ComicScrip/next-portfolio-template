@@ -8,7 +8,7 @@ async function seed() {
       name: 'admin',
       email: 'admin@website.com',
       role: 'admin',
-      hashedPassword: await hashPassword('verysecure'),
+      hashedPassword: await hashPassword('superpass3001'),
     },
   });
 
