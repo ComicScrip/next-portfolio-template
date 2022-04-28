@@ -7,9 +7,12 @@ import Image from 'next/image';
 
 export default function CreateProject() {
   const [error, setError] = useState('');
-  const [title, setTitle] = useState('');
+  const [titleFR, setTitleFR] = useState('');
+  const [titleEN, setTitleEN] = useState('');
   const [mainPictureUrl, setMainPictureUrl] = useState('');
-  const [description, setDescription] = useState('');
+  const [descriptionFR, setDescriptionFR] = useState('');
+  const [descriptionEN, setDescriptionEN] = useState('');
+  const [lang, setLang] = useState('FR');
   const [mainPictureUrlError, setMainPictureUrlError] = useState('');
   const router = useRouter();
   const {
@@ -18,7 +21,13 @@ export default function CreateProject() {
   const isUpdate = id !== 'new';
 
   const saveProject = async () => {
-    const formValues = { title, mainPictureUrl, description };
+    const formValues = {
+      titleFR,
+      titleEN,
+      mainPictureUrl,
+      descriptionEN,
+      descriptionFR,
+    };
     if (!mainPictureUrl)
       return setMainPictureUrlError('Please choose an image');
     try {
@@ -37,14 +46,31 @@ export default function CreateProject() {
     if (id && isUpdate) {
       axios
         .get(`/api/projects/${id}`)
-        .then(({ data: { title, description, mainPictureUrl } }) => {
-          setTitle(title);
-          setDescription(description);
-          setMainPictureUrl(mainPictureUrl);
-        })
+        .then(
+          ({
+            data: {
+              titleFR,
+              titleEN,
+              descriptionFR,
+              descriptionEN,
+              mainPictureUrl,
+            },
+          }) => {
+            setTitleFR(titleFR);
+            setTitleEN(titleEN);
+            setDescriptionFR(descriptionFR);
+            setDescriptionEN(descriptionEN);
+            setMainPictureUrl(mainPictureUrl);
+          }
+        )
         .catch(() => setError('could not retrive projects from the API'));
     }
   }, [isUpdate, id]);
+
+  const title = lang === 'FR' ? titleFR : titleEN;
+  const setTitle = lang === 'FR' ? setTitleFR : setTitleEN;
+  const description = lang === 'FR' ? descriptionFR : descriptionEN;
+  const setDescription = lang === 'FR' ? setDescriptionFR : setDescriptionEN;
 
   return (
     <AdminLayout
@@ -55,7 +81,6 @@ export default function CreateProject() {
       </h1>
       {error && <div className='text-red-500'>{error}</div>}
       <form
-        className=''
         onSubmit={async (e) => {
           e.preventDefault();
           await saveProject();
@@ -85,6 +110,23 @@ export default function CreateProject() {
             <Image src={mainPictureUrl} alt={title} width={800} height={450} />
           </div>
         )}
+
+        <label htmlFor='lang' className='block mb-3'>
+          Lang :{' '}
+          <select
+            className='mt-5'
+            required
+            id='lang'
+            type='text'
+            data-cy='project-lang-input'
+            value={lang}
+            onChange={(e) => setLang(e.target.value)}
+          >
+            <option value='FR'>FR</option>
+            <option value='EN'>EN</option>
+          </select>
+        </label>
+
         <label htmlFor='title' className='block mb-3'>
           Title :{' '}
           <input
@@ -92,8 +134,8 @@ export default function CreateProject() {
             id='title'
             type='text'
             data-cy='project-title-input'
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={lang === 'FR' ? titleFR : titleEN}
+            onChange={({ target: { value } }) => setTitle(value)}
           />
         </label>
 
@@ -104,7 +146,7 @@ export default function CreateProject() {
             className='block mb-6 w-[400px]'
             id='description'
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={({ target: { value } }) => setDescription(value)}
           />
         </label>
 

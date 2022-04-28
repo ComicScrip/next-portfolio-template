@@ -62,29 +62,25 @@ Cypress.Commands.add(
     cy.dataSession({
       name: 'userSession',
       setup: () => {
-        cy.visit('/login');
-        cy.get('#username').type(email);
-        cy.get('#password').type(password);
-        cy.get('form').submit();
-        cy.get('[data-cy="currentUserMenu"]').should('be.visible');
-        cy.getCookie('next-auth.session-token')
-          .should('exist')
-          .then((cookie) => {
-            return cy
-              .request({
-                url: '/api/profile',
-                failOnStatusCode: false,
-                headers: {
-                  Cookie: `next-auth.session-token=${cookie.value}`,
-                },
-              })
-              .then(({ body: user }) =>
-                Promise.resolve({
-                  cookie,
-                  user,
-                })
-              );
-          });
+        cy.request({ url: '/api/auth/csrf' })
+          .then(({ body: { csrfToken } }) =>
+            cy.request({
+              url: '/api/auth/callback/credentials',
+              method: 'POST',
+              body: {
+                csrfToken,
+                username: email,
+                password,
+              },
+            })
+          )
+          .then(() => cy.getCookie('next-auth.session-token').should('exist'))
+          .then((cookie) =>
+            cy.request({ url: '/api/profile' }).then(({ body: user }) => ({
+              cookie,
+              user,
+            }))
+          );
       },
       validate: (saved) => {
         return cy
@@ -95,10 +91,9 @@ Cypress.Commands.add(
               Cookie: `next-auth.session-token=${saved.cookie.value}`,
             },
           })
-          .then(({ body: user }) =>
-            Promise.resolve(
+          .then(
+            ({ body: user }) =>
               user.email === saved.user.email && user.role === saved.user.role
-            )
           );
       },
       recreate: (saved) => {

@@ -34,15 +34,23 @@ module.exports = (on, config) => {
   });
   on('task', {
     cleanDb: async () => Promise.all([User.deleteMany(), Project.deleteMany()]),
-    createSampleProject: async (title = 'P1') =>
+    createSampleProject: async ({
+      titleFR = 'P1 - FR',
+      titleEN = 'P1 - EN',
+      descriptionFR = 'description FR',
+      descriptionEN = 'description EN',
+    } = {}) =>
       Project.createProject({
-        title,
-        description: `${title} description`,
+        titleEN,
+        titleFR,
+        descriptionEN,
+        descriptionFR,
         mainPictureUrl:
           'https://ucarecdn.com/be32d5a2-4ef2-4a47-8e73-7142f80ae188/ms_project_2013_2.jpg',
       }),
     deleteAllUsers: User.deleteMany,
     deleteAllProjects: Project.deleteMany,
+    getAllProjects: Project.getProjects,
     findUserByEmail: User.findByEmail,
     createUser: User.createUser,
     getLastEmail(userEmail) {
