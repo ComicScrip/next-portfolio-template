@@ -10,9 +10,11 @@ datasource db {
 
 model Project {
   id             Int      @id @default(autoincrement())
-  title          String   @db.VarChar(255)
+  titleFR        String?  @db.VarChar(255)
+  titleEN        String?  @db.VarChar(255)
   mainPictureUrl String   @db.VarChar(255)
-  description    String   @db.Text
+  descriptionFR  String?  @db.Text
+  descriptionEN  String?  @db.Text
   createdAt      DateTime @default(now())
   updatedAt      DateTime @default(now())
 }
