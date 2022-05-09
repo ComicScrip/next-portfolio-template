@@ -1,4 +1,4 @@
-FROM node:14.15-alpine
+FROM node:lts-alpine3.14
 
 ENV PORT 80
 
