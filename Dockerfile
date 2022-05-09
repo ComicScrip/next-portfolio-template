@@ -9,7 +9,7 @@ WORKDIR /usr/src/app
 # Installing dependencies
 COPY package*.json /usr/src/app/
 RUN npm i -g pnpm
-RUN pnpm install
+RUN npm install
 
 # Copying source files
 COPY . /usr/src/app
@@ -18,7 +18,7 @@ ARG DATABASE_URL=${DATABASE_URL}
 ARG NEXT_PUBLIC_HCAPTCHA_SITEKEY=${NEXT_PUBLIC_HCAPTCHA_SITEKEY}
 ARG NEXT_PUBLIC_UPLOADCARE_KEY=${NEXT_PUBLIC_UPLOADCARE_KEY}
 
-RUN pnpm run pre-start
+RUN npm run pre-start
 
 # Building app
 EXPOSE 80
