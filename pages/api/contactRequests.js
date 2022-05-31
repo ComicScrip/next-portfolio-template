@@ -1,4 +1,3 @@
-import base from '../../middlewares/common';
 import mailer from '../../mailer';
 import { verify } from 'hcaptcha';
 
@@ -23,4 +22,7 @@ async function handlePost({ body: { email, message, hcaptchaToken } }, res) {
   }
 }
 
-export default base().post(handlePost);
+export default function handler(req, res) {
+  if (req.method === 'POST') return handlePost(req, res);
+  else return res.status(405).send('Method not allowed');
+}
