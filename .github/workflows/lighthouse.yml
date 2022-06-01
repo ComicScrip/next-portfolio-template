@@ -9,8 +9,8 @@ jobs:
         uses: haltuf/mysql-action@master
         with:
           host port: 3306
-          mysql database: 'test'
-          mysql root password: 'root'
+          mysql database: "test"
+          mysql root password: "root"
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup Node.js 14.x
@@ -23,7 +23,7 @@ jobs:
           version: 6.0.2
           run_install: true
       - name: Reset DB
-        run: | 
+        run: |
           DATABASE_URL=mysql://root:root@localhost:3306/test npx prisma migrate deploy
           DATABASE_URL=mysql://root:root@localhost:3306/test npx prisma db seed
       - name: Build

@@ -1,21 +1,21 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import AdminLayout from '../../components/AdminLayout';
+import axios from "axios";
+import { useEffect, useState } from "react";
+import AdminLayout from "../../components/AdminLayout";
 
 export default function AdminDashboard() {
   const [userList, setUserList] = useState([]);
 
   useEffect(() => {
     axios
-      .get('/api/users')
+      .get("/api/users")
       .then((res) => setUserList(res.data))
       .catch(console.error);
   }, []);
 
   return (
-    <AdminLayout pageTitle={'Dashboard'}>
-      <h1 className='text-2xl mb-4'>Dashboard</h1>
-      <h2 className='text-2xl'>Users</h2>
+    <AdminLayout pageTitle={"Dashboard"}>
+      <h1 className="text-2xl mb-4">Dashboard</h1>
+      <h2 className="text-2xl">Users</h2>
 
       <table>
         <thead>

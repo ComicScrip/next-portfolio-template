@@ -1,13 +1,13 @@
-const db = require('../db');
-const Joi = require('joi');
-const argon2 = require('argon2');
+const db = require("../db");
+const Joi = require("joi");
+const argon2 = require("argon2");
 
 module.exports.isAdmin = async (email) => {
   try {
     const currentUser = await db.user.findUnique({
       where: { email },
     });
-    return currentUser && currentUser.active && currentUser.role === 'admin';
+    return currentUser && currentUser.active && currentUser.role === "admin";
   } catch (err) {
     console.error(err);
   }
@@ -17,7 +17,7 @@ module.exports.isAdmin = async (email) => {
 module.exports.emailAlreadyExists = (email) =>
   db.user.findFirst({ where: { email } }).then((user) => !!user);
 
-module.exports.findByEmail = (email = '') =>
+module.exports.findByEmail = (email = "") =>
   db.user.findUnique({ where: { email } });
 
 module.exports.findById = (id) =>
@@ -28,15 +28,15 @@ module.exports.validateUser = (data, forUpdate = false) =>
     email: Joi.string()
       .email()
       .max(255)
-      .presence(forUpdate ? 'optional' : 'required'),
+      .presence(forUpdate ? "optional" : "required"),
     password: Joi.string()
       .min(8)
       .max(100)
-      .presence(forUpdate ? 'optional' : 'required'),
+      .presence(forUpdate ? "optional" : "required"),
     name: Joi.string()
       .max(255)
-      .presence(forUpdate ? 'optional' : 'required'),
-    image: Joi.string().max(255).allow(null, ''),
+      .presence(forUpdate ? "optional" : "required"),
+    image: Joi.string().max(255).allow(null, ""),
   }).validate(data, { abortEarly: false }).error;
 
 const hashingOptions = {
