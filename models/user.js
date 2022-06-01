@@ -97,3 +97,5 @@ module.exports.updateUser = async (id, data) =>
 
 module.exports.deleteMany = db.user.deleteMany;
 module.exports.delete = db.user.delete;
+
+module.exports.findAllUsers = () => db.user.findMany();

@@ -2,9 +2,12 @@ import mailer from '../../../mailer';
 import {
   createUser,
   emailAlreadyExists,
+  findAllUsers,
   validateUser,
 } from '../../../models/user';
 import crypto from 'crypto';
+import base from '../../../middlewares/common';
+import requireAdmin from '../../../middlewares/requireAdmin';
 
 async function handlePost(req, res) {
   const validationErrors = validateUser(req.body);
@@ -27,7 +30,9 @@ async function handlePost(req, res) {
   res.status(201).send({ id, email, name });
 }
 
-export default function handler(req, res) {
-  if (req.method === 'POST') return handlePost(req, res);
-  else return res.status(405).send('Method not allowed');
+async function handleGet(req, res) {
+  console.log(req.currentUser);
+  res.send(await findAllUsers());
 }
+
+export default base().post(handlePost).get(requireAdmin, handleGet);

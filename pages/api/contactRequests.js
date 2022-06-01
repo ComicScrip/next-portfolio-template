@@ -1,5 +1,6 @@
 import mailer from '../../mailer';
 import { verify } from 'hcaptcha';
+import base from '../../middlewares/common';
 
 async function handlePost({ body: { email, message, hcaptchaToken } }, res) {
   const { success: validCaptcha } = await verify(
@@ -22,7 +23,4 @@ async function handlePost({ body: { email, message, hcaptchaToken } }, res) {
   }
 }
 
-export default function handler(req, res) {
-  if (req.method === 'POST') return handlePost(req, res);
-  else return res.status(405).send('Method not allowed');
-}
+export default base().post(handlePost);
