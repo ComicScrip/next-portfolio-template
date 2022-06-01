@@ -1,3 +1,4 @@
+import requireAdmin from '../../../middlewares/requireAdmin';
 import {
   createProject,
   getProjects,
@@ -33,8 +34,4 @@ const handlePost = async (req, res) => {
   res.status(201).send(await createProject(req.body));
 };
 
-export default function handler(req, res) {
-  if (req.method === 'GET') return handleGet(req, res);
-  if (req.method === 'POST') return handlePost(req, res);
-  else return res.status(405).send('Method not allowed');
-}
+export default base().get(handleGet).post(requireAdmin, handlePost);

@@ -2,10 +2,13 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useSession, signIn } from 'next-auth/react';
 import CurrentUserMenu from './CurrentUserMenu';
+import { useContext } from 'react';
+import CurrentUserContext from '../contexts/currentUserContext';
 
 export default function AdminLayout({ children, pageTitle }) {
   const { status } = useSession();
-  currentUserIsAdmin = false;
+
+  const { currentUserIsAdmin } = useContext(CurrentUserContext);
 
   if (currentUserIsAdmin) {
     return (
@@ -21,11 +24,6 @@ export default function AdminLayout({ children, pageTitle }) {
             <Link href='/admin'>
               <a className='mr-6 hover:bg-slate-500 p-3 rounded-2xl'>
                 Dashboard
-              </a>
-            </Link>
-            <Link href='/admin/projects'>
-              <a aria-disabled className='hover:bg-slate-500 p-3 rounded-2xl'>
-                Projects
               </a>
             </Link>
           </nav>

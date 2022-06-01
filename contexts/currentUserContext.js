@@ -7,6 +7,8 @@ export const CurrentUserContextProvider = ({ children }) => {
   const [currentUserProfile, setCurrentUserProfile] = useState(null);
   const { status } = useSession();
 
+  const currentUserIsAdmin = currentUserProfile?.role === 'admin';
+
   useEffect(() => {
     if (status === 'authenticated') {
       axios
@@ -22,7 +24,7 @@ export const CurrentUserContextProvider = ({ children }) => {
 
   return (
     <CurrentUserContext.Provider
-      value={{ currentUserProfile, setCurrentUserProfile }}
+      value={{ currentUserProfile, setCurrentUserProfile, currentUserIsAdmin }}
     >
       {children}
     </CurrentUserContext.Provider>

@@ -26,9 +26,7 @@ async function handleDelete({ query: { id } }, res) {
   else res.status(404).send();
 }
 
-export default function handler(req, res) {
-  if (req.method === 'GET') return handleGet(req, res);
-  if (req.method === 'PATCH') return handlePatch(req, res);
-  if (req.method === 'DELETE') return handleDelete(req, res);
-  else return res.status(405).send('Method not allowed');
-}
+export default base()
+  .get(handleGet)
+  .patch(requireAdmin, handlePatch)
+  .delete(requireAdmin, handleDelete);
