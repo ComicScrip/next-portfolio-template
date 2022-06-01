@@ -16,7 +16,8 @@
     "start": "NODE_ENV=production npm run start:server",
     "serve:lhci": "npm start",
     "test:gui": "cypress open",
-    "test": "cypress run"
+    "test": "cypress run",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@hcaptcha/react-hcaptcha": "^0.3.9",
@@ -57,6 +58,7 @@
     "cypress-file-upload": "^5.0.8",
     "eslint": "7.32.0",
     "eslint-config-next": "12.0.4",
+    "husky": "^8.0.1",
     "postcss": "^8.4.4",
     "prisma": "^3.6.0",
     "smtp-tester": "^1.2.0",
@@ -65,5 +67,13 @@
   },
   "prisma": {
     "seed": "node prisma/seed.js"
+  },
+  "lint-staged": {
+    "*.{json,js,ts,jsx,tsx,html,css}": [
+      "prettier --write"
+    ],
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --quiet --cache --fix"
+    ]
   }
 }

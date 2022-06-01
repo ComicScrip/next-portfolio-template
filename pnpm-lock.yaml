@@ -18,6 +18,7 @@ specifiers:
   express: ^4.17.2
   form-data: ^4.0.0
   hcaptcha: ^0.1.0
+  husky: ^8.0.1
   joi: ^17.5.0
   lodash: ^4.17.21
   module-alias: ^2.2.2
@@ -80,6 +81,7 @@ devDependencies:
   cypress-file-upload: 5.0.8_cypress@9.2.1
   eslint: 7.32.0
   eslint-config-next: 12.0.4_e81be7d1ca1bbab87068554ecb71ac53
+  husky: 8.0.1
   postcss: 8.4.5
   prisma: 3.8.1
   smtp-tester: 1.2.0
@@ -4223,6 +4225,12 @@ packages:
     resolution: {integrity: sha512-SEQu7vl8KjNL2eoGBLF3+wAjpsNfA9XMlXAYj/3EdaNfAlxKthD1xjEQfGOUhllCGGJVNY34bRr6lPINhNjyZw==}
     engines: {node: '>=8.12.0'}
     dev: false
+
+  /husky/8.0.1:
+    resolution: {integrity: sha512-xs7/chUH/CKdOCs7Zy0Aev9e/dKOMZf3K1Az1nar3tzlv0jfqnYtu235bstsWTmXOR0EfINrPa97yy4Lz6RiKw==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dev: true
 
   /i18next-fs-backend/1.1.4:
     resolution: {integrity: sha512-/MfAGMP0jHonV966uFf9PkWWuDjPYLIcsipnSO3NxpNtAgRUKLTwvm85fEmsF6hGeu0zbZiCQ3W74jwO6K9uXA==}
