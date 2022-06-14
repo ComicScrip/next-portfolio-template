@@ -6,7 +6,7 @@ async function seed() {
   await db.user.create({
     data: {
       name: 'admin',
-      email: 'admin@website.com',
+      email: 'pierre.genthon@wildcodeschool.com',
       role: 'admin',
       hashedPassword: await hashPassword('verysecure'),
     },
