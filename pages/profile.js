@@ -47,25 +47,12 @@ export default function ProfilePage() {
     }
   }, [status]);
 
-  const handleAvatarClick = () => {
-    avatarUploadRef.current.click();
-  };
-
-  const handleAvatarFileInputChange = (e) => {
-    if (e.target.files[0]) {
-      setImage(URL.createObjectURL(e.target.files[0]));
-    }
-  };
-
   return (
     <Layout pageTitle={t("profile")}>
       <div className="mt-8 flex flex-col justify-center items-center ">
         <h1 className="pageTitle text-center ">{t("myProfile")}</h1>
 
-        <div
-          className="cursor-pointer p-[1px] bg-white hover:bg-slate-300 w-[128px] h-[128px] flex justify-center items-center rounded-full"
-          onClick={handleAvatarClick}
-        >
+        <div className="cursor-pointer p-[1px] bg-white hover:bg-slate-300 w-[128px] h-[128px] flex justify-center items-center rounded-full">
           <Avatar size={120} src={image} />
         </div>
 
@@ -74,11 +61,8 @@ export default function ProfilePage() {
           className="p-6 bg-slate-700/50 mt-6 rounded-xl w-[300px]"
         >
           <input
-            type="file"
             id="avatar"
             accept="image/png, image/jpeg, image/gif"
-            ref={avatarUploadRef}
-            onChange={handleAvatarFileInputChange}
             style={{ display: "none" }}
           />
           <label htmlFor="email">

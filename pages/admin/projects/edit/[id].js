@@ -2,7 +2,6 @@ import AdminLayout from "../../../../components/AdminLayout";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/dist/client/router";
-import { Widget } from "@uploadcare/react-widget";
 import Image from "next/image";
 
 export default function CreateProject() {
@@ -22,11 +21,11 @@ export default function CreateProject() {
 
   const saveProject = async () => {
     const formValues = {
-      titleFR,
-      titleEN,
+      titleFR: titleFR || titleEN,
+      titleEN: titleEN || titleFR,
       mainPictureUrl,
-      descriptionEN,
-      descriptionFR,
+      descriptionEN: descriptionEN || descriptionFR,
+      descriptionFR: descriptionFR || descriptionEN,
     };
     if (!mainPictureUrl)
       return setMainPictureUrlError("Please choose an image");
@@ -88,18 +87,6 @@ export default function CreateProject() {
       >
         <label htmlFor="mainPictureUrl" className="block mb-3">
           Main picture :{" "}
-          <Widget
-            publicKey={process.env.NEXT_PUBLIC_UPLOADCARE_KEY}
-            id="file"
-            tabs="file url"
-            crop="16:9"
-            required
-            value={mainPictureUrl}
-            onChange={({ cdnUrl }) => {
-              setMainPictureUrlError("");
-              setMainPictureUrl(cdnUrl);
-            }}
-          />
           {mainPictureUrlError && (
             <div className="text-red-500">{mainPictureUrlError}</div>
           )}
