@@ -1,8 +1,8 @@
-import NextAuth from 'next-auth';
-import GithubProvider from 'next-auth/providers/github';
-import crypto from 'crypto';
-import CredentialsProvider from 'next-auth/providers/credentials';
-import { createUser, findByEmail, verifyPassword } from '../../../models/user';
+import NextAuth from "next-auth";
+import GithubProvider from "next-auth/providers/github";
+import crypto from "crypto";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { createUser, findByEmail, verifyPassword } from "../../../models/user";
 
 export default NextAuth({
   providers: [
@@ -11,7 +11,7 @@ export default NextAuth({
       clientSecret: process.env.GITHUB_SECRET,
     }),
     CredentialsProvider({
-      name: 'Credentials',
+      name: "Credentials",
       async authorize(credentials) {
         const user = await findByEmail(credentials.username);
         if (
@@ -29,12 +29,12 @@ export default NextAuth({
   secret: process.env.SECRET,
   callbacks: {
     async jwt({ token, profile, account }) {
-      if (account && account.provider === 'github' && profile) {
+      if (account && account.provider === "github" && profile) {
         const matchingUser = await findByEmail(profile.email);
         if (!matchingUser)
           await createUser({
             email: profile.email,
-            password: crypto.randomBytes(20).toString('hex'),
+            password: crypto.randomBytes(20).toString("hex"),
             name: profile.login,
             image: profile.avatar_url,
           });
@@ -58,6 +58,6 @@ export default NextAuth({
     },
   },
   pages: {
-    signIn: '/login',
+    signIn: "/login",
   },
 });

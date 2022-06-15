@@ -1,10 +1,10 @@
-import '../styles/globals.css';
+import "../styles/globals.css";
 
-import { SessionProvider } from 'next-auth/react';
-import { CurrentUserContextProvider } from '../contexts/currentUserContext';
-import { ToastContainer } from 'react-toastify';
-import { Flip } from 'react-toastify';
-import { appWithTranslation } from 'next-i18next';
+import { SessionProvider } from "next-auth/react";
+import { CurrentUserContextProvider } from "../contexts/currentUserContext";
+import { ToastContainer } from "react-toastify";
+import { Flip } from "react-toastify";
+import { appWithTranslation } from "next-i18next";
 
 const TranslatedContent = appWithTranslation(function Content({
   Component,
@@ -16,7 +16,7 @@ const TranslatedContent = appWithTranslation(function Content({
         <Component {...pageProps} />
       </CurrentUserContextProvider>
       <ToastContainer
-        position='bottom-center'
+        position="bottom-center"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -26,7 +26,7 @@ const TranslatedContent = appWithTranslation(function Content({
         draggable
         pauseOnHover
         transition={Flip}
-        theme='dark'
+        theme="dark"
       />
     </>
   );

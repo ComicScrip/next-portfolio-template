@@ -1,14 +1,14 @@
-import base from '../../../middlewares/common';
-import mailer from '../../../mailer';
-import { findByEmail, hashPassword, updateUser } from '../../../models/user';
-import crypto from 'crypto';
+import base from "../../../middlewares/common";
+import mailer from "../../../mailer";
+import { findByEmail, hashPassword, updateUser } from "../../../models/user";
+import crypto from "crypto";
 
 async function handlePost(req, res) {
   const { email } = req.body;
   const user = await findByEmail(email);
   if (!user) return res.status(404).send();
 
-  const resetPasswordToken = crypto.randomBytes(50).toString('hex');
+  const resetPasswordToken = crypto.randomBytes(50).toString("hex");
   await updateUser(user.id, {
     resetPasswordToken: await hashPassword(resetPasswordToken),
   });
@@ -21,7 +21,7 @@ async function handlePost(req, res) {
     text: mailBody,
     html: mailBody,
   });
-  res.send('Reset password email sent');
+  res.send("Reset password email sent");
 }
 
 export default base().post(handlePost);

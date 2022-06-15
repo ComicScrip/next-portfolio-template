@@ -1,13 +1,13 @@
-import CurrentUserContext from '../contexts/currentUserContext';
-import { signOut } from 'next-auth/react';
-import Link from 'next/link';
-import { useContext, useRef, useState } from 'react';
-import { useOutsideClick } from 'rooks';
-import Avatar from './Avatar';
-import { useTranslation } from 'next-i18next';
+import CurrentUserContext from "../contexts/currentUserContext";
+import { signOut } from "next-auth/react";
+import Link from "next/link";
+import { useContext, useRef, useState } from "react";
+import { useOutsideClick } from "rooks";
+import Avatar from "./Avatar";
+import { useTranslation } from "next-i18next";
 
 export default function CurrentUserMenu() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const { currentUserProfile, currentUserIsAdmin } =
     useContext(CurrentUserContext);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -20,35 +20,35 @@ export default function CurrentUserMenu() {
   const visibleLinks = currentUserIsAdmin
     ? [
         {
-          label: 'Back-office',
-          href: '/admin',
+          label: "Back-office",
+          href: "/admin",
         },
         {
-          label: t('profile'),
-          href: '/profile',
+          label: t("profile"),
+          href: "/profile",
         },
       ]
     : [
         {
-          label: t('profile'),
-          href: '/profile',
+          label: t("profile"),
+          href: "/profile",
         },
       ];
 
   return (
-    <div ref={ref} data-cy='currentUserMenu'>
-      <div onClick={toggleUserMenu} className='cursor-pointer'>
+    <div ref={ref} data-cy="currentUserMenu">
+      <div onClick={toggleUserMenu} className="cursor-pointer">
         <Avatar src={currentUserProfile.image} alt={currentUserProfile.name} />
       </div>
       <div
         style={{
           maxHeight: userMenuOpen ? 100 + visibleLinks.length * 100 : 0,
         }}
-        className='transition-[max-height] overflow-hidden absolute z-10 right-[90px] md:right-[50px] mt-2 rounded bg-slate-700 text-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]'
+        className="transition-[max-height] overflow-hidden absolute z-10 right-[90px] md:right-[50px] mt-2 rounded bg-slate-700 text-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]"
       >
         {visibleLinks.map(({ href, label }) => (
           <Link key={href} href={href}>
-            <a className='block p-[12px] text-sm text-center border-b-slate-600 border-b-[1px] cursor-pointer hover:bg-slate-600'>
+            <a className="block p-[12px] text-sm text-center border-b-slate-600 border-b-[1px] cursor-pointer hover:bg-slate-600">
               {label}
             </a>
           </Link>
@@ -56,9 +56,9 @@ export default function CurrentUserMenu() {
 
         <button
           onClick={() => signOut()}
-          className='p-4 m-4 block text-sm px-4 py-2 leading-none border rounded text-white border-slate-500 hover:border-transparent hover:text-white hover:bg-slate-400 bg-slate-500'
+          className="p-4 m-4 block text-sm px-4 py-2 leading-none border rounded text-white border-slate-500 hover:border-transparent hover:text-white hover:bg-slate-400 bg-slate-500"
         >
-          {t('logout')}
+          {t("logout")}
         </button>
       </div>
     </div>

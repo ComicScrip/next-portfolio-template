@@ -42,3 +42,5 @@ public/sw*
 public/workbox-*
 
 cypress/videos
+cypress/screenshots
+.eslintcache

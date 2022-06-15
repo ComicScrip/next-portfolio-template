@@ -52,20 +52,20 @@ textarea {
 }
 
 button,
-[type='button'],
-[type='reset'],
-[type='submit'] {
+[type="button"],
+[type="reset"],
+[type="submit"] {
   @apply bg-amber-400 text-slate-900 cursor-pointer;
 }
 
 button:hover,
-[type='button']:hover,
-[type='reset']:hover,
-[type='submit']:hover,
+[type="button"]:hover,
+[type="reset"]:hover,
+[type="submit"]:hover,
 button:focus,
-[type='button']:focus,
-[type='reset']:focus,
-[type='submit']:focus {
+[type="button"]:focus,
+[type="reset"]:focus,
+[type="submit"]:focus {
   @apply bg-amber-300 text-slate-900;
   outline: none;
 }
