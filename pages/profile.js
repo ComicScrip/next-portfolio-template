@@ -2,7 +2,7 @@ import Avatar from "../components/Avatar";
 import Layout from "../components/Layout";
 import CurrentUserContext from "../contexts/currentUserContext";
 import { signIn, useSession } from "next-auth/react";
-import { useContext, useEffect, useRef, useState, useCallback } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
@@ -18,8 +18,6 @@ export default function ProfilePage() {
   const [image, setImage] = useState("");
   const [email, setEmail] = useState("");
 
-  const avatarUploadRef = useRef();
-
   useEffect(() => {
     if (currentUserProfile) {
       setName(currentUserProfile.name || "");
@@ -33,7 +31,6 @@ export default function ProfilePage() {
       e.preventDefault();
       const data = new FormData();
       data.append("name", name);
-      data.append("image", avatarUploadRef.current.files[0]);
       updateProfileOnAPI(data, () => {
         toast.success(t("profileSaved"));
       });
