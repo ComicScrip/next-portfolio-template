@@ -75,6 +75,11 @@ export default function LoginPage({ csrfToken }) {
                     {t('invalidCredsMessage')}
                   </p>
                 )}
+                <Link href='/reset-password'>
+                  <a className='mt-6 text-sky-300 hover:text-sky-400 text-center w-full block'>
+                    {t('forgotPassword')}
+                  </a>
+                </Link>
                 <Link href='/signup'>
                   <a className='mt-6 text-sky-300 hover:text-sky-400 text-center w-full block'>
                     {t('notRegistered')}

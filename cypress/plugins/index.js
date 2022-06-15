@@ -59,6 +59,8 @@ module.exports = (on, config) => {
     deleteUserByEmail(email) {
       return User.delete({ where: { email } }).catch(() => false);
     },
+    hashPassword: User.hashPassword,
+    verifyPassword: ({ plain, hashed }) => User.verifyPassword(plain, hashed),
   });
   return config;
 };

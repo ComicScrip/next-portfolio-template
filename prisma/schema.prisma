@@ -28,4 +28,5 @@ model User {
   role                  String  @default("visitor")
   active                Boolean @default(true)
   emailVerificationCode String? @unique
+  resetPasswordToken    String? @unique
 }

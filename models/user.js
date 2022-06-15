@@ -62,10 +62,19 @@ module.exports.createUser = async ({
   role,
   image,
   emailVerificationCode,
+  resetPasswordToken,
 }) => {
   const hashedPassword = await hashPassword(password);
   return db.user.create({
-    data: { email, hashedPassword, name, role, image, emailVerificationCode },
+    data: {
+      email,
+      hashedPassword,
+      name,
+      role,
+      image,
+      emailVerificationCode,
+      resetPasswordToken,
+    },
   });
 };
 
