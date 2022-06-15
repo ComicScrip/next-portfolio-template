@@ -14,9 +14,38 @@ export default function ResetPasswordPage() {
   const [newPasswordConfirmation, setNewPasswordConfirmation] = useState('');
   const [resetEmailSent, setResetEmailSent] = useState(false);
 
-  const sendResetPasswordEmail = (e) => {};
+  const sendResetPasswordEmail = (e) => {
+    e.preventDefault();
+    axios
+      .post('/api/users/reset-password-email', { email })
+      .then(() => {
+        setResetEmailSent(true);
+      })
+      .catch(() => {
+        toast.error(t('emailNotFound'));
+      });
+  };
 
-  const resetPassword = (e) => {};
+  const resetPassword = (e) => {
+    e.preventDefault();
+
+    if (newPassword !== newPasswordConfirmation)
+      return toast.error(t('passwordsDontMatch'));
+
+    axios
+      .post('/api/users/reset-password', {
+        email: router.query.email,
+        newPassword,
+        newPasswordConfirmation,
+        resetPasswordToken: router.query.resetPasswordToken,
+      })
+      .then(() => {
+        router.push('/login');
+      })
+      .catch(() => {
+        toast.error(t('invalidToken'));
+      });
+  };
 
   return (
     <Layout pageTitle={t('resetPassword')}>
