@@ -25,18 +25,18 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 Cypress.Commands.add(
-  'signup',
+  "signup",
   ({
-    email = 'visitor@website.com',
-    role = 'visitor',
-    password = 'verysecure',
-    name = 'visitor',
+    email = "visitor@website.com",
+    role = "visitor",
+    password = "verysecure",
+    name = "visitor",
   } = {}) => {
     cy.dataSession({
-      name: 'userInDb',
+      name: "userInDb",
       setup: () => {
-        cy.task('deleteUserByEmail', email);
-        cy.task('createUser', {
+        cy.task("deleteUserByEmail", email);
+        cy.task("createUser", {
           email,
           password,
           role,
@@ -46,7 +46,7 @@ Cypress.Commands.add(
         });
       },
       validate: (saved) => {
-        return cy.task('findUserByEmail', saved.email).then((user) => {
+        return cy.task("findUserByEmail", saved.email).then((user) => {
           if (user?.email === email && user?.role === role)
             return Promise.resolve(!!user);
           else return Promise.resolve(false);
@@ -57,16 +57,16 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add(
-  'login',
-  ({ email = 'visitor@website.com', password = 'verysecure' } = {}) => {
+  "login",
+  ({ email = "visitor@website.com", password = "verysecure" } = {}) => {
     cy.dataSession({
-      name: 'userSession',
+      name: "userSession",
       setup: () => {
-        cy.request({ url: '/api/auth/csrf' })
+        cy.request({ url: "/api/auth/csrf" })
           .then(({ body: { csrfToken } }) =>
             cy.request({
-              url: '/api/auth/callback/credentials',
-              method: 'POST',
+              url: "/api/auth/callback/credentials",
+              method: "POST",
               body: {
                 csrfToken,
                 username: email,
@@ -74,9 +74,9 @@ Cypress.Commands.add(
               },
             })
           )
-          .then(() => cy.getCookie('next-auth.session-token').should('exist'))
+          .then(() => cy.getCookie("next-auth.session-token").should("exist"))
           .then((cookie) =>
-            cy.request({ url: '/api/profile' }).then(({ body: user }) => ({
+            cy.request({ url: "/api/profile" }).then(({ body: user }) => ({
               cookie,
               user,
             }))
@@ -85,7 +85,7 @@ Cypress.Commands.add(
       validate: (saved) => {
         return cy
           .request({
-            url: '/api/profile',
+            url: "/api/profile",
             failOnStatusCode: false,
             headers: {
               Cookie: `next-auth.session-token=${saved.cookie.value}`,
@@ -97,35 +97,36 @@ Cypress.Commands.add(
           );
       },
       recreate: (saved) => {
-        cy.setCookie('next-auth.session-token', saved.cookie.value);
+        cy.setCookie("next-auth.session-token", saved.cookie.value);
       },
-      dependsOn: ['userInDb'],
+      dependsOn: ["userInDb"],
     });
   }
 );
 
 Cypress.Commands.add(
-  'setupCurrentUser',
+  "setupCurrentUser",
   ({
-    email = 'visitor@website.com',
-    role = 'visitor',
-    name = 'Visitor',
+    email = "visitor@website.com",
+    role = "visitor",
+    name = "Visitor",
   } = {}) => {
     cy.dataSession({
-      name: 'currentUser',
+      name: "currentUser",
       setup: () => {
         cy.signup({ name, role, email });
         cy.login({ email });
-        cy.get('@userSession').then((session) => session.user);
+        cy.get("@userSession").then((session) => session.user);
       },
+      validate: () => false,
     });
   }
 );
 
-Cypress.Commands.add('visitInLanguage', (url, lang) => {
+Cypress.Commands.add("visitInLanguage", (url, lang) => {
   cy.visit(url, {
     onBeforeLoad(win) {
-      Object.defineProperty(win.navigator, 'language', {
+      Object.defineProperty(win.navigator, "language", {
         value: lang,
       });
     },

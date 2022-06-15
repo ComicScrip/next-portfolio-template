@@ -1,0 +1,22 @@
+name: Lint
+on: [push]
+
+jobs:
+  run-linters:
+    name: run linters
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - name: Set up pnpm and install deps
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.0.2
+          run_install: true
+      - name: Run linters
+        run: 'pnpm run lint'
