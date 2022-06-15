@@ -18,6 +18,7 @@ async function handlePost(req, res) {
 
   await updateUser(user.id, {
     hashedPassword: await hashPassword(newPassword),
+    resetPasswordToken: null,
   });
   res.send('password has been reset');
 }
