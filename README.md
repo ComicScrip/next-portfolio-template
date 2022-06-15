@@ -20,7 +20,7 @@ If you ever want to add an environment variable, please add it to `.env.example`
 
 ### Setup the database
 
-```sh
+```bash
 pnpm run resetDB
 pnpm run showDB
 ```
