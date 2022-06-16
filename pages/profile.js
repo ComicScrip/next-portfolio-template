@@ -61,6 +61,7 @@ export default function ProfilePage() {
             id="avatar"
             accept="image/png, image/jpeg, image/gif"
             style={{ display: "none" }}
+            type="file"
           />
           <label htmlFor="email">
             Email
