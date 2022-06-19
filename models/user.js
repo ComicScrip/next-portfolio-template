@@ -63,7 +63,9 @@ module.exports.createUser = async ({
   image,
   emailVerificationCode,
   resetPasswordToken,
+  active = true,
 }) => {
+  console.log({ active });
   const hashedPassword = await hashPassword(password);
   return db.user.create({
     data: {
@@ -74,6 +76,7 @@ module.exports.createUser = async ({
       image,
       emailVerificationCode,
       resetPasswordToken,
+      active,
     },
   });
 };
@@ -107,3 +110,6 @@ module.exports.updateUser = async (id, data) =>
 module.exports.deleteMany = db.user.deleteMany;
 module.exports.deleteByEmail = async (email) =>
   db.user.delete({ where: { email } }).catch(() => false);
+
+module.exports.findMany = db.user.findMany;
+module.exports.count = db.user.count;

@@ -4,5 +4,6 @@
   "chromeWebSecurity": false,
   "env": {
     "CONTACT_FORM_RECIPIENT": "user@app.com"
-  }
+  },
+  "defaultCommandTimeout": 10000
 }

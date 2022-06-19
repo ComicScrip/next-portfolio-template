@@ -7,7 +7,8 @@ import CurrentUserContext from "../contexts/currentUserContext";
 
 export default function AdminLayout({ children, pageTitle }) {
   const { status } = useSession();
-  const { currentUserIsAdmin } = useContext(CurrentUserContext);
+  const { currentUserIsAdmin, currentUserProfile } =
+    useContext(CurrentUserContext);
 
   if (currentUserIsAdmin) {
     return (
@@ -28,6 +29,9 @@ export default function AdminLayout({ children, pageTitle }) {
             <Link href="/admin/projects">
               <a className="hover:bg-slate-500 p-3 rounded-2xl">Projects</a>
             </Link>
+            <Link href="/admin/users">
+              <a className="hover:bg-slate-500 p-3 rounded-2xl">Users</a>
+            </Link>
           </nav>
           <CurrentUserMenu />
         </header>
@@ -35,6 +39,8 @@ export default function AdminLayout({ children, pageTitle }) {
       </>
     );
   }
+
+  console.log({ status, currentUserProfile });
 
   return (
     <div className="flex flex-col justify-center items-center bg-slate-900 text-white h-full text-xl text-center">
@@ -46,7 +52,16 @@ export default function AdminLayout({ children, pageTitle }) {
             You have to log in with an admin user to access the back office{" "}
           </p>
 
-          <button className="mt-6" onClick={() => signIn()}>
+          <button
+            className="mt-6"
+            onClick={() =>
+              signIn("credentials", {
+                username: "pierre.genthon@wildcodeschool.com",
+                password: "verysecure",
+                callbackUrl: `${window.location.origin}/admin/projects`,
+              })
+            }
+          >
             Log in
           </button>
         </>
