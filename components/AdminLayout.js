@@ -7,8 +7,7 @@ import CurrentUserContext from "../contexts/currentUserContext";
 
 export default function AdminLayout({ children, pageTitle }) {
   const { status } = useSession();
-  const { currentUserIsAdmin, currentUserProfile } =
-    useContext(CurrentUserContext);
+  const { currentUserIsAdmin } = useContext(CurrentUserContext);
 
   if (currentUserIsAdmin) {
     return (
@@ -39,8 +38,6 @@ export default function AdminLayout({ children, pageTitle }) {
       </>
     );
   }
-
-  console.log({ status, currentUserProfile });
 
   return (
     <div className="flex flex-col justify-center items-center bg-slate-900 text-white h-full text-xl text-center">

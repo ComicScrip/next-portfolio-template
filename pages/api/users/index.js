@@ -45,8 +45,6 @@ async function handleGet(req, res) {
     count({ where }),
   ]);
   res.setHeader("x-total-count", total);
-  console.log({ skip, perPage, pageNumber, total, nameOrEmailContains });
-
   res.send(users);
 }
 

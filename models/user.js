@@ -65,7 +65,6 @@ module.exports.createUser = async ({
   resetPasswordToken,
   active = true,
 }) => {
-  console.log({ active });
   const hashedPassword = await hashPassword(password);
   return db.user.create({
     data: {

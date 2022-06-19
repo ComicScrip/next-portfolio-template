@@ -18,8 +18,6 @@ export default function UserListAdmin() {
 
   const [numberOfPages, setNumberOfPages] = useState(1);
 
-  console.log(router.query);
-
   useEffect(() => {
     setError("");
     const controller = new AbortController();
