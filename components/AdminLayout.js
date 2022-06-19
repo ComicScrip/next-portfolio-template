@@ -49,16 +49,7 @@ export default function AdminLayout({ children, pageTitle }) {
             You have to log in with an admin user to access the back office{" "}
           </p>
 
-          <button
-            className="mt-6"
-            onClick={() =>
-              signIn("credentials", {
-                username: "pierre.genthon@wildcodeschool.com",
-                password: "verysecure",
-                callbackUrl: `${window.location.origin}/admin/projects`,
-              })
-            }
-          >
+          <button className="mt-6" onClick={() => signIn()}>
             Log in
           </button>
         </>
