@@ -33,8 +33,7 @@ export const CurrentUserContextProvider = ({ children }) => {
       .catch(() => {
         // when we have a stale cookie, disconnect
         signOut();
-      })
-      .finally(() => {});
+      });
   }, []);
 
   useEffect(() => {
