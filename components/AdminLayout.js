@@ -28,6 +28,9 @@ export default function AdminLayout({ children, pageTitle }) {
             <Link href="/admin/projects">
               <a className="hover:bg-slate-500 p-3 rounded-2xl">Projects</a>
             </Link>
+            <Link href="/admin/users">
+              <a className="hover:bg-slate-500 p-3 rounded-2xl">Users</a>
+            </Link>
           </nav>
           <CurrentUserMenu />
         </header>

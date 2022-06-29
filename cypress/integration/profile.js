@@ -12,6 +12,8 @@ describe("/profile", () => {
       cy.visitInLanguage("/profile", "en");
       cy.get('[data-cy="switch-to-en"]').click();
       cy.contains("My profile");
+      cy.get("#name").should("have.value", "John doe");
+
       cy.contains("Name");
       cy.contains("Save").click();
       cy.contains("Your profile has been saved");

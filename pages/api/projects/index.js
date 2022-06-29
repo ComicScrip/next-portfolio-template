@@ -30,7 +30,6 @@ const handleGet = async (req, res) => {
 
 const handlePost = async (req, res) => {
   const validationErrors = validateProject(req.body);
-  console.log(validationErrors);
   if (validationErrors) return res.status(422).send(validationErrors);
   res.status(201).send(await createProject(req.body));
 };
