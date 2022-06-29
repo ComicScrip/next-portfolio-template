@@ -1,8 +1,8 @@
 /// <reference types="cypress" />
-const User = require('../../models/user');
-const Project = require('../../models/project');
-const ms = require('smtp-tester');
-const dotenvPlugin = require('cypress-dotenv');
+const User = require("../../models/user");
+const Project = require("../../models/project");
+const ms = require("smtp-tester");
+const dotenvPlugin = require("cypress-dotenv");
 
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
@@ -32,13 +32,13 @@ module.exports = (on, config) => {
       html: email.html,
     };
   });
-  on('task', {
+  on("task", {
     cleanDb: async () => Promise.all([User.deleteMany(), Project.deleteMany()]),
     createSampleProject: async ({
-      titleFR = 'P1 - FR',
-      titleEN = 'P1 - EN',
-      descriptionFR = 'description FR',
-      descriptionEN = 'description EN',
+      titleFR = "P1 - FR",
+      titleEN = "P1 - EN",
+      descriptionFR = "description FR",
+      descriptionEN = "description EN",
     } = {}) =>
       Project.createProject({
         titleEN,
@@ -46,7 +46,19 @@ module.exports = (on, config) => {
         descriptionEN,
         descriptionFR,
         mainPictureUrl:
-          'https://ucarecdn.com/be32d5a2-4ef2-4a47-8e73-7142f80ae188/ms_project_2013_2.jpg',
+          "https://ucarecdn.com/be32d5a2-4ef2-4a47-8e73-7142f80ae188/ms_project_2013_2.jpg",
+      }),
+    createSampleUser: async ({
+      name = "test",
+      email = "test@test.com",
+      password = "test1234456",
+      active = true,
+    } = {}) =>
+      User.createUser({
+        active,
+        email,
+        name,
+        password,
       }),
     deleteAllUsers: User.deleteMany,
     deleteAllProjects: Project.deleteMany,
@@ -56,9 +68,9 @@ module.exports = (on, config) => {
     getLastEmail(userEmail) {
       return lastEmail[userEmail] || null;
     },
-    deleteUserByEmail(email) {
-      return User.delete({ where: { email } }).catch(() => false);
-    },
+    deleteUserByEmail: User.deleteByEmail,
+    hashPassword: User.hashPassword,
+    verifyPassword: ({ plain, hashed }) => User.verifyPassword(plain, hashed),
   });
   return config;
 };

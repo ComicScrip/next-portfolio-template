@@ -1,7 +1,7 @@
 name: deploy
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -10,6 +10,6 @@ jobs:
       - uses: AlexxNB/caprover-action@v1
         with:
           branch: main
-          server: '${{ secrets.CAPROVER_SERVER }}'
-          password: '${{ secrets.CAPROVER_PASSWORD }}'
-          appname: '${{ secrets.CAPROVER_APP_NAME }}'
+          server: "${{ secrets.CAPROVER_SERVER }}"
+          password: "${{ secrets.CAPROVER_PASSWORD }}"
+          appname: "${{ secrets.CAPROVER_APP_NAME }}"

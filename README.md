@@ -18,10 +18,9 @@ cp .env.example .env
 And then change variables inside `.env` to match your own environment.
 If you ever want to add an environment variable, please add it to `.env.example`.
 
-
 ### Setup the database
 
-```sh
+```bash
 pnpm run resetDB
 pnpm run showDB
 ```
@@ -47,6 +46,7 @@ pnpm run dev:test
 ```sh
 pnpm run test
 ```
+
 ### Run tests with the Cypress GUI
 
 ```sh

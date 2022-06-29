@@ -1,9 +1,9 @@
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport(
-  process.env.CI === 'true'
+  process.env.CI === "true"
     ? {
-        host: 'localhost',
+        host: "localhost",
         port: 7777,
         secure: false,
         ignoreTLS: true,

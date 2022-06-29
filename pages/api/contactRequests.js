@@ -1,6 +1,6 @@
-import base from '../../middlewares/common';
-import mailer from '../../mailer';
-import { verify } from 'hcaptcha';
+import base from "../../middlewares/common";
+import mailer from "../../mailer";
+import { verify } from "hcaptcha";
 
 async function handlePost({ body: { email, message, hcaptchaToken } }, res) {
   const { success: validCaptcha } = await verify(
@@ -17,9 +17,9 @@ async function handlePost({ body: { email, message, hcaptchaToken } }, res) {
       html: mailBody,
       replyTo: email,
     });
-    res.status(201).send('OK');
+    res.status(201).send("OK");
   } else {
-    res.status(422).send('invalid hCaptcha token');
+    res.status(422).send("invalid hCaptcha token");
   }
 }
 

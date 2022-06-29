@@ -1,14 +1,14 @@
-const db = require('../db');
-const Joi = require('joi');
+const db = require("../db");
+const Joi = require("joi");
 
 module.exports.validateProject = (data, forUpdate = false) => {
   const titleValidator = Joi.string()
     .max(255)
-    .presence(forUpdate ? 'optional' : 'required');
+    .presence(forUpdate ? "optional" : "required");
 
   const descriptionValidator = Joi.string()
     .max(65000)
-    .presence(forUpdate ? 'optional' : 'required');
+    .presence(forUpdate ? "optional" : "required");
 
   return Joi.object({
     titleFR: titleValidator,
@@ -17,10 +17,10 @@ module.exports.validateProject = (data, forUpdate = false) => {
     descriptionEN: descriptionValidator,
     mainPictureUrl: Joi.string()
       .max(255)
-      .presence(forUpdate ? 'optional' : 'required'),
+      .presence(forUpdate ? "optional" : "required"),
   })
-    .or('titleFR', 'titleEN')
-    .or('descriptionFR', 'descriptionEN')
+    .or("titleFR", "titleEN")
+    .or("descriptionFR", "descriptionEN")
     .validate(data, { abortEarly: false }).error;
 };
 
@@ -49,7 +49,7 @@ module.exports.getOneProject = (id) => {
 module.exports.deleteOneProject = (id) => {
   return db.project
     .delete({ where: { id: parseInt(id, 10) } })
-    .catch((_) => false);
+    .catch(() => false);
 };
 
 module.exports.createProject = ({
@@ -68,7 +68,7 @@ module.exports.getTranslation = (
   { id, titleFR, titleEN, descriptionFR, descriptionEN, mainPictureUrl },
   lang
 ) => {
-  const isFR = lang.toUpperCase() === 'FR';
+  const isFR = lang.toUpperCase() === "FR";
   return {
     id,
     mainPictureUrl,
@@ -80,7 +80,7 @@ module.exports.getTranslation = (
 module.exports.updateProject = (id, data) => {
   return db.project
     .update({ where: { id: parseInt(id, 10) }, data })
-    .catch((_) => false);
+    .catch(() => false);
 };
 
 module.exports.deleteMany = db.project.deleteMany;

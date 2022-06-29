@@ -1,7 +1,7 @@
-import Head from 'next/head';
-import Footer from './Footer';
-import Header from './Header';
-import OfflineBanner from './OfflineBanner';
+import Head from "next/head";
+import Footer from "./Footer";
+import Header from "./Header";
+import OfflineBanner from "./OfflineBanner";
 
 export default function Layout({ children, pageTitle }) {
   return (
@@ -11,7 +11,7 @@ export default function Layout({ children, pageTitle }) {
       </Head>
       <Header />
       <OfflineBanner />
-      <main className='bg-slate-800 text-white pb-14'>{children}</main>
+      <main className="bg-slate-800 text-white pb-14">{children}</main>
       <Footer />
     </>
   );

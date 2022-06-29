@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 export default function OfflineBanner() {
   const [connected, setConnected] = useState(true);
@@ -9,7 +9,7 @@ export default function OfflineBanner() {
 
   return (
     !connected && (
-      <div className='bg-amber-500 p-3 text-center sticky'>
+      <div className="bg-amber-500 p-3 text-center sticky">
         No connection found, working offline
       </div>
     )

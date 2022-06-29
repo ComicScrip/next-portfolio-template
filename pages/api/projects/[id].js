@@ -3,9 +3,9 @@ import {
   getOneProject,
   updateProject,
   validateProject,
-} from '../../../models/project';
-import base from '../../../middlewares/common';
-import requireAdmin from '../../../middlewares/requireAdmin';
+} from "../../../models/project";
+import base from "../../../middlewares/common";
+import requireAdmin from "../../../middlewares/requireAdmin";
 
 async function handlePatch({ query: { id }, body }, res) {
   const validationErrors = validateProject(body, true);

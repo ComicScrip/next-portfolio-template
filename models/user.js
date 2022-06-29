@@ -1,13 +1,13 @@
-const db = require('../db');
-const Joi = require('joi');
-const argon2 = require('argon2');
+const db = require("../db");
+const Joi = require("joi");
+const argon2 = require("argon2");
 
 module.exports.isAdmin = async (email) => {
   try {
     const currentUser = await db.user.findUnique({
       where: { email },
     });
-    return currentUser && currentUser.active && currentUser.role === 'admin';
+    return currentUser && currentUser.active && currentUser.role === "admin";
   } catch (err) {
     console.error(err);
   }
@@ -17,8 +17,8 @@ module.exports.isAdmin = async (email) => {
 module.exports.emailAlreadyExists = (email) =>
   db.user.findFirst({ where: { email } }).then((user) => !!user);
 
-module.exports.findByEmail = (email = '') =>
-  db.user.findUnique({ where: { email } });
+module.exports.findByEmail = (email = "") =>
+  db.user.findUnique({ where: { email } }).catch(() => false);
 
 module.exports.findById = (id) =>
   db.user.findFirst({ where: { id: parseInt(id, 10) } });
@@ -28,15 +28,15 @@ module.exports.validateUser = (data, forUpdate = false) =>
     email: Joi.string()
       .email()
       .max(255)
-      .presence(forUpdate ? 'optional' : 'required'),
+      .presence(forUpdate ? "optional" : "required"),
     password: Joi.string()
       .min(8)
       .max(100)
-      .presence(forUpdate ? 'optional' : 'required'),
+      .presence(forUpdate ? "optional" : "required"),
     name: Joi.string()
       .max(255)
-      .presence(forUpdate ? 'optional' : 'required'),
-    image: Joi.string().max(255).allow(null, ''),
+      .presence(forUpdate ? "optional" : "required"),
+    image: Joi.string().max(255).allow(null, ""),
   }).validate(data, { abortEarly: false }).error;
 
 const hashingOptions = {
@@ -62,10 +62,21 @@ module.exports.createUser = async ({
   role,
   image,
   emailVerificationCode,
+  resetPasswordToken,
+  active = true,
 }) => {
   const hashedPassword = await hashPassword(password);
   return db.user.create({
-    data: { email, hashedPassword, name, role, image, emailVerificationCode },
+    data: {
+      email,
+      hashedPassword,
+      name,
+      role,
+      image,
+      emailVerificationCode,
+      resetPasswordToken,
+      active,
+    },
   });
 };
 
@@ -96,4 +107,8 @@ module.exports.updateUser = async (id, data) =>
   });
 
 module.exports.deleteMany = db.user.deleteMany;
-module.exports.delete = db.user.delete;
+module.exports.deleteByEmail = async (email) =>
+  db.user.delete({ where: { email } }).catch(() => false);
+
+module.exports.findMany = db.user.findMany;
+module.exports.count = db.user.count;
