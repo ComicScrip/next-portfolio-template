@@ -22,11 +22,11 @@ export default function CreateProject() {
 
   const saveProject = async () => {
     const formValues = {
-      titleFR,
-      titleEN,
+      titleFR: titleFR || titleEN,
+      titleEN: titleEN || titleFR,
       mainPictureUrl,
-      descriptionEN,
-      descriptionFR,
+      descriptionEN: descriptionEN || descriptionFR,
+      descriptionFR: descriptionFR || descriptionEN,
     };
     if (!mainPictureUrl)
       return setMainPictureUrlError("Please choose an image");
