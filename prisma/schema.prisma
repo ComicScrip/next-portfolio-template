@@ -20,13 +20,14 @@ model Project {
 }
 
 model User {
-  id                    Int     @id @default(autoincrement())
+  id                    Int      @id @default(autoincrement())
   name                  String?
-  email                 String? @unique
+  email                 String?  @unique
   image                 String?
   hashedPassword        String?
-  role                  String  @default("visitor")
-  active                Boolean @default(true)
-  emailVerificationCode String? @unique
-  resetPasswordToken    String? @unique
+  role                  String   @default("visitor")
+  active                Boolean  @default(true)
+  emailVerificationCode String?  @unique
+  resetPasswordToken    String?  @unique
+  createdAt             DateTime @default(now())
 }
