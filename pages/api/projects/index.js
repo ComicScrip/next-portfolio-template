@@ -34,4 +34,4 @@ const handlePost = async (req, res) => {
   res.status(201).send(await createProject(req.body));
 };
 
-export default base().use(requireAdmin).post(handlePost).get(handleGet);
+export default base().post(requireAdmin, handlePost).get(handleGet);
