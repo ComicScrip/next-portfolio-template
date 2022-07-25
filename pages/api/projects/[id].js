@@ -27,7 +27,6 @@ async function handleDelete({ query: { id } }, res) {
 }
 
 export default base()
-  .use(requireAdmin)
   .get(handleGet)
-  .patch(handlePatch)
-  .delete(handleDelete);
+  .patch(requireAdmin, handlePatch)
+  .delete(requireAdmin, handleDelete);

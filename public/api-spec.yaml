@@ -1,0 +1,107 @@
+openapi: 3.0.2
+servers:
+  - url: /api
+info:
+  title: 'Portfilio API'
+  version: 0.0.1
+  description: "Portfolio API descirption" 
+tags:
+  - name: project
+    description: Everything about Projects
+  - name: user
+    description: Operations about user
+paths:
+  /projects:
+    get:
+      tags:
+        - project
+      summary: Get projects from db
+      operationId: getProjects
+      responses:
+        '200':
+          description: Successful operation
+          content:  
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+  '/projects/{projectId}':
+    get:
+      tags:
+        - project
+      summary: Find project by ID
+      description: Returns a single project
+      operationId: getProjectById
+      parameters:
+        - name: projectId
+          in: path
+          description: ID of project to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Project'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Project not found
+    delete:
+      tags:
+        - project
+      summary: Deletes a project
+      description: ''
+      operationId: deleteProject
+      parameters:
+        - name: projectId
+          in: path
+          description: project id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: OK
+        '404':
+          description: Project not found
+components:
+  schemas: 
+    Project:
+      required:
+        - title
+        - description
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        title:
+          type: string
+          example: 'my project'
+        description:
+          type: string
+          example: 'my project'
+      type: object
+  requestBodies:
+    Project:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Project'
+      description: Project object that needs to be added to the store
+    ProjectArray:
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Project'
+      description: List of project object
